@@ -22,5 +22,17 @@ export default class App extends React.Component {
 
   location_did_submit(location) {
     this.setState({location: location})
+    this.add_location(location)
+  }
+  
+  add_location(location) {
+    let locations = localStorage.getItem('locations') || []
+    if (!_.contains(locations, location)) {
+      locations.push(location)
+      localStorage.setItem('locations', locations)
+    }
+    // TODO make immutable
+    locations = Object.assign({}, locations)
+    locations[location] = 1
   }
 }
