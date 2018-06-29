@@ -14,6 +14,7 @@ export default class Location extends React.Component {
   render() {
     return <form>
       <input type='text' defaultValue={this.state.location || ''}
+          onChange={this.location_did_change.bind(this)}
       />
       <input type='submit' onClick={preventDefaultWrapper(this.location_did_submit.bind(this))}
       />
@@ -25,12 +26,12 @@ export default class Location extends React.Component {
   }
 
   location_did_submit(e) {
-    if (this.props.location_did_change) {
-      this.props.location_did_change(this.state.location)
+    if (this.props.location_did_submit) {
+      this.props.location_did_submit(this.state.location)
     }
   }
 }
 
 Location.propTypes = {
-  location_did_change: PropTypes.func,
+  location_did_submit: PropTypes.func,
 }

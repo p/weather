@@ -14,13 +14,13 @@ export default class App extends React.Component {
     return <div>
       Weather for:
       <Location
-        location_did_change={this.location_did_change.bind(this)}
+        location_did_submit={this.location_did_submit.bind(this)}
       />
       <p>{this.state.location}</p>
     </div>
   }
 
-  location_did_change(location) {
+  location_did_submit(location) {
     this.setState({location: location})
   }
 }
