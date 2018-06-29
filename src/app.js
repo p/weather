@@ -1,13 +1,25 @@
+import _ from 'underscore'
+import connectToStores from 'alt-utils/lib/connectToStores';
 import React from 'react';
 import Location from './location'
+import Store from './store';
 
+@connectToStores
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-
+    
     this.state = {
-      location: null,
+      locations: props.locations,
     }
+  }
+  
+  static getStores() {
+    return [Store]
+  }
+    
+  static getPropsFromStores() {
+    return Store.getState()
   }
 
   render() {
@@ -17,6 +29,10 @@ export default class App extends React.Component {
         location_did_submit={this.location_did_submit.bind(this)}
       />
       <p>{this.state.location}</p>
+      <h2>Locations</h2>
+      {_.map(this.state.locations, (location) => (
+          <p>{location}</p>
+        ))}
     </div>
   }
 
@@ -26,13 +42,20 @@ export default class App extends React.Component {
   }
   
   add_location(location) {
-    let locations = localStorage.getItem('locations') || []
+    let locations = localStorage.getItem('locations') || '[]'
+    try {
+      locations = JSON.parse(locations)
+    } catch(e) {
+      console.log('Cannot parse locations: ' + e)
+      locations = []
+    }
     if (!_.contains(locations, location)) {
       locations.push(location)
-      localStorage.setItem('locations', locations)
+      localStorage.setItem('locations', JSON.stringify(locations))
     }
     // TODO make immutable
     locations = Object.assign({}, locations)
     locations[location] = 1
+    this.setState({locations})
   }
 }

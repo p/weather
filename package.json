@@ -1,8 +1,11 @@
 {
   "dependencies": {
     "@rq/prevent-default-wrapper": "^0.0.4",
+    "alt": "^0.18.6",
+    "alt-utils": "^2.0.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
