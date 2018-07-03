@@ -2,7 +2,7 @@ import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import React from 'react';
 import PropTypes from 'prop-types'
 
-export default class Location extends React.Component {
+export default class LocationForm extends React.Component {
   constructor(props) {
     super(props)
 
@@ -32,6 +32,6 @@ export default class Location extends React.Component {
   }
 }
 
-Location.propTypes = {
+LocationForm.propTypes = {
   location_did_submit: PropTypes.func,
 }
