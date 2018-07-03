@@ -25,7 +25,7 @@ import (
 import "github.com/jasonwinn/geocoder"
 //import "net/http"
 
-var api_key string
+var owm_api_key string
 
 type entry struct {
 	text        string
@@ -77,7 +77,7 @@ func conditions(c *gin.Context) {
 	} else {
 	}
 	
-    w, err := owm.NewCurrent("F", "FI", api_key)
+    w, err := owm.NewCurrent("F", "FI", owm_api_key)
     if err != nil {
         log.Fatalln(err)
     }
@@ -128,10 +128,16 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	api_key = os.Getenv("OWM_API_KEY")
-	if debug == "" {
+	owm_api_key = os.Getenv("OWM_API_KEY")
+	if owm_api_key == "" {
 		panic("Must have OWM_API_KEY set")
 	}
+	
+	geocoder_key := os.Getenv("MAPQUEST_API_KEY")
+	if geocoder_key == "" {
+		panic("Must have MAPQUEST_API_KEY sset")
+	}
+	geocoder.SetAPIKey(geocoder_key)
 
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
