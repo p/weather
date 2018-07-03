@@ -32,7 +32,7 @@ export default class App extends React.Component {
       <p>{this.state.location}</p>
       <h2>Locations</h2>
       {_.map(this.state.locations, (location) => (
-          <p key={location}>{location}
+          <p key={location}>{location}&nbsp;
             <a href='#' onClick={preventDefaultWrapper(this.remove_location.bind(this, location))}>
               Remove</a>
           </p>
