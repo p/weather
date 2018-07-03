@@ -1,3 +1,4 @@
+import Immutable from 'seamless-immutable'
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
 import connectToStores from 'alt-utils/lib/connectToStores';
@@ -46,40 +47,44 @@ export default class App extends React.Component {
   }
   
   add_location(location) {
-    let locations = localStorage.getItem('locations') || '[]'
-    try {
-      locations = JSON.parse(locations)
-    } catch(e) {
-      console.log('Cannot parse locations: ' + e)
-      locations = []
-    }
+    let locations = this.load_locations()
+
     if (!_.contains(locations, location)) {
       locations.push(location)
-      localStorage.setItem('locations', JSON.stringify(locations))
+      this.save_locations(locations)
     }
-    // TODO make immutable
-    locations = Object.assign({}, locations)
-    locations[location] = 1
-    this.setState({locations})
+    this.save_locations_to_state(locations)
   }
   
   remove_location(location) {
-    let locations = localStorage.getItem('locations') || '[]'
+    let locations = this.load_locations()
+    
+    if (_.contains(locations, location)) {
+      locations = _.without(locations, location)
+      this.save_locations(locations)
+    }
+    
+    this.save_locations_to_state(locations)
+  }
+  
+  load_locations() {
+    let locations = localStorage.getItem('locations') || '{}'
     try {
       locations = JSON.parse(locations)
     } catch(e) {
       console.log('Cannot parse locations: ' + e)
-      locations = []
+      locations = {}
     }
-    
-    if (_.contains(locations, location)) {
-      locations = _.without(locations, location)
-      localStorage.setItem('locations', JSON.stringify(locations))
-    }
-    
+    return locations
+  }
+  
+  save_locations(locations) {
+    localStorage.setItem('locations', JSON.stringify(locations))
+  }
+  
+  save_locations_to_state(locations) {
     // TODO make immutable
-    locations = Object.assign({}, locations)
-    locations[location] = 1
+    locations = Immutable(Object.assign({}, locations, {location: 1}))
     this.setState({locations})
   }
 }
