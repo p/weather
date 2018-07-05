@@ -14,44 +14,31 @@ import (
 	//"io/ioutil"
 		"encoding/gob"
 	"log"
-	"regexp"
+	//"regexp"
 	//"strings"
-	"time"
+	//"time"
 
 	owm "github.com/briandowns/openweathermap"
 	bolt "github.com/coreos/bbolt"
-	"html/template"
+	//"html/template"
 )
 import "github.com/jasonwinn/geocoder"
 //import "net/http"
 
 var owm_api_key string
+var db *bolt.DB
 
-type entry struct {
+type location struct {
+	lat double
+	lng double
+}
+
+type conditions struct {
 	text        string
 	received_at int64
 }
 
-var entries []entry
-
-func twiml(forward_number string, from_number string, text string) string {
-	twiml_template := `
-<?xml version='1.0' encoding='UTF-8'?>
-<Response>
-    <Message to='%s'>[OTPBASE:%s] %s</Message>
-</Response>
-`
-	return fmt.Sprintf(twiml_template, forward_number, from_number, text)
-}
-
-var http_user, http_password string
-var forward_number string
-var ticker *time.Ticker
-var code_regexp *regexp.Regexp
-var apps_template *template.Template
-var db *bolt.DB
-
-func conditions(c *gin.Context) {
+func get_conditions(c *gin.Context) {
 	location := c.Param("location")
 	var coords []byte
 	db.View(func(tx *bolt.Tx) error {
@@ -67,6 +54,14 @@ func conditions(c *gin.Context) {
 		if err != nil {
 			c.String(500, "Could not geocode " + location + ": "+err.Error())
 			return
+		}
+		
+		loc := location{lat, lng}
+		
+		store := new(bytes.Buffer)
+		enc := gob.NewEncoder(store)
+		err := enc.Encode(&loc)
+		if err != nil {
 		}
 		
 		db.Update(func(tx *bolt.Tx) error {
@@ -148,7 +143,7 @@ func main() {
 
 	//router.Use(gin.Recovery())
 
-	router.GET("/:location", conditions)
+	router.GET("/:location", get_conditions)
 
 	// By default it serves on :8080 unless a
 	// PORT environment variable was defined.
