@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"os"
 	"strconv"
-	//"sync"
+	"errors"
 	//"io"
 	//"io/ioutil"
 	"encoding/gob"
@@ -43,14 +43,16 @@ type current_conditions struct {
 	CreatedAt int64 `json:"created_at"`
 }
 
-func get_conditions(c *gin.Context) {
-	location := c.Param("location")
+func resolve_location(location string) (*resolved_location, error) {
 	var coords []byte
-	db.View(func(tx *bolt.Tx) error {
+	err := db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte("geocodes"))
 		coords = b.Get([]byte(location))
 		return nil
 	})
+	if err != nil {
+			return nil, errors.New("Could not look up location: "+err.Error())
+	}
 
 	var resloc resolved_location
 	if coords == nil {
@@ -58,8 +60,7 @@ func get_conditions(c *gin.Context) {
 		lat = lat
 		lng = lng
 		if err != nil {
-			c.String(500, "Could not geocode "+location+": "+err.Error())
-			return
+			return nil, errors.New("Could not geocode "+location+": "+err.Error())
 		}
 
 		resloc = resolved_location{lat, lng, time.Now().UnixNano()}
@@ -68,8 +69,7 @@ func get_conditions(c *gin.Context) {
 		enc := gob.NewEncoder(store)
 		err = enc.Encode(&resloc)
 		if err != nil {
-			c.String(500, "Could not encode: "+err.Error())
-			return
+			return nil, errors.New("Could not encode: "+err.Error())
 		}
 
 		err = db.Update(func(tx *bolt.Tx) error {
@@ -78,8 +78,7 @@ func get_conditions(c *gin.Context) {
 			return err
 		})
 		if err != nil {
-			c.String(500, "Could not persist: "+err.Error())
-			return
+			return nil, errors.New("Could not persist: "+err.Error())
 		}
 
 		log.Debug(fmt.Sprintf("Geocoded %s to %f,%f", location, resloc.Lat, resloc.Lng))
@@ -88,11 +87,20 @@ func get_conditions(c *gin.Context) {
 		dec := gob.NewDecoder(store)
 		err := dec.Decode(&resloc)
 		if err != nil {
-			c.String(500, "Could not decode: "+err.Error())
-			return
+			return nil, errors.New("Could not decode: "+err.Error())
 		}
 
 		log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
+	}
+	return &resloc, nil
+}
+
+func get_conditions(c *gin.Context) {
+	location := c.Param("location")
+	resloc, err := resolve_location(location)
+	if err != nil {
+			c.String(500, err.Error())
+			return
 	}
 
 	w, err := owm.NewCurrent("F", "FI", owm_api_key)
