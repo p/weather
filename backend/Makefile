@@ -1,8 +1,14 @@
+GOPATH?=$$HOME/go
+
 all: b
+
+d:
+	go get github.com/codegangsta/gin
+	go-get-deps
 
 b:
 	mkdir -p tmp
 	go build -o tmp/weather src/server.go
 
 r:
-	env `cat .env` DEBUG=1 tmp/weather
+	env `cat .env` DEBUG=1 ${GOPATH}/bin/gin --build src --port 8093 --bin tmp/gin-bin run server.go
