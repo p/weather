@@ -12,8 +12,8 @@ import (
 	//"sync"
 	//"io"
 	//"io/ioutil"
-		"encoding/gob"
-	  log "github.com/sirupsen/logrus"
+	"encoding/gob"
+	log "github.com/sirupsen/logrus"
 	//"regexp"
 	"encoding/json"
 	"time"
@@ -23,22 +23,23 @@ import (
 	//"html/template"
 )
 import "github.com/jasonwinn/geocoder"
+
 //import "net/http"
 
 var owm_api_key string
 var db *bolt.DB
 
 type resolved_location struct {
-	Lat float64
-	Lng float64
+	Lat       float64
+	Lng       float64
 	CreatedAt int64
 }
 
 type current_conditions struct {
-	Temp      float64 `json:"temp"`
-	TempMin   float64 `json:"temp_min"`
-	TempMax   float64 `json:"temp_max"`
-	
+	Temp    float64 `json:"temp"`
+	TempMin float64 `json:"temp_min"`
+	TempMax float64 `json:"temp_max"`
+
 	CreatedAt int64 `json:"created_at"`
 }
 
@@ -50,19 +51,19 @@ func get_conditions(c *gin.Context) {
 		coords = b.Get([]byte(location))
 		return nil
 	})
-	
-		var resloc resolved_location
+
+	var resloc resolved_location
 	if coords == nil {
 		lat, lng, err := geocoder.Geocode(location)
-		lat=lat
-		lng=lng
+		lat = lat
+		lng = lng
 		if err != nil {
-			c.String(500, "Could not geocode " + location + ": "+err.Error())
+			c.String(500, "Could not geocode "+location+": "+err.Error())
 			return
 		}
-		
+
 		resloc = resolved_location{lat, lng, time.Now().UnixNano()}
-		
+
 		store := new(bytes.Buffer)
 		enc := gob.NewEncoder(store)
 		err = enc.Encode(&resloc)
@@ -70,7 +71,7 @@ func get_conditions(c *gin.Context) {
 			c.String(500, "Could not encode: "+err.Error())
 			return
 		}
-		
+
 		err = db.Update(func(tx *bolt.Tx) error {
 			b := tx.Bucket([]byte("geocodes"))
 			err := b.Put([]byte(location), store.Bytes())
@@ -80,7 +81,7 @@ func get_conditions(c *gin.Context) {
 			c.String(500, "Could not persist: "+err.Error())
 			return
 		}
-		
+
 		log.Debug(fmt.Sprintf("Geocoded %s to %f,%f", location, resloc.Lat, resloc.Lng))
 	} else {
 		store := bytes.NewBuffer(coords)
@@ -90,42 +91,41 @@ func get_conditions(c *gin.Context) {
 			c.String(500, "Could not decode: "+err.Error())
 			return
 		}
-		
+
 		log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
 	}
-	
-    w, err := owm.NewCurrent("F", "FI", owm_api_key)
-    if err != nil {
-			c.String(500, "Could not make current: "+err.Error())
-			return
-    }
 
-    err = w.CurrentByCoordinates(
-            &owm.Coordinates{
-                Longitude: resloc.Lng,
-                Latitude: resloc.Lat,
-            },
-    )
-    if err != nil {
-			c.String(500, "Could not retrieve: "+err.Error())
-			return
-    }
-    
-    cc := current_conditions{
-	w.Main.Temp,
-	w.Main.TempMin,
-	w.Main.TempMax,
-	time.Now().UnixNano(),
-}
+	w, err := owm.NewCurrent("F", "FI", owm_api_key)
+	if err != nil {
+		c.String(500, "Could not make current: "+err.Error())
+		return
+	}
 
-payload, err := json.Marshal(cc)
-		if err != nil {
-			c.String(500, "Could not jsonify: "+err.Error())
-			return
-		}
+	err = w.CurrentByCoordinates(
+		&owm.Coordinates{
+			Longitude: resloc.Lng,
+			Latitude:  resloc.Lat,
+		},
+	)
+	if err != nil {
+		c.String(500, "Could not retrieve: "+err.Error())
+		return
+	}
 
+	cc := current_conditions{
+		w.Main.Temp,
+		w.Main.TempMin,
+		w.Main.TempMax,
+		time.Now().UnixNano(),
+	}
 
-		c.Writer.Header().Set("content-type", "application/json")
+	payload, err := json.Marshal(cc)
+	if err != nil {
+		c.String(500, "Could not jsonify: "+err.Error())
+		return
+	}
+
+	c.Writer.Header().Set("content-type", "application/json")
 	c.String(200, string(payload))
 }
 
@@ -154,7 +154,7 @@ func main() {
 		b = b
 		return nil
 	})
-	
+
 	gob.Register(&resolved_location{})
 
 	// Disable Console Color
@@ -163,16 +163,16 @@ func main() {
 	debug := os.Getenv("DEBUG")
 	if debug == "" {
 		gin.SetMode(gin.ReleaseMode)
-		  log.SetLevel(log.WarnLevel)
+		log.SetLevel(log.WarnLevel)
 	} else {
-	  log.SetLevel(log.DebugLevel)
+		log.SetLevel(log.DebugLevel)
 	}
 
 	owm_api_key = os.Getenv("OWM_API_KEY")
 	if owm_api_key == "" {
 		panic("Must have OWM_API_KEY set")
 	}
-	
+
 	geocoder_key := os.Getenv("MAPQUEST_API_KEY")
 	if geocoder_key == "" {
 		panic("Must have MAPQUEST_API_KEY sset")
@@ -184,7 +184,6 @@ func main() {
 	router := gin.Default()
 
 	//router.LoadHTMLGlob("views/*.html")
-
 
 	//router.Use(gin.Recovery())
 
