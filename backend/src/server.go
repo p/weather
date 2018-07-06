@@ -43,6 +43,25 @@ type current_conditions struct {
 	CreatedAt int64 `json:"created_at"`
 }
 
+func persist(bucket_name string, key string, data interface{}) error {
+		store := new(bytes.Buffer)
+		enc := gob.NewEncoder(store)
+		err = enc.Encode(data)
+		if err != nil {
+			return errors.New("Could not encode: "+err.Error())
+		}
+
+		err = db.Update(func(tx *bolt.Tx) error {
+			b := tx.Bucket([]byte(bucket_name))
+			err := b.Put([]byte(key), store.Bytes())
+			return err
+		})
+		if err != nil {
+			return errors.New("Could not store: "+err.Error())
+		}
+		return nil
+}
+
 func resolve_location(location string) (*resolved_location, error) {
 	var coords []byte
 	err := db.View(func(tx *bolt.Tx) error {
@@ -64,19 +83,8 @@ func resolve_location(location string) (*resolved_location, error) {
 		}
 
 		resloc = resolved_location{lat, lng, time.Now().UnixNano()}
-
-		store := new(bytes.Buffer)
-		enc := gob.NewEncoder(store)
-		err = enc.Encode(&resloc)
-		if err != nil {
-			return nil, errors.New("Could not encode: "+err.Error())
-		}
-
-		err = db.Update(func(tx *bolt.Tx) error {
-			b := tx.Bucket([]byte("geocodes"))
-			err := b.Put([]byte(location), store.Bytes())
-			return err
-		})
+		
+		err = persist("geocodes", location, &resloc)
 		if err != nil {
 			return nil, errors.New("Could not persist: "+err.Error())
 		}
@@ -95,18 +103,24 @@ func resolve_location(location string) (*resolved_location, error) {
 	return &resloc, nil
 }
 
-func get_conditions(c *gin.Context) {
-	location := c.Param("location")
-	resloc, err := resolve_location(location)
+func get_current_weather(location string,
+resloc resolved_location) (*current_conditions, error) {
+	var cc current_conditions
+	var encoded []byte
+	
+	err := db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("current_conditions"))
+		encoded = b.Get([]byte(location))
+		return nil
+	})
 	if err != nil {
-			c.String(500, err.Error())
-			return
+		return nil, errors.New("Could not look up location: "+err.Error())
 	}
 
+	if encoded == nil {
 	w, err := owm.NewCurrent("F", "FI", owm_api_key)
 	if err != nil {
-		c.String(500, "Could not make current: "+err.Error())
-		return
+		return nil, errors.New("Could not make current: "+err.Error())
 	}
 
 	err = w.CurrentByCoordinates(
@@ -116,8 +130,7 @@ func get_conditions(c *gin.Context) {
 		},
 	)
 	if err != nil {
-		c.String(500, "Could not retrieve: "+err.Error())
-		return
+		return nil, errors.New("Could not get current weather: "+err.Error())
 	}
 
 	cc := current_conditions{
@@ -125,6 +138,37 @@ func get_conditions(c *gin.Context) {
 		w.Main.TempMin,
 		w.Main.TempMax,
 		time.Now().UnixNano(),
+	}
+		err = persist("current_conditions", location, &cc)
+		if err != nil {
+			return nil, errors.New("Could not persist: "+err.Error())
+		}
+
+		log.Debug(fmt.Sprintf("Fetched weather for %s", location))
+	} else {
+		store := bytes.NewBuffer(encoded)
+		dec := gob.NewDecoder(store)
+		err := dec.Decode(&cc)
+		if err != nil {
+			return nil, errors.New("Could not decode: "+err.Error())
+		}
+
+		log.Debug(fmt.Sprintf("Retrieved cached weather for %s", location))
+	}
+	return &cc, nil
+}
+
+func get_conditions(c *gin.Context) {
+	location := c.Param("location")
+	resloc, err := resolve_location(location)
+	if err != nil {
+			c.String(500, err.Error())
+			return
+	}
+	cc, err := get_current_weather(location, resloc)
+	if err != nil {
+		c.String(500, "Could not get weather: "+err.Error())
+		return
 	}
 
 	payload, err := json.Marshal(cc)
