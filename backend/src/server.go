@@ -4,7 +4,7 @@ package main
 // from weather services.
 
 import (
-	//"errors"
+	"bytes"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"os"
@@ -13,10 +13,10 @@ import (
 	//"io"
 	//"io/ioutil"
 		"encoding/gob"
-	"log"
+	  log "github.com/sirupsen/logrus"
 	//"regexp"
-	//"strings"
-	//"time"
+	"encoding/json"
+	"time"
 
 	owm "github.com/briandowns/openweathermap"
 	bolt "github.com/coreos/bbolt"
@@ -28,14 +28,18 @@ import "github.com/jasonwinn/geocoder"
 var owm_api_key string
 var db *bolt.DB
 
-type location struct {
-	lat double
-	lng double
+type resolved_location struct {
+	Lat float64
+	Lng float64
+	CreatedAt int64
 }
 
-type conditions struct {
-	text        string
-	received_at int64
+type current_conditions struct {
+	Temp      float64 `json:"temp"`
+	TempMin   float64 `json:"temp_min"`
+	TempMax   float64 `json:"temp_max"`
+	
+	CreatedAt int64 `json:"created_at"`
 }
 
 func get_conditions(c *gin.Context) {
@@ -47,6 +51,7 @@ func get_conditions(c *gin.Context) {
 		return nil
 	})
 	
+		var resloc resolved_location
 	if coords == nil {
 		lat, lng, err := geocoder.Geocode(location)
 		lat=lat
@@ -56,35 +61,72 @@ func get_conditions(c *gin.Context) {
 			return
 		}
 		
-		loc := location{lat, lng}
+		resloc = resolved_location{lat, lng, time.Now().UnixNano()}
 		
 		store := new(bytes.Buffer)
 		enc := gob.NewEncoder(store)
-		err := enc.Encode(&loc)
+		err = enc.Encode(&resloc)
 		if err != nil {
+			c.String(500, "Could not encode: "+err.Error())
+			return
 		}
 		
-		db.Update(func(tx *bolt.Tx) error {
+		err = db.Update(func(tx *bolt.Tx) error {
 			b := tx.Bucket([]byte("geocodes"))
-			err := b.Put([]byte(location), coords)
+			err := b.Put([]byte(location), store.Bytes())
 			return err
 		})
+		if err != nil {
+			c.String(500, "Could not persist: "+err.Error())
+			return
+		}
+		
+		log.Debug(fmt.Sprintf("Geocoded %s to %f,%f", location, resloc.Lat, resloc.Lng))
 	} else {
+		store := bytes.NewBuffer(coords)
+		dec := gob.NewDecoder(store)
+		err := dec.Decode(&resloc)
+		if err != nil {
+			c.String(500, "Could not decode: "+err.Error())
+			return
+		}
+		
+		log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
 	}
 	
     w, err := owm.NewCurrent("F", "FI", owm_api_key)
     if err != nil {
-        log.Fatalln(err)
+			c.String(500, "Could not make current: "+err.Error())
+			return
     }
 
-    w.CurrentByCoordinates(
+    err = w.CurrentByCoordinates(
             &owm.Coordinates{
-                Longitude: -112.07,
-                Latitude: 33.45,
+                Longitude: resloc.Lng,
+                Latitude: resloc.Lat,
             },
     )
+    if err != nil {
+			c.String(500, "Could not retrieve: "+err.Error())
+			return
+    }
+    
+    cc := current_conditions{
+	w.Main.Temp,
+	w.Main.TempMin,
+	w.Main.TempMax,
+	time.Now().UnixNano(),
+}
 
-	c.String(200, "r")
+payload, err := json.Marshal(cc)
+		if err != nil {
+			c.String(500, "Could not jsonify: "+err.Error())
+			return
+		}
+
+
+		c.Writer.Header().Set("content-type", "application/json")
+	c.String(200, string(payload))
 }
 
 func main() {
@@ -113,7 +155,7 @@ func main() {
 		return nil
 	})
 	
-	gob.Register(&owm.Coordinates{})
+	gob.Register(&resolved_location{})
 
 	// Disable Console Color
 	// gin.DisableConsoleColor()
@@ -121,6 +163,9 @@ func main() {
 	debug := os.Getenv("DEBUG")
 	if debug == "" {
 		gin.SetMode(gin.ReleaseMode)
+		  log.SetLevel(log.WarnLevel)
+	} else {
+	  log.SetLevel(log.DebugLevel)
 	}
 
 	owm_api_key = os.Getenv("OWM_API_KEY")
