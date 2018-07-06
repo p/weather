@@ -143,15 +143,18 @@ func main() {
 	defer db.Close()
 
 	db.Update(func(tx *bolt.Tx) error {
-		b, err := tx.CreateBucketIfNotExists([]byte("geocodes"))
+		buckets := []string{
+		"geocodes","conditions","forecasts"}
+		
+		for index, bucket := range buckets {
+		b, err := tx.CreateBucketIfNotExists([]byte(bucket))
 		if err != nil {
-			log.Fatal("Cannot create geocodes bucket")
+			log.Fatal("Cannot create " + bucket + " bucket")
 		}
-		b, err = tx.CreateBucketIfNotExists([]byte("conditions"))
-		if err != nil {
-			log.Fatal("Cannot create conditions bucket")
-		}
+		
 		b = b
+		index=index
+		}
 		return nil
 	})
 
