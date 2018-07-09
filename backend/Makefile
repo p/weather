@@ -12,3 +12,6 @@ b:
 
 r:
 	env `cat .env` DEBUG=1 ${GOPATH}/bin/gin --build src --port 8093 --bin tmp/gin-bin run server.go
+
+fmt:
+	for f in src/*.go; do go fmt $$f && sed -i -e 's/	/  /g' $$f; done
