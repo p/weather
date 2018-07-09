@@ -4,23 +4,23 @@ package main
 // from weather services.
 
 import (
-	"bytes"
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"os"
-	"strconv"
-	"errors"
-	//"io"
-	//"io/ioutil"
-	"encoding/gob"
-	log "github.com/sirupsen/logrus"
-	//"regexp"
-	"encoding/json"
-	"time"
+  "bytes"
+  "errors"
+  "fmt"
+  "github.com/gin-gonic/gin"
+  "os"
+  "strconv"
+  //"io"
+  //"io/ioutil"
+  "encoding/gob"
+  log "github.com/sirupsen/logrus"
+  //"regexp"
+  "encoding/json"
+  "time"
 
-	owm "github.com/briandowns/openweathermap"
-	bolt "github.com/coreos/bbolt"
-	//"html/template"
+  owm "github.com/briandowns/openweathermap"
+  bolt "github.com/coreos/bbolt"
+  //"html/template"
 )
 import "github.com/jasonwinn/geocoder"
 
@@ -30,232 +30,232 @@ var owm_api_key string
 var db *bolt.DB
 
 type resolved_location struct {
-	Lat       float64
-	Lng       float64
-	CreatedAt int64
+  Lat       float64
+  Lng       float64
+  CreatedAt int64
 }
 
 type current_conditions struct {
-	Temp    float64 `json:"temp"`
-	TempMin float64 `json:"temp_min"`
-	TempMax float64 `json:"temp_max"`
+  Temp    float64 `json:"temp"`
+  TempMin float64 `json:"temp_min"`
+  TempMax float64 `json:"temp_max"`
 
-	CreatedAt int64 `json:"created_at"`
+  CreatedAt int64 `json:"created_at"`
 }
 
 func persist(bucket_name string, key string, data interface{}) error {
-		store := new(bytes.Buffer)
-		enc := gob.NewEncoder(store)
-		err := enc.Encode(data)
-		if err != nil {
-			return errors.New("Could not encode: "+err.Error())
-		}
+  store := new(bytes.Buffer)
+  enc := gob.NewEncoder(store)
+  err := enc.Encode(data)
+  if err != nil {
+    return errors.New("Could not encode: " + err.Error())
+  }
 
-		err = db.Update(func(tx *bolt.Tx) error {
-			b := tx.Bucket([]byte(bucket_name))
-			err := b.Put([]byte(key), store.Bytes())
-			return err
-		})
-		if err != nil {
-			return errors.New("Could not store: "+err.Error())
-		}
-		return nil
+  err = db.Update(func(tx *bolt.Tx) error {
+    b := tx.Bucket([]byte(bucket_name))
+    err := b.Put([]byte(key), store.Bytes())
+    return err
+  })
+  if err != nil {
+    return errors.New("Could not store: " + err.Error())
+  }
+  return nil
 }
 
 func resolve_location(location string) (*resolved_location, error) {
-	var coords []byte
-	err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte("geocodes"))
-		coords = b.Get([]byte(location))
-		return nil
-	})
-	if err != nil {
-			return nil, errors.New("Could not look up location: "+err.Error())
-	}
+  var coords []byte
+  err := db.View(func(tx *bolt.Tx) error {
+    b := tx.Bucket([]byte("geocodes"))
+    coords = b.Get([]byte(location))
+    return nil
+  })
+  if err != nil {
+    return nil, errors.New("Could not look up location: " + err.Error())
+  }
 
-	var resloc resolved_location
-	if coords == nil {
-		lat, lng, err := geocoder.Geocode(location)
-		lat = lat
-		lng = lng
-		if err != nil {
-			return nil, errors.New("Could not geocode "+location+": "+err.Error())
-		}
+  var resloc resolved_location
+  if coords == nil {
+    lat, lng, err := geocoder.Geocode(location)
+    lat = lat
+    lng = lng
+    if err != nil {
+      return nil, errors.New("Could not geocode " + location + ": " + err.Error())
+    }
 
-		resloc = resolved_location{lat, lng, time.Now().UnixNano()}
-		
-		err = persist("geocodes", location, &resloc)
-		if err != nil {
-			return nil, errors.New("Could not persist: "+err.Error())
-		}
+    resloc = resolved_location{lat, lng, time.Now().UnixNano()}
 
-		log.Debug(fmt.Sprintf("Geocoded %s to %f,%f", location, resloc.Lat, resloc.Lng))
-	} else {
-		store := bytes.NewBuffer(coords)
-		dec := gob.NewDecoder(store)
-		err := dec.Decode(&resloc)
-		if err != nil {
-			return nil, errors.New("Could not decode: "+err.Error())
-		}
+    err = persist("geocodes", location, &resloc)
+    if err != nil {
+      return nil, errors.New("Could not persist: " + err.Error())
+    }
 
-		log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
-	}
-	return &resloc, nil
+    log.Debug(fmt.Sprintf("Geocoded %s to %f,%f", location, resloc.Lat, resloc.Lng))
+  } else {
+    store := bytes.NewBuffer(coords)
+    dec := gob.NewDecoder(store)
+    err := dec.Decode(&resloc)
+    if err != nil {
+      return nil, errors.New("Could not decode: " + err.Error())
+    }
+
+    log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
+  }
+  return &resloc, nil
 }
 
 func get_current_weather(location string,
-resloc resolved_location) (*current_conditions, error) {
-	var cc current_conditions
-	var encoded []byte
-	
-	err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte("current_conditions"))
-		encoded = b.Get([]byte(location))
-		return nil
-	})
-	if err != nil {
-		return nil, errors.New("Could not look up location: "+err.Error())
-	}
+  resloc resolved_location) (*current_conditions, error) {
+  var cc current_conditions
+  var encoded []byte
 
-	if encoded == nil {
-	w, err := owm.NewCurrent("F", "FI", owm_api_key)
-	if err != nil {
-		return nil, errors.New("Could not make current: "+err.Error())
-	}
+  err := db.View(func(tx *bolt.Tx) error {
+    b := tx.Bucket([]byte("current_conditions"))
+    encoded = b.Get([]byte(location))
+    return nil
+  })
+  if err != nil {
+    return nil, errors.New("Could not look up location: " + err.Error())
+  }
 
-	err = w.CurrentByCoordinates(
-		&owm.Coordinates{
-			Longitude: resloc.Lng,
-			Latitude:  resloc.Lat,
-		},
-	)
-	if err != nil {
-		return nil, errors.New("Could not get current weather: "+err.Error())
-	}
+  if encoded == nil {
+    w, err := owm.NewCurrent("F", "FI", owm_api_key)
+    if err != nil {
+      return nil, errors.New("Could not make current: " + err.Error())
+    }
 
-	cc = current_conditions{
-		w.Main.Temp,
-		w.Main.TempMin,
-		w.Main.TempMax,
-		time.Now().UnixNano(),
-	}
-		err = persist("current_conditions", location, &cc)
-		if err != nil {
-			return nil, errors.New("Could not persist: "+err.Error())
-		}
+    err = w.CurrentByCoordinates(
+      &owm.Coordinates{
+        Longitude: resloc.Lng,
+        Latitude:  resloc.Lat,
+      },
+    )
+    if err != nil {
+      return nil, errors.New("Could not get current weather: " + err.Error())
+    }
 
-		log.Debug(fmt.Sprintf("Fetched weather for %s", location))
-	} else {
-		store := bytes.NewBuffer(encoded)
-		dec := gob.NewDecoder(store)
-		err := dec.Decode(&cc)
-		if err != nil {
-			return nil, errors.New("Could not decode: "+err.Error())
-		}
+    cc = current_conditions{
+      w.Main.Temp,
+      w.Main.TempMin,
+      w.Main.TempMax,
+      time.Now().UnixNano(),
+    }
+    err = persist("current_conditions", location, &cc)
+    if err != nil {
+      return nil, errors.New("Could not persist: " + err.Error())
+    }
 
-		log.Debug(fmt.Sprintf("Retrieved cached weather for %s", location))
-	}
-	return &cc, nil
+    log.Debug(fmt.Sprintf("Fetched weather for %s", location))
+  } else {
+    store := bytes.NewBuffer(encoded)
+    dec := gob.NewDecoder(store)
+    err := dec.Decode(&cc)
+    if err != nil {
+      return nil, errors.New("Could not decode: " + err.Error())
+    }
+
+    log.Debug(fmt.Sprintf("Retrieved cached weather for %s", location))
+  }
+  return &cc, nil
 }
 
 func get_conditions(c *gin.Context) {
-	location := c.Param("location")
-	resloc, err := resolve_location(location)
-	if err != nil {
-			c.String(500, err.Error())
-			return
-	}
-	cc, err := get_current_weather(location, *resloc)
-	if err != nil {
-		c.String(500, "Could not get weather: "+err.Error())
-		return
-	}
+  location := c.Param("location")
+  resloc, err := resolve_location(location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  cc, err := get_current_weather(location, *resloc)
+  if err != nil {
+    c.String(500, "Could not get weather: "+err.Error())
+    return
+  }
 
-	payload, err := json.Marshal(cc)
-	if err != nil {
-		c.String(500, "Could not jsonify: "+err.Error())
-		return
-	}
+  payload, err := json.Marshal(cc)
+  if err != nil {
+    c.String(500, "Could not jsonify: "+err.Error())
+    return
+  }
 
-	c.Writer.Header().Set("content-type", "application/json")
-	c.String(200, string(payload))
+  c.Writer.Header().Set("content-type", "application/json")
+  c.String(200, string(payload))
 }
 
 func main() {
-	var err error
+  var err error
 
-	db_path := os.Getenv("DB_PATH")
-	if db_path == "" {
-		db_path = "weather.db"
-	}
-	db, err = bolt.Open(db_path, 0600, nil)
-	if err != nil {
-		log.Fatal("Error opening database")
-	}
-	defer db.Close()
+  db_path := os.Getenv("DB_PATH")
+  if db_path == "" {
+    db_path = "weather.db"
+  }
+  db, err = bolt.Open(db_path, 0600, nil)
+  if err != nil {
+    log.Fatal("Error opening database")
+  }
+  defer db.Close()
 
-	db.Update(func(tx *bolt.Tx) error {
-		buckets := []string{
-		"geocodes","current_conditions","forecasts"}
-		
-		for index, bucket := range buckets {
-		b, err := tx.CreateBucketIfNotExists([]byte(bucket))
-		if err != nil {
-			log.Fatal("Cannot create " + bucket + " bucket")
-		}
-		
-		b = b
-		index=index
-		}
-		return nil
-	})
+  db.Update(func(tx *bolt.Tx) error {
+    buckets := []string{
+      "geocodes", "current_conditions", "forecasts"}
 
-	gob.Register(&resolved_location{})
+    for index, bucket := range buckets {
+      b, err := tx.CreateBucketIfNotExists([]byte(bucket))
+      if err != nil {
+        log.Fatal("Cannot create " + bucket + " bucket")
+      }
 
-	// Disable Console Color
-	// gin.DisableConsoleColor()
+      b = b
+      index = index
+    }
+    return nil
+  })
 
-	debug := os.Getenv("DEBUG")
-	if debug == "" {
-		gin.SetMode(gin.ReleaseMode)
-		log.SetLevel(log.WarnLevel)
-	} else {
-		log.SetLevel(log.DebugLevel)
-	}
+  gob.Register(&resolved_location{})
 
-	owm_api_key = os.Getenv("OWM_API_KEY")
-	if owm_api_key == "" {
-		panic("Must have OWM_API_KEY set")
-	}
+  // Disable Console Color
+  // gin.DisableConsoleColor()
 
-	geocoder_key := os.Getenv("MAPQUEST_API_KEY")
-	if geocoder_key == "" {
-		panic("Must have MAPQUEST_API_KEY sset")
-	}
-	geocoder.SetAPIKey(geocoder_key)
+  debug := os.Getenv("DEBUG")
+  if debug == "" {
+    gin.SetMode(gin.ReleaseMode)
+    log.SetLevel(log.WarnLevel)
+  } else {
+    log.SetLevel(log.DebugLevel)
+  }
 
-	// Creates a gin router with default middleware:
-	// logger and recovery (crash-free) middleware
-	router := gin.Default()
+  owm_api_key = os.Getenv("OWM_API_KEY")
+  if owm_api_key == "" {
+    panic("Must have OWM_API_KEY set")
+  }
 
-	//router.LoadHTMLGlob("views/*.html")
+  geocoder_key := os.Getenv("MAPQUEST_API_KEY")
+  if geocoder_key == "" {
+    panic("Must have MAPQUEST_API_KEY sset")
+  }
+  geocoder.SetAPIKey(geocoder_key)
 
-	//router.Use(gin.Recovery())
+  // Creates a gin router with default middleware:
+  // logger and recovery (crash-free) middleware
+  router := gin.Default()
 
-	router.GET("/:location", get_conditions)
+  //router.LoadHTMLGlob("views/*.html")
 
-	// By default it serves on :8080 unless a
-	// PORT environment variable was defined.
-	port := os.Getenv("PORT")
-	var iport int
-	if port == "" {
-		iport = 8093
-	} else {
-		iport, err = strconv.Atoi(port)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	router.Run(fmt.Sprintf(":%d", iport))
-	// router.Run(":3000") for a hard coded port
+  //router.Use(gin.Recovery())
+
+  router.GET("/:location", get_conditions)
+
+  // By default it serves on :8080 unless a
+  // PORT environment variable was defined.
+  port := os.Getenv("PORT")
+  var iport int
+  if port == "" {
+    iport = 8093
+  } else {
+    iport, err = strconv.Atoi(port)
+    if err != nil {
+      log.Fatal(err)
+    }
+  }
+  router.Run(fmt.Sprintf(":%d", iport))
+  // router.Run(":3000") for a hard coded port
 }
