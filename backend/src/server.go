@@ -46,7 +46,7 @@ type current_conditions struct {
 func persist(bucket_name string, key string, data interface{}) error {
 		store := new(bytes.Buffer)
 		enc := gob.NewEncoder(store)
-		err = enc.Encode(data)
+		err := enc.Encode(data)
 		if err != nil {
 			return errors.New("Could not encode: "+err.Error())
 		}
@@ -133,7 +133,7 @@ resloc resolved_location) (*current_conditions, error) {
 		return nil, errors.New("Could not get current weather: "+err.Error())
 	}
 
-	cc := current_conditions{
+	cc = current_conditions{
 		w.Main.Temp,
 		w.Main.TempMin,
 		w.Main.TempMax,
@@ -165,7 +165,7 @@ func get_conditions(c *gin.Context) {
 			c.String(500, err.Error())
 			return
 	}
-	cc, err := get_current_weather(location, resloc)
+	cc, err := get_current_weather(location, *resloc)
 	if err != nil {
 		c.String(500, "Could not get weather: "+err.Error())
 		return
@@ -196,7 +196,7 @@ func main() {
 
 	db.Update(func(tx *bolt.Tx) error {
 		buckets := []string{
-		"geocodes","conditions","forecasts"}
+		"geocodes","current_conditions","forecasts"}
 		
 		for index, bucket := range buckets {
 		b, err := tx.CreateBucketIfNotExists([]byte(bucket))
