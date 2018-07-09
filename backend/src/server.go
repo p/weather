@@ -158,6 +158,31 @@ func get_current_weather(location string,
   return &cc, nil
 }
 
+func list_locations(c *gin.Context) {
+	var locations []string
+	err := db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("geocodes"))
+		b.ForEach(func(k, v []byte) error {
+			locations = append(locations, string(k))
+			return nil
+		})
+		return nil
+	})
+  if err != nil {
+    c.String(500, "Problem: "+err.Error())
+    return
+  }
+
+  payload, err := json.Marshal(locations)
+  if err != nil {
+    c.String(500, "Could not jsonify: "+err.Error())
+    return
+  }
+
+  c.Writer.Header().Set("content-type", "application/json")
+  c.String(200, string(payload))
+}
+
 func get_conditions(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
@@ -242,7 +267,8 @@ func main() {
 
   //router.Use(gin.Recovery())
 
-  router.GET("/:location", get_conditions)
+  router.GET("/locations", list_locations)
+  router.GET("/current/:location", get_conditions)
 
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.
