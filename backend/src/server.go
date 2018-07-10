@@ -26,6 +26,9 @@ import "github.com/jasonwinn/geocoder"
 
 //import "net/http"
 
+const current_age = 10*60*1e9
+const forecast_age = 60*60*1e9
+
 var owm_api_key string
 var db *bolt.DB
 
@@ -122,7 +125,7 @@ func resolve_location(location string) (*resolved_location, error) {
 
 func get_current_weather(location string,
   resloc resolved_location) (*current_conditions, error) {
-  var cc current_conditions
+  var cc *current_conditions
   var encoded []byte
 
   err := db.View(func(tx *bolt.Tx) error {
@@ -134,7 +137,23 @@ func get_current_weather(location string,
     return nil, errors.New("Could not look up location: " + err.Error())
   }
 
-  if encoded == nil {
+  if encoded != nil {
+    store := bytes.NewBuffer(encoded)
+    dec := gob.NewDecoder(store)
+    var temp_cc current_conditions
+    err := dec.Decode(&temp_cc)
+    if err != nil {
+      return nil, errors.New("Could not decode: " + err.Error())
+    }
+
+    log.Debug(fmt.Sprintf("Retrieved cached weather for %s", location))
+    
+    if (time.Now().UnixNano() - temp_cc.CreatedAt <= current_age) {
+      cc = &temp_cc
+    }
+  }
+  
+  if cc == nil {
     w, err := owm.NewCurrent("F", "FI", owm_api_key)
     if err != nil {
       return nil, errors.New("Could not make current: " + err.Error())
@@ -150,7 +169,7 @@ func get_current_weather(location string,
       return nil, errors.New("Could not get current weather: " + err.Error())
     }
 
-    cc = current_conditions{
+    cc = &current_conditions{
       w.Main.Temp,
       w.Main.TempMin,
       w.Main.TempMax,
@@ -162,17 +181,9 @@ func get_current_weather(location string,
     }
 
     log.Debug(fmt.Sprintf("Fetched weather for %s", location))
-  } else {
-    store := bytes.NewBuffer(encoded)
-    dec := gob.NewDecoder(store)
-    err := dec.Decode(&cc)
-    if err != nil {
-      return nil, errors.New("Could not decode: " + err.Error())
-    }
-
-    log.Debug(fmt.Sprintf("Retrieved cached weather for %s", location))
   }
-  return &cc, nil
+  
+  return cc, nil
 }
 
 func list_locations(c *gin.Context) {
