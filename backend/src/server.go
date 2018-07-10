@@ -159,15 +159,15 @@ func get_current_weather(location string,
 }
 
 func list_locations(c *gin.Context) {
-	var locations []string
-	err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte("geocodes"))
-		b.ForEach(func(k, v []byte) error {
-			locations = append(locations, string(k))
-			return nil
-		})
-		return nil
-	})
+  var locations []string
+  err := db.View(func(tx *bolt.Tx) error {
+    b := tx.Bucket([]byte("geocodes"))
+    b.ForEach(func(k, v []byte) error {
+      locations = append(locations, string(k))
+      return nil
+    })
+    return nil
+  })
   if err != nil {
     c.String(500, "Problem: "+err.Error())
     return
