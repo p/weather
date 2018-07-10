@@ -10,6 +10,7 @@ import Store from '../store';
 export default class Location extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {}
   }
   
   static getStores() {
@@ -19,11 +20,24 @@ export default class Location extends React.Component {
   static getPropsFromStores() {
     return Store.getState()
   }
+  
+  componentDidMount() {
+    fetch('http://localhost:8093/locations/' + this.props.params.location + '/current')
+    .then(resp => resp.json())
+    .then(payload => {
+      this.setState({weather: payload})
+    })
+  }
 
   render() {
     return <div>
-      Weather for
-    {this.props.params.location}
+      <h2>{this.props.params.location}</h2>
+      {this.state.weather &&
+        <div>
+      <p>Now: {this.state.weather.temp}&deg;</p>
+      <p>Min: {this.state.weather.temp_min}&deg;</p>
+      <p>Max: {this.state.weather.temp_max}&deg;</p>
+      </div>}
     </div>
   }
 }

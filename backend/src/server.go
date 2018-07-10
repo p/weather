@@ -180,6 +180,8 @@ func list_locations(c *gin.Context) {
   }
 
   c.Writer.Header().Set("content-type", "application/json")
+  c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+  c.Writer.Header().Set("Access-Control-Allow-Method", "*")
   c.String(200, string(payload))
 }
 
@@ -203,6 +205,8 @@ func get_conditions(c *gin.Context) {
   }
 
   c.Writer.Header().Set("content-type", "application/json")
+  c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+  c.Writer.Header().Set("Access-Control-Allow-Method", "*")
   c.String(200, string(payload))
 }
 
@@ -268,7 +272,7 @@ func main() {
   //router.Use(gin.Recovery())
 
   router.GET("/locations", list_locations)
-  router.GET("/current/:location", get_conditions)
+  router.GET("/locations/:location/current", get_conditions)
 
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.
