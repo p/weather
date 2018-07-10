@@ -22,11 +22,16 @@ export default class Location extends React.Component {
   }
   
   componentDidMount() {
+    this.load()
+  }
+  
+  load() {
     fetch('http://localhost:8093/locations/' + this.props.params.location + '/current')
     .then(resp => resp.json())
     .then(payload => {
       this.setState({weather: payload})
     })
+    setTimeout(this.load.bind(this), 10*60*1000)
   }
 
   render() {
@@ -37,8 +42,18 @@ export default class Location extends React.Component {
       <p>Now: {this.state.weather.temp}&deg;</p>
       <p>Min: {this.state.weather.temp_min}&deg;</p>
       <p>Max: {this.state.weather.temp_max}&deg;</p>
+      <p>Updated: {this.data_age()}</p>
       </div>}
     </div>
+  }
+  
+  data_age() {
+    if (this.state.weather) {
+      let date = new Date(this.state.weather.created_at * 1000)
+      return date.toString()
+    } else {
+      return null
+    }
   }
 }
 

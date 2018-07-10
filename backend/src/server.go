@@ -43,6 +43,23 @@ type current_conditions struct {
   CreatedAt int64 `json:"created_at"`
 }
 
+type presented_current_conditions struct {
+  Temp    float64 `json:"temp"`
+  TempMin float64 `json:"temp_min"`
+  TempMax float64 `json:"temp_max"`
+
+  CreatedAt float64 `json:"created_at"`
+}
+
+func present_current_conditions(cc *current_conditions) presented_current_conditions {
+  return presented_current_conditions{
+    cc.Temp,
+    cc.TempMin,
+    cc.TempMax,
+    float64(cc.CreatedAt) / 1e9,
+  }
+}
+
 func persist(bucket_name string, key string, data interface{}) error {
   store := new(bytes.Buffer)
   enc := gob.NewEncoder(store)
@@ -159,15 +176,15 @@ func get_current_weather(location string,
 }
 
 func list_locations(c *gin.Context) {
-  var locations []string
-  err := db.View(func(tx *bolt.Tx) error {
-    b := tx.Bucket([]byte("geocodes"))
-    b.ForEach(func(k, v []byte) error {
-      locations = append(locations, string(k))
-      return nil
-    })
-    return nil
-  })
+	var locations []string
+	err := db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("geocodes"))
+		b.ForEach(func(k, v []byte) error {
+			locations = append(locations, string(k))
+			return nil
+		})
+		return nil
+	})
   if err != nil {
     c.String(500, "Problem: "+err.Error())
     return
@@ -188,8 +205,10 @@ func get_conditions(c *gin.Context) {
     c.String(500, "Could not get weather: "+err.Error())
     return
   }
+  
+  pcc := present_current_conditions(cc)
 
-  render_json(c, cc)
+  render_json(c, pcc)
 }
 
 func render_json(c *gin.Context, data interface{}) {
