@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import {Link} from 'react-easy-router'
 import Immutable from 'seamless-immutable'
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
@@ -49,8 +50,8 @@ export default class Location extends React.Component {
   
   data_age() {
     if (this.state.weather) {
-      let date = new Date(this.state.weather.created_at * 1000)
-      return date.toString()
+      let d = new Date().getTime()/1000 - this.state.weather.created_at
+      return moment.duration(d, 'seconds').humanize() + ' ago'
     } else {
       return null
     }
