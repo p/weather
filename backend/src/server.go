@@ -173,15 +173,7 @@ func list_locations(c *gin.Context) {
     return
   }
 
-  payload, err := json.Marshal(locations)
-  if err != nil {
-    c.String(500, "Could not jsonify: "+err.Error())
-    return
-  }
-
-  c.Writer.Header().Set("content-type", "application/json")
-  set_cors_headers(c)
-  c.String(200, string(payload))
+  render_json(c, locations)
 }
 
 func get_conditions(c *gin.Context) {
@@ -197,7 +189,11 @@ func get_conditions(c *gin.Context) {
     return
   }
 
-  payload, err := json.Marshal(cc)
+  render_json(c, cc)
+}
+
+func render_json(c *gin.Context, data interface{}) {
+  payload, err := json.Marshal(data)
   if err != nil {
     c.String(500, "Could not jsonify: "+err.Error())
     return
