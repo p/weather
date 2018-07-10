@@ -180,8 +180,7 @@ func list_locations(c *gin.Context) {
   }
 
   c.Writer.Header().Set("content-type", "application/json")
-  c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-  c.Writer.Header().Set("Access-Control-Allow-Method", "*")
+  set_cors_headers(c)
   c.String(200, string(payload))
 }
 
@@ -205,9 +204,13 @@ func get_conditions(c *gin.Context) {
   }
 
   c.Writer.Header().Set("content-type", "application/json")
+  set_cors_headers(c)
+  c.String(200, string(payload))
+}
+
+func set_cors_headers(c *gin.Context) {
   c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
   c.Writer.Header().Set("Access-Control-Allow-Method", "*")
-  c.String(200, string(payload))
 }
 
 func main() {
