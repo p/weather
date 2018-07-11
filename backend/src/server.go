@@ -250,6 +250,10 @@ func current_retriever(resloc resolved_location) (persistable, error) {
     return nil, errors.New("Could not get current weather: " + err.Error())
   }
 
+if (log.GetLevel() == log.DebugLevel) {
+  fmt.Printf("%# v", pretty.Formatter(w))
+  }
+
   p := current_conditions{
     w.Main.Temp,
     w.Main.TempMin,
@@ -292,7 +296,9 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
     return nil, errors.New("Could not get forecast: " + err.Error())
   }
 
-  //fmt.Printf("%# v", pretty.Formatter(w))
+if (log.GetLevel() == log.DebugLevel) {
+  fmt.Printf("%# v", pretty.Formatter(w))
+  }
 
   l := w.ForecastWeatherJson.(*owm.Forecast5WeatherData).List
   dailies := make([]daily_forecast, 0, len(l))
