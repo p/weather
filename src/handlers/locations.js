@@ -18,6 +18,14 @@ export default class Locations extends React.Component {
     }
   }
   
+  componentDidMount() {
+    fetch('http://localhost:8093/locations')
+    .then(resp => resp.json())
+    .then(payload => {
+      this.setState({locations: payload})
+    })
+  }
+  
   static getStores() {
     return [Store]
   }
