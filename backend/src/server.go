@@ -21,14 +21,14 @@ import (
   owm "github.com/briandowns/openweathermap"
   bolt "github.com/coreos/bbolt"
   //"html/template"
-"github.com/kr/pretty" 
-"github.com/jasonwinn/geocoder"
+  "github.com/jasonwinn/geocoder"
+  "github.com/kr/pretty"
 )
 
 //import "net/http"
 
-const current_age = 10*60*1e9
-const forecast_age = 60*60*1e9
+const current_age = 10 * 60 * 1e9
+const forecast_age = 60 * 60 * 1e9
 
 var owm_api_key string
 var db *bolt.DB
@@ -69,15 +69,15 @@ func present_current_conditions(cc *current_conditions) presented_current_condit
 }
 
 type daily_forecast struct {
-  Time int64
-  Temp float64
+  Time    int64
+  Temp    float64
   TempMin float64
   TempMax float64
 }
 
 type forecast struct {
   DailyForecasts []daily_forecast
-  CreatedAt int64 `json:"created_at"`
+  CreatedAt      int64 `json:"created_at"`
 }
 
 func (f forecast) GetCreatedAt() int64 {
@@ -85,22 +85,22 @@ func (f forecast) GetCreatedAt() int64 {
 }
 
 type presented_daily_forecast struct {
-  Time float64
-  Temp float64
+  Time    float64
+  Temp    float64
   TempMin float64
   TempMax float64
 }
 
 type presented_forecast struct {
   DailyForecasts []presented_daily_forecast
-  CreatedAt float64 `json:"created_at"`
+  CreatedAt      float64 `json:"created_at"`
 }
 
 func present_forecast(f *forecast) presented_forecast {
   presented_daily := make([]presented_daily_forecast, 0, len(f.DailyForecasts))
   for _, v := range f.DailyForecasts {
     presented_daily = append(presented_daily, presented_daily_forecast{
-      float64(v.Time)/1e9,
+      float64(v.Time) / 1e9,
       v.Temp,
       v.TempMin,
       v.TempMax,
@@ -205,18 +205,17 @@ func get_weather_with_cache(
     typed := temp.(persistable)
 
     log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
-    
-    if (time.Now().UnixNano() - typed.GetCreatedAt() <= current_age) {
+
+    if time.Now().UnixNano()-typed.GetCreatedAt() <= current_age {
       p = typed
     }
   }
-  
+
   if p == nil {
     p, err = retriever(resloc)
     if err != nil {
       return nil, errors.New("Could not retrieve: " + err.Error())
     }
-
 
     err = persist(bucket_name, location, &p)
     if err != nil {
@@ -225,116 +224,114 @@ func get_weather_with_cache(
 
     log.Debug(fmt.Sprintf("Fetched data for %s", location))
   }
-  
+
   return p, nil
 }
 
 func current_retriever(resloc resolved_location) (persistable, error) {
-    w, err := owm.NewCurrent("F", "en", owm_api_key)
-    if err != nil {
-      return nil, errors.New("Could not make current: " + err.Error())
-    }
+  w, err := owm.NewCurrent("F", "en", owm_api_key)
+  if err != nil {
+    return nil, errors.New("Could not make current: " + err.Error())
+  }
 
-    err = w.CurrentByCoordinates(
-      &owm.Coordinates{
-        Longitude: resloc.Lng,
-        Latitude:  resloc.Lat,
-      },
-    )
-    if err != nil {
-      return nil, errors.New("Could not get current weather: " + err.Error())
-    }
+  err = w.CurrentByCoordinates(
+    &owm.Coordinates{
+      Longitude: resloc.Lng,
+      Latitude:  resloc.Lat,
+    },
+  )
+  if err != nil {
+    return nil, errors.New("Could not get current weather: " + err.Error())
+  }
 
-
-    p := current_conditions{
-      w.Main.Temp,
-      w.Main.TempMin,
-      w.Main.TempMax,
-      time.Now().UnixNano(),
-    }
-    return &p, nil
+  p := current_conditions{
+    w.Main.Temp,
+    w.Main.TempMin,
+    w.Main.TempMax,
+    time.Now().UnixNano(),
+  }
+  return &p, nil
 }
 
 func get_current_weather(location string,
   resloc resolved_location) (*current_conditions, error) {
-  
+
   p, err := get_weather_with_cache(
     location,
     resloc,
     "current_conditions",
     current_retriever)
-    
+
   if err != nil {
     return nil, err
   }
-  
+
   return p.(*current_conditions), nil
 }
 
 func forecast_retriever(resloc resolved_location) (persistable, error) {
-    w, err := owm.NewForecast("5", "F", "en", owm_api_key)
-    if err != nil {
-      return nil, errors.New("Could not make forecast: " + err.Error())
-    }
+  w, err := owm.NewForecast("5", "F", "en", owm_api_key)
+  if err != nil {
+    return nil, errors.New("Could not make forecast: " + err.Error())
+  }
 
-    err = w.DailyByCoordinates(
-      &owm.Coordinates{
-        Longitude: resloc.Lng,
-        Latitude:  resloc.Lat,
-      },
-      5,
-    )
-    if err != nil {
-      return nil, errors.New("Could not get forecast: " + err.Error())
-    }
+  err = w.DailyByCoordinates(
+    &owm.Coordinates{
+      Longitude: resloc.Lng,
+      Latitude:  resloc.Lat,
+    },
+    5,
+  )
+  if err != nil {
+    return nil, errors.New("Could not get forecast: " + err.Error())
+  }
 
-    
-//fmt.Printf("%# v", pretty.Formatter(w))    
+  //fmt.Printf("%# v", pretty.Formatter(w))
 
   l := w.ForecastWeatherJson.(*owm.Forecast5WeatherData).List
   dailies := make([]daily_forecast, 0, len(l))
   for _, v := range l {
     dailies = append(dailies, daily_forecast{
-      int64(v.Dt)*1e9,
+      int64(v.Dt) * 1e9,
       v.Main.Temp,
       v.Main.TempMin,
       v.Main.TempMax,
     })
   }
 
-    p := forecast{
-      dailies,
-      time.Now().UnixNano(),
-    }
+  p := forecast{
+    dailies,
+    time.Now().UnixNano(),
+  }
   return &p, nil
 }
 
 func get_forecast(location string,
   resloc resolved_location) (*forecast, error) {
-  
+
   p, err := get_weather_with_cache(
     location,
     resloc,
     "forecasts",
     forecast_retriever)
-    
+
   if err != nil {
     return nil, err
   }
-  
+
   return p.(*forecast), nil
 }
 
 func list_locations(c *gin.Context) {
-	var locations []string
-	err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte("geocodes"))
-		b.ForEach(func(k, v []byte) error {
-			locations = append(locations, string(k))
-			return nil
-		})
-		return nil
-	})
+  var locations []string
+  err := db.View(func(tx *bolt.Tx) error {
+    b := tx.Bucket([]byte("geocodes"))
+    b.ForEach(func(k, v []byte) error {
+      locations = append(locations, string(k))
+      return nil
+    })
+    return nil
+  })
   if err != nil {
     c.String(500, "Problem: "+err.Error())
     return
@@ -355,7 +352,7 @@ func get_conditions_route(c *gin.Context) {
     c.String(500, "Could not get weather: "+err.Error())
     return
   }
-  
+
   pcc := present_current_conditions(cc)
 
   render_json(c, pcc)
@@ -373,7 +370,7 @@ func get_forecast_route(c *gin.Context) {
     c.String(500, "Could not get weather: "+err.Error())
     return
   }
-  
+
   pf := present_forecast(f)
 
   render_json(c, pf)
@@ -478,6 +475,6 @@ func main() {
   router.Run(fmt.Sprintf(":%d", iport))
   // router.Run(":3000") for a hard coded port
 
-a:=pretty.Formatter
-a=a
+  a := pretty.Formatter
+  a = a
 }
