@@ -73,6 +73,8 @@ type daily_forecast struct {
   Temp    float64
   TempMin float64
   TempMax float64
+  ConditionName string
+  ConditionDescription string
 }
 
 type forecast struct {
@@ -89,6 +91,8 @@ type presented_daily_forecast struct {
   Temp    float64
   TempMin float64
   TempMax float64
+  ConditionName string
+  ConditionDescription string
 }
 
 type presented_forecast struct {
@@ -104,6 +108,8 @@ func present_forecast(f *forecast) presented_forecast {
       v.Temp,
       v.TempMin,
       v.TempMax,
+      v.ConditionName,
+      v.ConditionDescription,
     })
   }
   return presented_forecast{
@@ -296,6 +302,8 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
       v.Main.Temp,
       v.Main.TempMin,
       v.Main.TempMax,
+      v.Weather[0].Main,
+      v.Weather[0].Description,
     })
   }
 
