@@ -30,6 +30,7 @@ import (
 const current_age = 10 * 60 * 1e9
 const forecast_age = 60 * 60 * 1e9
 
+var online bool
 var owm_api_key string
 var db *bolt.DB
 
@@ -147,6 +148,10 @@ func resolve_location(location string) (*resolved_location, error) {
 
   var resloc resolved_location
   if coords == nil {
+    if !online {
+      return nil, errors.New("Cannot geocode - running in offline mode")
+    }
+    
     lat, lng, err := geocoder.Geocode(location)
     lat = lat
     lng = lng
@@ -215,6 +220,10 @@ func get_weather_with_cache(
   }
 
   if p == nil {
+    if !online {
+      return nil, errors.New("Cannot get weather - running in offline mode")
+    }
+      
     p, err = retriever(resloc)
     if err != nil {
       return nil, errors.New("Could not retrieve: " + err.Error())
@@ -438,7 +447,7 @@ func main() {
 
   // Disable Console Color
   // gin.DisableConsoleColor()
-
+  
   debug := os.Getenv("DEBUG")
   if debug == "" {
     gin.SetMode(gin.ReleaseMode)
@@ -447,6 +456,10 @@ func main() {
     log.SetLevel(log.DebugLevel)
   }
 
+  offline := os.Getenv("OFFLINE")
+  if offline == "" {
+    online = true
+  
   owm_api_key = os.Getenv("OWM_API_KEY")
   if owm_api_key == "" {
     panic("Must have OWM_API_KEY set")
@@ -457,6 +470,9 @@ func main() {
     panic("Must have MAPQUEST_API_KEY sset")
   }
   geocoder.SetAPIKey(geocoder_key)
+  } else {
+    online = false
+  }
 
   // Creates a gin router with default middleware:
   // logger and recovery (crash-free) middleware
