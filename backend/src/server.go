@@ -214,7 +214,7 @@ func get_weather_with_cache(
 
     log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
 
-    if time.Now().UnixNano()-typed.GetCreatedAt() <= current_age {
+    if !online || time.Now().UnixNano()-typed.GetCreatedAt() <= current_age {
       p = typed
     }
   }
