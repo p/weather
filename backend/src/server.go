@@ -70,7 +70,6 @@ func present_current_conditions(cc *current_conditions) presented_current_condit
 
 type daily_forecast struct {
   Time    int64
-  Temp    float64
   TempMin float64
   TempMax float64
   ConditionName string
@@ -88,7 +87,6 @@ func (f forecast) GetCreatedAt() int64 {
 
 type presented_daily_forecast struct {
   Time    float64 `json:"time"`
-  Temp    float64 `json:"temp"`
   TempMin float64 `json:"temp_min"`
   TempMax float64 `json:"temp_max"`
   ConditionName string `json:"condition_name"`
@@ -105,7 +103,6 @@ func present_forecast(f *forecast) presented_forecast {
   for _, v := range f.DailyForecasts {
     presented_daily = append(presented_daily, presented_daily_forecast{
       float64(v.Time) / 1e9,
-      v.Temp,
       v.TempMin,
       v.TempMax,
       v.ConditionName,
@@ -305,7 +302,6 @@ if (log.GetLevel() == log.DebugLevel) {
   for _, v := range l {
     dailies = append(dailies, daily_forecast{
       int64(v.Dt) * 1e9,
-      v.Main.Temp,
       v.Main.TempMin,
       v.Main.TempMax,
       v.Weather[0].Main,
