@@ -59,7 +59,7 @@ export default class Location extends React.Component {
         <div>
         <ul>
         {_.map(this.state.forecast.daily_forecasts, forecast => <li key={forecast.time}>
-      <p>Now: {forecast.temp}&deg;</p>
+      <p>{this.format_date(forecast.time)}</p>
       <p>Min: {forecast.temp_min}&deg;</p>
       <p>Max: {forecast.temp_max}&deg;</p>
       </li>)}
@@ -76,6 +76,11 @@ export default class Location extends React.Component {
     } else {
       return null
     }
+  }
+  
+  format_date(timestamp) {
+    let date = new Date(timestamp*1000)
+    return moment(date).format('e, M D')
   }
 }
 
