@@ -87,16 +87,16 @@ func (f forecast) GetCreatedAt() int64 {
 }
 
 type presented_daily_forecast struct {
-  Time    float64
-  Temp    float64
-  TempMin float64
-  TempMax float64
-  ConditionName string
-  ConditionDescription string
+  Time    float64 `json:"time"`
+  Temp    float64 `json:"temp"`
+  TempMin float64 `json:"temp_min"`
+  TempMax float64 `json:"temp_max"`
+  ConditionName string `json:"condition_name"`
+  ConditionDescription string `json:"condition_description"`
 }
 
 type presented_forecast struct {
-  DailyForecasts []presented_daily_forecast
+  DailyForecasts []presented_daily_forecast `json:"daily_forecasts"`
   CreatedAt      float64 `json:"created_at"`
 }
 
