@@ -45,6 +45,19 @@ class App < Sinatra::Base
   end
 
   get '/locations/:location/forecast' do |location|
+    resloc = resolve(location)
+    api_key = wu_api_key(resloc.wu_current_url)
+    url = "https://api.weather.com/v1/geocode/#{resloc.lat}/#{resloc.lng}/forecast/daily/10day.json?apiKey=#{api_key}&units=e"
+    payload = JSON.parse(open(url).read)
+    forecasts = payload['forecasts'].map do |forecast|
+      {
+        time: forecast['fcst_valid'],
+        day: map_forecast(forecast['day']),
+        night: map_forecast(forecast['night']),
+      }
+    end
+    content_type :json
+    JSON.generate(forecasts)
   end
 
   private def resolve(location)
@@ -79,5 +92,14 @@ class App < Sinatra::Base
       end
     end
     api_key
+  end
+
+  private def map_forecast(forecast)
+    {
+      temp: forecast['temp'],
+      condition_name: forecast['shortcast'],
+      condition_description: forecast['narrative'],
+      precip_prob: forecast['pop'],
+    }
   end
 end
