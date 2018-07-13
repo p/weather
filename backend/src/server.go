@@ -218,26 +218,13 @@ func get_weather_with_cache(
   retriever func(resloc resolved_location) (persistable, error),
 ) (persistable, error) {
   var p persistable
-  var encoded []byte
 
-  err := db.View(func(tx *bolt.Tx) error {
-    b := tx.Bucket([]byte(bucket_name))
-    encoded = b.Get([]byte(location))
-    return nil
-  })
+  data, err := lookup(bucket_name, location)
   if err != nil {
     return nil, errors.New("Error retrieving from cache: " + err.Error())
   }
-
-  if encoded != nil {
-    store := bytes.NewBuffer(encoded)
-    dec := gob.NewDecoder(store)
-    var temp persistable
-    err := dec.Decode(&temp)
-    if err != nil {
-      return nil, errors.New("Could not decode: " + err.Error())
-    }
-    typed := temp.(persistable)
+  if data == nil {
+    typed := *(data.(*persistable))
 
     log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
 
