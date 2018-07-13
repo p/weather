@@ -10,11 +10,12 @@ import (
   "github.com/gin-gonic/gin"
   "os"
   "strconv"
-  //"io"
+  "io"
   //"io/ioutil"
   "encoding/gob"
+  "net/http"
   log "github.com/sirupsen/logrus"
-  //"regexp"
+  "regexp"
   "encoding/json"
   "time"
 
@@ -133,6 +134,32 @@ func persist(bucket_name string, key string, data interface{}) error {
     return errors.New("Could not store: " + err.Error())
   }
   return nil
+}
+
+func lookup(bucket_name string, key string) (interface{}, error) {
+  var encoded []byte
+  err := db.View(func(tx *bolt.Tx) error {
+    b := tx.Bucket([]byte(bucket_name))
+    encoded = b.Get([]byte(key))
+    return nil
+  })
+  if err != nil {
+    return nil, errors.New("Error retrieving data from db: " + err.Error())
+  }
+  
+  if encoded == nil {
+    return nil, nil
+  }
+
+  store := bytes.NewBuffer(encoded)
+  dec := gob.NewDecoder(store)
+  var data interface{}
+  err = dec.Decode(&data)
+  if err != nil {
+    return nil, errors.New("Could not decode: " + err.Error())
+  }
+  
+  return data, nil
 }
 
 func resolve_location(location string) (*resolved_location, error) {
@@ -412,8 +439,15 @@ func set_cors_headers(c *gin.Context) {
   c.Writer.Header().Set("Access-Control-Allow-Method", "*")
 }
 
+type wu_credentials struct {
+  api_key string
+  updated_at int64
+}
+
 func main() {
   var err error
+  
+  wu_api_key_regexp = regexp.MustCompile(WU_API_KEY_REGEXP)
 
   db_path := os.Getenv("DB_PATH")
   if db_path == "" {
@@ -444,6 +478,7 @@ func main() {
   gob.Register(&resolved_location{})
   gob.Register(&current_conditions{})
   gob.Register(&forecast{})
+  gob.Register(&wu_credentials{})
 
   // Disable Console Color
   // gin.DisableConsoleColor()
@@ -503,4 +538,65 @@ func main() {
 
   a := pretty.Formatter
   a = a
+}
+
+const WU_API_KEY_REGEXP = "apiKey=([a-zA-Z0-9]+)[^A-Za-z0-9]"
+var wu_api_key_regexp *regexp.Regexp
+const WU_API_KEY_URL = "https://www.wunderground.com/forecast/us/ny/new-york-city"
+
+func get_wu_api_key() (string, error) {
+  res, err := http.Get(WU_API_KEY_URL)
+  if err != nil {
+    return "", errors.New("Could not retrieve wu api key: " + err.Error())
+  }
+  
+  defer res.Body.Close()
+  
+  window := ""
+  buf := make([]byte, 0, 65535)
+  for {
+    n, err := res.Body.Read(buf)
+    n=n
+    if err != nil {
+      if err == io.EOF {
+        break
+      }
+      
+      return "", errors.New("Error reading while retrieving wu api key:" + err.Error())
+    }
+    
+    if len(window) > 20 {
+      window = window[len(window)-20:len(window)] + string(buf)
+    } else {
+      window = window + string(buf)
+    }
+    
+    if len(window) > 20 {
+      matches := wu_api_key_regexp.FindStringSubmatch(window)
+      if len(matches) > 0 {
+        api_key := matches[0]
+        wu_creds := wu_credentials{
+          api_key,
+          time.Now().UnixNano(),
+        }
+        persist("config", "wu_credentials", &wu_creds)
+        return api_key, nil
+      }
+    }
+  }
+  
+  return "", errors.New("Could not find wu api key while looking for it")
+}
+
+func get_wu_api_key_cached() (string, error) {
+  raw_wu_creds, err := lookup("config", "wu_api_key")
+  if err != nil {
+    return "", errors.New("Could not retrieve wu api key: " + err.Error())
+  }
+  wu_creds := raw_wu_creds.(*wu_credentials)
+  api_key := wu_creds.api_key
+  if api_key == "" {
+    api_key, err = get_wu_api_key()
+  }
+  return api_key, err
 }
