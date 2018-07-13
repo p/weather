@@ -3,6 +3,9 @@ package main
 // A weather backend, its primary purpose is to cache weather data
 // from weather services.
 
+// gob & deserialization:
+// http://www.funcmain.com/gob_encoding_an_interface
+
 import (
   "bytes"
   "errors"
@@ -11,7 +14,7 @@ import (
   "os"
   "strconv"
   "io"
-  //"io/ioutil"
+  "io/ioutil"
   "encoding/gob"
   "net/http"
   log "github.com/sirupsen/logrus"
@@ -39,6 +42,10 @@ type resolved_location struct {
   Lat       float64
   Lng       float64
   CreatedAt int64
+}
+
+func (resloc resolved_location) GetCreatedAt() int64 {
+  return resloc.CreatedAt
 }
 
 type current_conditions struct {
@@ -117,10 +124,10 @@ func present_forecast(f *forecast) presented_forecast {
   }
 }
 
-func persist(bucket_name string, key string, data interface{}) error {
+func persist(bucket_name string, key string, data persistable) error {
   store := new(bytes.Buffer)
   enc := gob.NewEncoder(store)
-  err := enc.Encode(data)
+  err := enc.Encode(&data)
   if err != nil {
     return errors.New("Could not encode: " + err.Error())
   }
@@ -153,7 +160,7 @@ func lookup(bucket_name string, key string) (interface{}, error) {
 
   store := bytes.NewBuffer(encoded)
   dec := gob.NewDecoder(store)
-  var data interface{}
+  var data persistable
   err = dec.Decode(&data)
   if err != nil {
     return nil, errors.New("Could not decode: " + err.Error())
@@ -163,18 +170,16 @@ func lookup(bucket_name string, key string) (interface{}, error) {
 }
 
 func resolve_location(location string) (*resolved_location, error) {
-  var coords []byte
-  err := db.View(func(tx *bolt.Tx) error {
-    b := tx.Bucket([]byte("geocodes"))
-    coords = b.Get([]byte(location))
-    return nil
-  })
+  data, err := lookup("geocodes", location)
+  log.Debug("location: "+location)
+  log.Debug(data)
+  var resloc resolved_location
+  
   if err != nil {
     return nil, errors.New("Could not look up location: " + err.Error())
   }
 
-  var resloc resolved_location
-  if coords == nil {
+  if data == nil {
     if !online {
       return nil, errors.New("Cannot geocode - running in offline mode")
     }
@@ -195,12 +200,7 @@ func resolve_location(location string) (*resolved_location, error) {
 
     log.Debug(fmt.Sprintf("Geocoded %s to %f,%f", location, resloc.Lat, resloc.Lng))
   } else {
-    store := bytes.NewBuffer(coords)
-    dec := gob.NewDecoder(store)
-    err := dec.Decode(&resloc)
-    if err != nil {
-      return nil, errors.New("Could not decode: " + err.Error())
-    }
+    resloc = *(data.(* resolved_location))
 
     log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
   }
@@ -223,8 +223,8 @@ func get_weather_with_cache(
   if err != nil {
     return nil, errors.New("Error retrieving from cache: " + err.Error())
   }
-  if data == nil {
-    typed := *(data.(*persistable))
+  if data != nil {
+    typed := data.(persistable)
 
     log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
 
@@ -243,7 +243,7 @@ func get_weather_with_cache(
       return nil, errors.New("Could not retrieve: " + err.Error())
     }
 
-    err = persist(bucket_name, location, &p)
+    err = persist(bucket_name, location, p)
     if err != nil {
       return nil, errors.New("Could not persist: " + err.Error())
     }
@@ -355,6 +355,22 @@ func get_forecast(location string,
   return p.(*forecast), nil
 }
 
+func get_wu_forecast(location string,
+  resloc resolved_location) (*forecast, error) {
+
+  p, err := get_weather_with_cache(
+    location,
+    resloc,
+    "wu_forecasts",
+    wu_forecast_retriever)
+
+  if err != nil {
+    return nil, err
+  }
+
+  return p.(*forecast), nil
+}
+
 func list_locations(c *gin.Context) {
   var locations []string
   err := db.View(func(tx *bolt.Tx) error {
@@ -409,6 +425,24 @@ func get_forecast_route(c *gin.Context) {
   render_json(c, pf)
 }
 
+func get_wu_forecast_route(c *gin.Context) {
+  location := c.Param("location")
+  resloc, err := resolve_location(location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  f, err := get_wu_forecast(location, *resloc)
+  if err != nil {
+    c.String(500, "Could not get weather: "+err.Error())
+    return
+  }
+
+  pf := present_forecast(f)
+
+  render_json(c, pf)
+}
+
 func render_json(c *gin.Context, data interface{}) {
   payload, err := json.Marshal(data)
   if err != nil {
@@ -427,8 +461,12 @@ func set_cors_headers(c *gin.Context) {
 }
 
 type wu_credentials struct {
-  api_key string
-  updated_at int64
+  ApiKey string
+  UpdatedAt int64
+}
+
+func (x wu_credentials) GetCreatedAt() int64 {
+  return x.UpdatedAt
 }
 
 func main() {
@@ -448,7 +486,7 @@ func main() {
 
   db.Update(func(tx *bolt.Tx) error {
     buckets := []string{
-      "geocodes", "current_conditions", "forecasts"}
+      "geocodes", "current_conditions", "forecasts", "wu_forecasts", "config"}
 
     for index, bucket := range buckets {
       b, err := tx.CreateBucketIfNotExists([]byte(bucket))
@@ -507,6 +545,7 @@ func main() {
   router.GET("/locations", list_locations)
   router.GET("/locations/:location/current", get_conditions_route)
   router.GET("/locations/:location/forecast", get_forecast_route)
+  router.GET("/locations/:location/forecast/wu", get_wu_forecast_route)
 
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.
@@ -529,39 +568,46 @@ func main() {
 
 const WU_API_KEY_REGEXP = "apiKey=([a-zA-Z0-9]+)[^A-Za-z0-9]"
 var wu_api_key_regexp *regexp.Regexp
-const WU_API_KEY_URL = "https://www.wunderground.com/forecast/us/ny/new-york-city"
+const WU_API_KEY_URL = "https://www.wunderground.com/weather/us/ny/new-york"
 
 func get_wu_api_key() (string, error) {
-  res, err := http.Get(WU_API_KEY_URL)
+req, err := http.NewRequest("GET", WU_API_KEY_URL, nil)
+if err != nil {
+                return "", err
+        }
+        req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:52.9) Gecko/20100101 Goanna/3.4 Firefox/52.9 PaleMoon/27.9.2")
+          client := &http.Client{}
+                  res, err := client.Do(req)
   if err != nil {
     return "", errors.New("Could not retrieve wu api key: " + err.Error())
   }
   
   defer res.Body.Close()
   
+  //content, err := ioutil.ReadAll(res.Body)
+  //ioutil.WriteFile("x.html",content ,0644)
+  //log.Debug(string(content))
+  //log.Debug(len(content))
+  
+  a:=ioutil.ReadAll
+  a=a
+  
   window := ""
-  buf := make([]byte, 0, 65535)
+  buf := make([]byte, 32768)
   for {
     n, err := res.Body.Read(buf)
-    n=n
-    if err != nil {
-      if err == io.EOF {
-        break
-      }
-      
-      return "", errors.New("Error reading while retrieving wu api key:" + err.Error())
-    }
-    
+    if n > 0 {
     if len(window) > 20 {
-      window = window[len(window)-20:len(window)] + string(buf)
+      window = window[len(window)-20:len(window)] + string(buf[:n])
     } else {
-      window = window + string(buf)
+      window = window + string(buf[:n])
     }
+    //log.Debug(string(buf[:n]))
     
-    if len(window) > 20 {
+    if len(window) > 20 || err != nil {
       matches := wu_api_key_regexp.FindStringSubmatch(window)
       if len(matches) > 0 {
-        api_key := matches[0]
+        api_key := matches[1]
         wu_creds := wu_credentials{
           api_key,
           time.Now().UnixNano(),
@@ -569,7 +615,15 @@ func get_wu_api_key() (string, error) {
         persist("config", "wu_credentials", &wu_creds)
         return api_key, nil
       }
+      window = window[:20]
     }
+    }
+    
+      if err == io.EOF {
+          break
+      } else if err != nil {
+      return "", errors.New("Error reading while retrieving wu api key:" + err.Error())
+      }
   }
   
   return "", errors.New("Could not find wu api key while looking for it")
@@ -577,13 +631,90 @@ func get_wu_api_key() (string, error) {
 
 func get_wu_api_key_cached() (string, error) {
   raw_wu_creds, err := lookup("config", "wu_api_key")
+  var api_key string
   if err != nil {
     return "", errors.New("Could not retrieve wu api key: " + err.Error())
   }
-  wu_creds := raw_wu_creds.(*wu_credentials)
-  api_key := wu_creds.api_key
+  
+  if raw_wu_creds != nil {
+    wu_creds := raw_wu_creds.(*wu_credentials)
+    api_key = wu_creds.ApiKey
+  }
+  
   if api_key == "" {
     api_key, err = get_wu_api_key()
+    if err != nil {
+      return "", err
+    }
+    wu_creds := wu_credentials{
+      api_key,
+      time.Now().UnixNano(),
+    }
+    err = persist("config", "wu_api_key", &wu_creds)
+    if err != nil {
+      return "", errors.New("Could not persist wu api key: " + err.Error())
+    }
   }
   return api_key, err
+}
+
+type WuForecastResponseMetadata struct {
+  Language string `json:"language"`
+  TransactionId string `json:"transaction_id"`
+  Version string `json:"version"`
+  Latitude float64 `json:"latitude"`
+  Longitude float64 `json:"longitude"`
+  Units string `json:"units"`
+  ExpireTimeGmt int64 `json:"expire_time_gmt"`
+  StatusCode int `json:"status_code"`
+}
+
+type WuForecastResponseForecast struct {
+  Class string `json:"class"`
+  ExpireTimeGmt int64 `json:"expire_time_gmt"`
+  FcstValid int64 `json:"fcst_valid"`
+  FcstValidLocal string `json:"fcst_valid_local"`
+  Num int `json:"num"`
+  MaxTemp json.RawMessage `json:"max_temp"`
+  MinTemp json.RawMessage `json:"min_temp"`
+}
+
+type WuForecastResponse struct {
+  Metadata WuForecastResponseMetadata `json:"metadata"`
+  Forecasts []WuForecastResponseForecast `json:"forecasts"`
+  
+}
+
+func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
+  api_key, err := get_wu_api_key_cached()
+  if err != nil {
+      return nil, errors.New("Error retrieving wu api key:" + err.Error())
+  }
+  log.Debug(api_key)
+  url := fmt.Sprintf("https://api.weather.com/v1/geocode/%f/%f/forecast/daily/10day.json?apiKey=%s&units=e", resloc.Lat, resloc.Lng, api_key)
+  res, err := http.Get(url)
+  if err != nil {
+      return nil, errors.New("Error retrieving wu forecast:" + err.Error())
+  }
+  defer res.Body.Close()
+
+  var payload WuForecastResponse
+  dec := json.NewDecoder(res.Body)
+  err = dec.Decode(&payload)
+  if err != nil {
+      return nil, errors.New("Could not decode wu forecast:" + err.Error())
+  }
+  
+if (log.GetLevel() == log.DebugLevel) {
+  fmt.Printf("%# v", pretty.Formatter(payload))
+  }
+  
+  dailies := make([]daily_forecast, 0)
+  
+  f := forecast{
+    dailies,
+    time.Now().UnixNano(),
+  }
+  
+  return &f, nil
 }
