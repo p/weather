@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'shotgun'
+gem 'nokogiri'
+gem 'daybreak'
+gem 'faraday'
+gem 'byebug'
+gem 'dotenv'
+gem 'geocoder'

@@ -1,0 +1,41 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    byebug (10.0.2)
+    daybreak (0.3.0)
+    dotenv (2.3.0)
+    faraday (0.14.0)
+      multipart-post (>= 1.2, < 3)
+    geocoder (1.4.9)
+    mini_portile2 (2.3.0)
+    multipart-post (2.0.0)
+    mustermann (1.0.2)
+    nokogiri (1.8.4)
+      mini_portile2 (~> 2.3.0)
+    rack (2.0.5)
+    rack-protection (2.0.3)
+      rack
+    shotgun (0.9.2)
+      rack (>= 1.0)
+    sinatra (2.0.3)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.3)
+      tilt (~> 2.0)
+    tilt (2.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  byebug
+  daybreak
+  dotenv
+  faraday
+  geocoder
+  nokogiri
+  shotgun
+  sinatra
+
+BUNDLED WITH
+   1.16.1

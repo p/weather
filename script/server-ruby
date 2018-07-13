@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd ruby &&
+exec bundle exec shotgun --port 8093 .config.ru
