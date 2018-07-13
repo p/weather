@@ -1,3 +1,7 @@
+require 'dotenv'
+
+Dotenv.load
+
 $: << 'lib'
 
 require 'app'
