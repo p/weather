@@ -34,6 +34,13 @@ import (
 const current_age = 10 * 60 * 1e9
 const forecast_age = 60 * 60 * 1e9
 
+type NetworkUse int
+const (
+  NetworkDefault NetworkUse = iota
+  NetworkForce
+  NetworkSkip
+)
+
 var online bool
 var owm_api_key string
 var db *bolt.DB
@@ -216,6 +223,7 @@ func get_weather_with_cache(
   resloc resolved_location,
   bucket_name string,
   retriever func(resloc resolved_location) (persistable, error),
+  network NetworkUse,
 ) (persistable, error) {
   var p persistable
 
@@ -290,7 +298,7 @@ func get_current_weather(location string,
     location,
     resloc,
     "current_conditions",
-    current_retriever)
+    current_retriever, 0)
 
   if err != nil {
     return nil, err
@@ -340,13 +348,13 @@ if (log.GetLevel() == log.DebugLevel) {
 }
 
 func get_forecast(location string,
-  resloc resolved_location) (*forecast, error) {
+  resloc resolved_location, network NetworkUse) (*forecast, error) {
 
   p, err := get_weather_with_cache(
     location,
     resloc,
     "forecasts",
-    forecast_retriever)
+    forecast_retriever, network)
 
   if err != nil {
     return nil, err
@@ -356,13 +364,13 @@ func get_forecast(location string,
 }
 
 func get_wu_forecast(location string,
-  resloc resolved_location) (*forecast, error) {
+  resloc resolved_location, network NetworkUse) (*forecast, error) {
 
   p, err := get_weather_with_cache(
     location,
     resloc,
     "wu_forecasts",
-    wu_forecast_retriever)
+    wu_forecast_retriever, network )
 
   if err != nil {
     return nil, err
@@ -414,7 +422,7 @@ func get_forecast_route(c *gin.Context) {
     c.String(500, err.Error())
     return
   }
-  f, err := get_forecast(location, *resloc)
+  f, err := get_forecast(location, *resloc, 0)
   if err != nil {
     c.String(500, "Could not get weather: "+err.Error())
     return
@@ -427,12 +435,28 @@ func get_forecast_route(c *gin.Context) {
 
 func get_wu_forecast_route(c *gin.Context) {
   location := c.Param("location")
+  raw_network := c.Param("network")
+  var network NetworkUse
+  var err error
+  switch raw_network {
+    case "":
+      network = NetworkDefault
+    case "0":
+      network = NetworkDefault
+    case "1":
+      network = NetworkForce
+    case "2":
+      network = NetworkSkip
+    default:
+      c.String(500, "Invalid network value: " + raw_network)
+      return
+  }
   resloc, err := resolve_location(location)
   if err != nil {
     c.String(500, err.Error())
     return
   }
-  f, err := get_wu_forecast(location, *resloc)
+  f, err := get_wu_forecast(location, *resloc, network)
   if err != nil {
     c.String(500, "Could not get weather: "+err.Error())
     return
