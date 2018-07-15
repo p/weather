@@ -664,25 +664,24 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
       return nil, errors.New("Error retrieving wu api key:" + err.Error())
   }
   log.Debug(api_key)
-  url := fmt.Sprintf("https://api.weather.com/v1/geocode/%f/%f/forecast/daily/10day.json?apiKey=%s&units=e", resloc.Lat, resloc.Lng, api_key)
-  res, err := http.Get(url)
-  if err != nil {
-      return nil, errors.New("Error retrieving wu forecast:" + err.Error())
-  }
-  defer res.Body.Close()
-
-  var payload WuForecastResponse
-  dec := json.NewDecoder(res.Body)
-  err = dec.Decode(&payload)
-  if err != nil {
-      return nil, errors.New("Could not decode wu forecast:" + err.Error())
-  }
   
-if (log.GetLevel() == log.DebugLevel) {
-  fmt.Printf("%# v", pretty.Formatter(payload))
+  c, err := NewWuClient(api_key)
+  if err != nil {
+    return nil, err
   }
+  payload, err := c.GetForecast10ByLocation(
+    resloc.Lat, resloc.Lng)
   
-  dailies := make([]daily_forecast, 0)
+  dailies := make([]daily_forecast, len(payload.Forecasts))
+  for _, v := range payload.Forecasts {
+    dailies = append(dailies, daily_forecast{
+      int64(v.FcstValid) * 1e9,
+      float64(*v.MinTemp),
+      float64(*v.MaxTemp),
+      "",
+      "",
+    })
+  }
   
   f := forecast{
     dailies,
