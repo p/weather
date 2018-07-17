@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd backend &&
+exec make r
