@@ -71,6 +71,8 @@ func (cc current_conditions) GetCreatedAt() int64 {
 type day_part_forecast struct {
   Time                 int64
   Temp                 float64
+  PrecipProbability int
+  PrecipType string
   ConditionName        string
   ConditionDescription string
 }
@@ -304,12 +306,16 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
       &day_part_forecast{
         int64(v.Dt) * 1e9,
         v.Main.TempMax,
+        0,
+        "",
         v.Weather[0].Main,
         v.Weather[0].Description,
       },
       &day_part_forecast{
         (int64(v.Dt) + 12*3600) * 1e9,
         v.Main.TempMin,
+        0,
+        "",
         "",
         "",
       },
@@ -698,6 +704,8 @@ func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
   return &day_part_forecast{
     int64(v.FcstValid) * 1e9,
     float64(v.Temp),
+    v.Pop,
+    v.PrecipType,
     v.Shortcast,
     v.Narrative,
   }

@@ -33,6 +33,7 @@ type WuForecastResponseDaypart struct {
   Hi                 int     `json:"hi"`
   Wc                 int     `json:"wc"`
   Pop                int     `json:"pop"`
+  PopPhrase          string  `json:"pop_phrase"`
   IconExtd           int     `json:"icon_extd"`
   IconCode           int     `json:"icon_code"`
   Wxman              string  `json:"wxman"`
@@ -48,7 +49,6 @@ type WuForecastResponseDaypart struct {
   Wdir               int     `json:"wdir"`
   WdirCardinal       string  `json:"wdir_cardinal"`
   Clds               int     `json:"clds"`
-  PopPhrase          string  `json:"pop_phrase"`
   TempPhrase         string  `json:"temp_phrase"`
   AccumulationPhrase string  `json:"accumulation_phrase"`
   WindPhrase         string  `json:"wind_phrase"`
