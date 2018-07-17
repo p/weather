@@ -199,7 +199,7 @@ func get_weather_with_cache(
 
       log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
 
-      if !online || time.Now().UnixNano()-typed.GetCreatedAt() <= current_age {
+      if !online || network == NetworkSkip || time.Now().UnixNano()-typed.GetCreatedAt() <= current_age {
         p = typed
       }
     }
@@ -679,6 +679,9 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   }
   payload, err := c.GetForecast10ByLocation(
     resloc.Lat, resloc.Lng)
+  if err != nil {
+    return nil, err
+  }
 
   dailies := make([]daily_forecast, len(payload.Forecasts))
   for _, v := range payload.Forecasts {
