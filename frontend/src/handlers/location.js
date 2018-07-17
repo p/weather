@@ -80,7 +80,7 @@ export default class Location extends React.Component {
   
   format_date(timestamp) {
     let date = new Date(timestamp*1000)
-    return moment(date).format('e, M D')
+    return moment(date).format('dddd, MMM D')
   }
 }
 

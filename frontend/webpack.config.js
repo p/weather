@@ -9,6 +9,7 @@ module.exports = {
   },
   entry: [
     'babel-polyfill',
+    'whatwg-fetch',
     'react-hot-loader/patch',
     './src/index'
   ],
