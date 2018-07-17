@@ -28,7 +28,11 @@ export default class Location extends React.Component {
   }
   
   load_data(key) {
-    fetch('http://localhost:8093/locations/' + this.props.params.location + '/' + key)
+    let url_key = key
+    if (key == 'forecast') {
+      url_key = 'forecast/wu'
+    }
+    fetch('http://localhost:8093/locations/' + this.props.params.location + '/' + url_key)
     .then(resp => resp.json())
     .then(payload => {
       let state_delta = {}
@@ -60,8 +64,14 @@ export default class Location extends React.Component {
         <ul>
         {_.map(this.state.forecast.daily_forecasts, forecast => <li key={forecast.time}>
       <p>{this.format_date(forecast.time)}</p>
-      <p>Min: {forecast.temp_min}&deg;</p>
-      <p>Max: {forecast.temp_max}&deg;</p>
+      {forecast.night ?
+      <p>Night: <b>{forecast.night.temp}&deg;</b> {forecast.night.condition_description}</p>
+      : <p></p>
+    }
+    {forecast.day ?
+      <p>Day: <b>{forecast.day.temp}&deg;</b> {forecast.day.condition_description}</p>
+      : <p></p>
+    }
       </li>)}
       </ul>
       <p>Updated: {this.data_age('forecast')}</p>

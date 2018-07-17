@@ -68,12 +68,17 @@ func (cc current_conditions) GetCreatedAt() int64 {
   return cc.CreatedAt
 }
 
-type daily_forecast struct {
+type day_part_forecast struct {
   Time                 int64
-  TempMin              *float64
-  TempMax              *float64
+  Temp              float64
   ConditionName        string
   ConditionDescription string
+}
+
+type daily_forecast struct {
+  Time                 int64
+  Day *day_part_forecast
+  Night *day_part_forecast
 }
 
 type forecast struct {
@@ -296,10 +301,18 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
   for _, v := range l {
     dailies = append(dailies, daily_forecast{
       int64(v.Dt) * 1e9,
-      &v.Main.TempMin,
-      &v.Main.TempMax,
+      &day_part_forecast{
+        int64(v.Dt) * 1e9,
+        v.Main.TempMax,
       v.Weather[0].Main,
       v.Weather[0].Description,
+      },
+      &day_part_forecast{
+        (int64(v.Dt) + 12*3600) * 1e9,
+        v.Main.TempMin,
+      "",
+      "",
+      },
     })
   }
 
@@ -665,10 +678,8 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   for _, v := range payload.Forecasts {
     dailies = append(dailies, daily_forecast{
       int64(v.FcstValid) * 1e9,
-      int_ptr_to_float_ptr(v.MinTemp),
-      int_ptr_to_float_ptr(v.MaxTemp),
-      shortcast_maybe(v.Day),
-      narrative_maybe(v.Day),
+      convert_wu_forecast(v.Day),
+      convert_wu_forecast(v.Night),
     })
   }
 
@@ -678,6 +689,18 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   }
 
   return &f, nil
+}
+
+func convert_wu_forecast(v *WuForecastResponseDaypart) (*day_part_forecast) {
+if v == nil {
+return nil
+}
+return &day_part_forecast{
+int64(v.FcstValid)*1e9,
+float64(v.Temp),
+v.Shortcast,
+v.Narrative,
+}
 }
 
 func int_ptr_to_float_ptr(v *int) *float64 {
