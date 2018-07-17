@@ -86,8 +86,8 @@ func present_current_conditions(cc *current_conditions) presented_current_condit
 
 type daily_forecast struct {
   Time    int64
-  TempMin float64
-  TempMax float64
+  TempMin *float64
+  TempMax *float64
   ConditionName string
   ConditionDescription string
 }
@@ -103,8 +103,8 @@ func (f forecast) GetCreatedAt() int64 {
 
 type presented_daily_forecast struct {
   Time    float64 `json:"time"`
-  TempMin float64 `json:"temp_min"`
-  TempMax float64 `json:"temp_max"`
+  TempMin *float64 `json:"temp_min"`
+  TempMax *float64 `json:"temp_max"`
   ConditionName string `json:"condition_name"`
   ConditionDescription string `json:"condition_description"`
 }
@@ -226,7 +226,9 @@ func get_weather_with_cache(
   network NetworkUse,
 ) (persistable, error) {
   var p persistable
+  var err error
 
+if network != NetworkForce {
   data, err := lookup(bucket_name, location)
   if err != nil {
     return nil, errors.New("Error retrieving from cache: " + err.Error())
@@ -240,7 +242,9 @@ func get_weather_with_cache(
       p = typed
     }
   }
+}
 
+if network != NetworkSkip {
   if p == nil {
     if !online {
       return nil, errors.New("Cannot get weather - running in offline mode")
@@ -258,6 +262,11 @@ func get_weather_with_cache(
 
     log.Debug(fmt.Sprintf("Fetched data for %s", location))
   }
+}
+
+if p == nil {
+return nil, errors.New("Could not retrieve weather")
+}
 
   return p, nil
 }
@@ -333,8 +342,8 @@ if (log.GetLevel() == log.DebugLevel) {
   for _, v := range l {
     dailies = append(dailies, daily_forecast{
       int64(v.Dt) * 1e9,
-      v.Main.TempMin,
-      v.Main.TempMax,
+      &v.Main.TempMin,
+      &v.Main.TempMax,
       v.Weather[0].Main,
       v.Weather[0].Description,
     })
@@ -435,7 +444,7 @@ func get_forecast_route(c *gin.Context) {
 
 func get_wu_forecast_route(c *gin.Context) {
   location := c.Param("location")
-  raw_network := c.Param("network")
+  raw_network := c.Query("network")
   var network NetworkUse
   var err error
   switch raw_network {
@@ -700,10 +709,10 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   for _, v := range payload.Forecasts {
     dailies = append(dailies, daily_forecast{
       int64(v.FcstValid) * 1e9,
-      float64(*v.MinTemp),
-      float64(*v.MaxTemp),
-      "",
-      "",
+      int_ptr_to_float_ptr(v.MinTemp),
+      int_ptr_to_float_ptr(v.MaxTemp),
+      shortcast_maybe(v.Day),
+      narrative_maybe(v.Day),
     })
   }
   
@@ -713,4 +722,29 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   }
   
   return &f, nil
+}
+
+func int_ptr_to_float_ptr(v *int) *float64 {
+if v == nil {
+return nil
+} else {
+q := float64(*v)
+return &q
+}
+}
+
+func shortcast_maybe(v *WuForecastResponseDaypart) string {
+if v == nil {
+return ""
+} else {
+return v.Shortcast
+}
+}
+
+func narrative_maybe(v *WuForecastResponseDaypart) string {
+if v == nil {
+return ""
+} else {
+return v.Narrative
+}
 }
