@@ -42,8 +42,34 @@ type WuForecastResponseDaypart struct {
   SubphrasePt1      string `json:"subphrase_pt1"`
   SubphrasePt2      string `json:"subphrase_pt2"`
   SubphrasePt3      string `json:"subphrase_pt3"`
+  PrecipType string `json:"precip_type"`
+  Rh int `json:"rh"`
+  Wspd int `json:"wspd"`
+  Wdir int `json:"wdir"`
+  WdirCardinal string `json:"wdir_cardinal"`
+  Clds int `json:"clds"`
+  PopPhrase string `json:"pop_phrase"`
+  TempPhrase string `json:"temp_phrase"`
+  AccumulationPhrase string `json:"accumulation_phrase"`
+  WindPhrase string `json:"wind_phrase"`
   Shortcast         string `json:"shortcast"`
   Narrative         string `json:"narrative"`
+  Qpf float64 `json:"qpf"`
+  // may be int
+  SnowQpf float64 `json:"snow_qpf"`
+  SnowRange string `json:"snow_range"`
+  SnowPhrase string `json:"snow_phrase"`
+  SnowCode string `json:"snow_code"`
+  VocalKey string `json:"vocal_key"`
+  // this was always null, don't know type
+  QualifierCode *string `json:"wind_phrase"`
+  Qualifier *string `json:"qualifier"`
+  UvIndexRaw float64 `json:"uv_index_raw"`
+  UvIndex int `json:"uv_index"`
+  UvWarning int `json:"uv_warning"`
+  UvDesc string `json:"uv_desc"`
+  GolfIndex int `json:"golf_index"`
+  GolfCategory string `json:"golf_category"`
 }
 
 type WuForecastResponseForecast struct {
@@ -54,6 +80,33 @@ type WuForecastResponseForecast struct {
   Num            int                        `json:"num"`
   MaxTemp        *int                       `json:"max_temp"`
   MinTemp        *int                       `json:"min_temp"`
+  // was always null
+  Torcon *string `json:"torcon"`
+  // was always null
+  Stormcon *string `json:"stormcon"`
+  // was always null
+  Blurb *string `json:"blurb"`
+  // was always null
+  BlurbAuthor *string `json:"blurb_author"`
+  LunarPhaseDay int `json:"lunar_phase_day"`
+  Dow string `json:"dow"`
+  LunarPhase string `json:"lunar_phase"`
+  LunarPhaseCode string `json:"lunar_phase_code"`
+  Sunrise string `json:"sunrise"`
+  Sunset string `json:"sunset"`
+  Moonrise string `json:"moonrise"`
+  Moonset string `json:"moonset"`
+  // assume *string
+  QualifierCode *string `json:"qualifier_code"`
+  // assume *string
+  Qualifier string `json:"qualifier"`
+  Narrative string `json:"narrative"`
+  Qpf float64 `json:"qpf"`
+  // may be int
+  SnowQpf float64 `json:"snow_qpf"`
+  SnowRange string `json:"snow_range"`
+  SnowPhrase string `json:"snow_phrase"`
+  SnowCode string `json:"snow_code"`
   Night          *WuForecastResponseDaypart `json:"night"`
   Day            *WuForecastResponseDaypart `json:"day"`
 }
