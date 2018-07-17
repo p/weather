@@ -70,14 +70,14 @@ func (cc current_conditions) GetCreatedAt() int64 {
 
 type day_part_forecast struct {
   Time                 int64
-  Temp              float64
+  Temp                 float64
   ConditionName        string
   ConditionDescription string
 }
 
 type daily_forecast struct {
-  Time                 int64
-  Day *day_part_forecast
+  Time  int64
+  Day   *day_part_forecast
   Night *day_part_forecast
 }
 
@@ -304,14 +304,14 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
       &day_part_forecast{
         int64(v.Dt) * 1e9,
         v.Main.TempMax,
-      v.Weather[0].Main,
-      v.Weather[0].Description,
+        v.Weather[0].Main,
+        v.Weather[0].Description,
       },
       &day_part_forecast{
         (int64(v.Dt) + 12*3600) * 1e9,
         v.Main.TempMin,
-      "",
-      "",
+        "",
+        "",
       },
     })
   }
@@ -691,16 +691,16 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   return &f, nil
 }
 
-func convert_wu_forecast(v *WuForecastResponseDaypart) (*day_part_forecast) {
-if v == nil {
-return nil
-}
-return &day_part_forecast{
-int64(v.FcstValid)*1e9,
-float64(v.Temp),
-v.Shortcast,
-v.Narrative,
-}
+func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
+  if v == nil {
+    return nil
+  }
+  return &day_part_forecast{
+    int64(v.FcstValid) * 1e9,
+    float64(v.Temp),
+    v.Shortcast,
+    v.Narrative,
+  }
 }
 
 func int_ptr_to_float_ptr(v *int) *float64 {

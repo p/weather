@@ -18,16 +18,16 @@ func present_current_conditions(cc *current_conditions) presented_current_condit
 }
 
 type presented_day_part_forecast struct {
-  Time                 int64  `json:"time"`
-  Temp              float64 `json:"temp"`
-  ConditionName        string   `json:"condition_name"`
-  ConditionDescription string   `json:"condition_description"`
+  Time                 int64   `json:"time"`
+  Temp                 float64 `json:"temp"`
+  ConditionName        string  `json:"condition_name"`
+  ConditionDescription string  `json:"condition_description"`
 }
 
 type presented_daily_forecast struct {
-  Time                 float64  `json:"time"`
+  Time  float64                      `json:"time"`
   Night *presented_day_part_forecast `json:"night"`
-  Day *presented_day_part_forecast `json:"day"`
+  Day   *presented_day_part_forecast `json:"day"`
 }
 
 type presented_forecast struct {
@@ -51,13 +51,13 @@ func present_forecast(f *forecast) presented_forecast {
 }
 
 func present_day_part_forecast(v *day_part_forecast) *presented_day_part_forecast {
-if v == nil {
-return nil
-}
-return &presented_day_part_forecast{
-v.Time/1e9,
-v.Temp,
-v.ConditionName,
-v.ConditionDescription,
-}
+  if v == nil {
+    return nil
+  }
+  return &presented_day_part_forecast{
+    v.Time / 1e9,
+    v.Temp,
+    v.ConditionName,
+    v.ConditionDescription,
+  }
 }
