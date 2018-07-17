@@ -11,7 +11,7 @@ b:
 	go build -o tmp/weather src/server.go
 
 r:
-	env `cat .env` DEBUG=1 ${GOPATH}/bin/gin --build src --port 8093 --bin tmp/gin-bin run server.go wu.go
+	env `cat .env` DEBUG=1 ${GOPATH}/bin/gin --build src --port 8093 --bin tmp/gin-bin run server.go wu.go present.go
 
 fmt:
 	for f in src/*.go; do go fmt $$f && sed -i -e 's/	/  /g' $$f; done
