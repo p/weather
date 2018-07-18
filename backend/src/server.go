@@ -49,8 +49,8 @@ var db *bolt.DB
 type resolved_location struct {
   Lat       float64 `json:"lat"`
   Lng       float64 `json:"lng"`
-  City string `json:"city"`
-  State string `json:"state"`
+  City      string  `json:"city"`
+  State     string  `json:"state"`
   UpdatedAt float64 `json:"updated_at"`
 }
 
@@ -73,21 +73,21 @@ func (cc current_conditions) GetUpdatedAt() float64 {
 type day_part_forecast struct {
   Time                 float64 `json:"time"`
   Temp                 float64 `json:"temp"`
-  PrecipProbability int `json:"precip_probability"`
-  PrecipType string `json:"precip_type"`
-  ConditionName        string `json:"condition_name"`
-  ConditionDescription string `json:"condition_description"`
+  PrecipProbability    int     `json:"precip_probability"`
+  PrecipType           string  `json:"precip_type"`
+  ConditionName        string  `json:"condition_name"`
+  ConditionDescription string  `json:"condition_description"`
 }
 
 type daily_forecast struct {
-  Time  float64 `json:"time"`
+  Time  float64            `json:"time"`
   Day   *day_part_forecast `json:"day"`
   Night *day_part_forecast `json:"night"`
 }
 
 type forecast struct {
   DailyForecasts []daily_forecast `json:"daily_forecasts"`
-  UpdatedAt      float64 `json:"updated_at"`
+  UpdatedAt      float64          `json:"updated_at"`
 }
 
 func (f forecast) GetUpdatedAt() float64 {
@@ -742,5 +742,5 @@ func narrative_maybe(v *WuForecastResponseDaypart) string {
 }
 
 func now() float64 {
-return float64(time.Now().UnixNano())/1e9
+  return float64(time.Now().UnixNano()) / 1e9
 }

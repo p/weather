@@ -26,18 +26,18 @@ type WuForecastResponseMetadata struct {
 
 type WuForecastResponseDaypart struct {
   // UTC timestamp for the forecast, e.g. 1531782000
-  FcstValid          int64   `json:"fcst_valid"`
+  FcstValid int64 `json:"fcst_valid"`
   // ISO8601 time for the forecast, e.g. "2018-07-16T19:00:00-0400"
-  FcstValidLocal     string  `json:"fcst_valid_local"`
+  FcstValidLocal string `json:"fcst_valid_local"`
   // "D" for day, "N" for night
-  DayInd             string  `json:"day_ind"`
+  DayInd string `json:"day_ind"`
   // "Tonight", "Tomorrow", "Wednesday"
-  DaypartName        string  `json:"daypart_name"`
+  DaypartName string `json:"daypart_name"`
   // "Monday night", "Tuesday night", "Tuesday"
-  LongDaypartName    string  `json:"long_daypart_name"`
+  LongDaypartName string `json:"long_daypart_name"`
   // This is sometimes the same as DaypartName and sometimes same as
   // LongDaypartName
-  AltDaypartName     string  `json:"alt_daypart_name"`
+  AltDaypartName string `json:"alt_daypart_name"`
   // Number of this forecast in the returned data, starting with 1.
   // Forecasts for day parts (this struct) and days overall have separate numbering.
   // Forecast for today has num=1. If today only has a night day part,
@@ -93,11 +93,11 @@ type WuForecastResponseDaypart struct {
 
 type WuForecastResponseForecast struct {
   // Type of forecast, "fod_long_range_daily" for this data
-  Class          string `json:"class"`
+  Class string `json:"class"`
   // UTC timestamp: 1531769805
-  ExpireTimeGmt  int64  `json:"expire_time_gmt"`
+  ExpireTimeGmt int64 `json:"expire_time_gmt"`
   // UTC timestamp: 1531911600
-  FcstValid      int64  `json:"fcst_valid"`
+  FcstValid int64 `json:"fcst_valid"`
   // ISO8601 time: "2018-07-18T07:00:00-0400"
   FcstValidLocal string `json:"fcst_valid_local"`
   // Number of this forecast in the returned data, starting with 1.
@@ -107,12 +107,12 @@ type WuForecastResponseForecast struct {
   // Forecast for tomorrow will have num=2, tomorrow's day num=2,
   // tomorrow's night num=3. The day after tomorrow will have num=3 for the
   // entire day, num=4 for the day part, num=5 for the night part.
-  Num            int    `json:"num"`
+  Num int `json:"num"`
   // Same as Day.Temp, can be null if there is no day data
   // which will happen when a forecast is retreived late enough in the day
-  MaxTemp        *int   `json:"max_temp"`
+  MaxTemp *int `json:"max_temp"`
   // Same as Night.Temp
-  MinTemp        int   `json:"min_temp"`
+  MinTemp int `json:"min_temp"`
   // was always null
   Torcon *string `json:"torcon"`
   // was always null
@@ -120,16 +120,16 @@ type WuForecastResponseForecast struct {
   // was always null
   Blurb *string `json:"blurb"`
   // was always null
-  BlurbAuthor    *string `json:"blurb_author"`
-  LunarPhaseDay  int     `json:"lunar_phase_day"`
+  BlurbAuthor   *string `json:"blurb_author"`
+  LunarPhaseDay int     `json:"lunar_phase_day"`
   // Day of week, e.g. "Monday", "Tuesday"
-  Dow            string  `json:"dow"`
-  LunarPhase     string  `json:"lunar_phase"`
-  LunarPhaseCode string  `json:"lunar_phase_code"`
-  Sunrise        string  `json:"sunrise"`
-  Sunset         string  `json:"sunset"`
-  Moonrise       string  `json:"moonrise"`
-  Moonset        string  `json:"moonset"`
+  Dow            string `json:"dow"`
+  LunarPhase     string `json:"lunar_phase"`
+  LunarPhaseCode string `json:"lunar_phase_code"`
+  Sunrise        string `json:"sunrise"`
+  Sunset         string `json:"sunset"`
+  Moonrise       string `json:"moonrise"`
+  Moonset        string `json:"moonset"`
   // assume *string
   QualifierCode *string `json:"qualifier_code"`
   // assume *string
