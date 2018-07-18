@@ -49,6 +49,8 @@ var db *bolt.DB
 type resolved_location struct {
   Lat       float64
   Lng       float64
+  City string
+  State string
   CreatedAt int64
 }
 
@@ -159,7 +161,13 @@ func resolve_location(location string) (*resolved_location, error) {
       return nil, errors.New("Could not geocode " + location + ": " + err.Error())
     }
 
-    resloc = resolved_location{lat, lng, time.Now().UnixNano()}
+    resloc = resolved_location{
+      lat,
+      lng,
+      "",
+      "",
+      time.Now().UnixNano(),
+    }
 
     err = persist("geocodes", location, &resloc)
     if err != nil {
