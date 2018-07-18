@@ -1,10 +1,10 @@
 package main
 
-import(
-"errors"
-"github.com/jasonwinn/geocoder"
-log "github.com/sirupsen/logrus"
-"fmt"
+import (
+  "errors"
+  "fmt"
+  "github.com/jasonwinn/geocoder"
+  log "github.com/sirupsen/logrus"
 )
 
 type resolved_location struct {

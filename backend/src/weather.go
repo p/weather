@@ -1,15 +1,15 @@
 package main
 
-import(
-"fmt"
-log "github.com/sirupsen/logrus"
+import (
+  "errors"
+  "fmt"
   owm "github.com/briandowns/openweathermap"
   "github.com/kr/pretty"
-"regexp"
-"io"
-"io/ioutil"
-"net/http"
-"errors"
+  log "github.com/sirupsen/logrus"
+  "io"
+  "io/ioutil"
+  "net/http"
+  "regexp"
 )
 
 type current_conditions struct {
