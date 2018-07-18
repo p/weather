@@ -31,8 +31,8 @@ import (
 
 //import "net/http"
 
-const current_age = 10 * 60 * 1e9
-const forecast_age = 60 * 60 * 1e9
+const current_age = 10 * 60
+const forecast_age = 60 * 60
 
 type NetworkUse int
 
@@ -47,15 +47,15 @@ var owm_api_key string
 var db *bolt.DB
 
 type resolved_location struct {
-  Lat       float64
-  Lng       float64
-  City string
-  State string
-  CreatedAt int64
+  Lat       float64 `json:"lat"`
+  Lng       float64 `json:"lng"`
+  City string `json:"city"`
+  State string `json:"state"`
+  UpdatedAt float64 `json:"updated_at"`
 }
 
-func (resloc resolved_location) GetCreatedAt() int64 {
-  return resloc.CreatedAt
+func (resloc resolved_location) GetUpdatedAt() float64 {
+  return resloc.UpdatedAt
 }
 
 type current_conditions struct {
@@ -63,35 +63,35 @@ type current_conditions struct {
   TempMin float64 `json:"temp_min"`
   TempMax float64 `json:"temp_max"`
 
-  CreatedAt int64 `json:"created_at"`
+  UpdatedAt float64 `json:"updated_at"`
 }
 
-func (cc current_conditions) GetCreatedAt() int64 {
-  return cc.CreatedAt
+func (cc current_conditions) GetUpdatedAt() float64 {
+  return cc.UpdatedAt
 }
 
 type day_part_forecast struct {
-  Time                 int64
-  Temp                 float64
-  PrecipProbability int
-  PrecipType string
-  ConditionName        string
-  ConditionDescription string
+  Time                 float64 `json:"time"`
+  Temp                 float64 `json:"temp"`
+  PrecipProbability int `json:"precip_probability"`
+  PrecipType string `json:"precip_type"`
+  ConditionName        string `json:"condition_name"`
+  ConditionDescription string `json:"condition_description"`
 }
 
 type daily_forecast struct {
-  Time  int64
-  Day   *day_part_forecast
-  Night *day_part_forecast
+  Time  float64 `json:"time"`
+  Day   *day_part_forecast `json:"day"`
+  Night *day_part_forecast `json:"night"`
 }
 
 type forecast struct {
-  DailyForecasts []daily_forecast
-  CreatedAt      int64 `json:"created_at"`
+  DailyForecasts []daily_forecast `json:"daily_forecasts"`
+  UpdatedAt      float64 `json:"updated_at"`
 }
 
-func (f forecast) GetCreatedAt() int64 {
-  return f.CreatedAt
+func (f forecast) GetUpdatedAt() float64 {
+  return f.UpdatedAt
 }
 
 func persist(bucket_name string, key string, data persistable) error {
@@ -166,7 +166,7 @@ func resolve_location(location string) (*resolved_location, error) {
       lng,
       "",
       "",
-      time.Now().UnixNano(),
+      float64(time.Now().UnixNano()) / 1e9,
     }
 
     err = persist("geocodes", location, &resloc)
@@ -184,7 +184,7 @@ func resolve_location(location string) (*resolved_location, error) {
 }
 
 type persistable interface {
-  GetCreatedAt() int64
+  GetUpdatedAt() float64
 }
 
 func get_weather_with_cache(
@@ -207,7 +207,7 @@ func get_weather_with_cache(
 
       log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
 
-      if !online || network == NetworkSkip || time.Now().UnixNano()-typed.GetCreatedAt() <= current_age {
+      if !online || network == NetworkSkip || float64(time.Now().UnixNano())/1e9-typed.GetUpdatedAt() <= current_age {
         p = typed
       }
     }
@@ -264,7 +264,7 @@ func current_retriever(resloc resolved_location) (persistable, error) {
     w.Main.Temp,
     w.Main.TempMin,
     w.Main.TempMax,
-    time.Now().UnixNano(),
+    float64(time.Now().UnixNano())/1e9,
   }
   return &p, nil
 }
@@ -310,9 +310,9 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
   dailies := make([]daily_forecast, 0)
   for _, v := range l {
     dailies = append(dailies, daily_forecast{
-      int64(v.Dt) * 1e9,
+      float64(v.Dt),
       &day_part_forecast{
-        int64(v.Dt) * 1e9,
+        float64(v.Dt),
         v.Main.TempMax,
         0,
         "",
@@ -320,7 +320,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
         v.Weather[0].Description,
       },
       &day_part_forecast{
-        (int64(v.Dt) + 12*3600) * 1e9,
+        float64(v.Dt) + 12*3600,
         v.Main.TempMin,
         0,
         "",
@@ -332,7 +332,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
 
   p := forecast{
     dailies,
-    time.Now().UnixNano(),
+    float64(time.Now().UnixNano())/1e9,
   }
   return &p, nil
 }
@@ -400,9 +400,7 @@ func get_conditions_route(c *gin.Context) {
     return
   }
 
-  pcc := present_current_conditions(cc)
-
-  render_json(c, pcc)
+  render_json(c, cc)
 }
 
 func get_forecast_route(c *gin.Context) {
@@ -418,9 +416,7 @@ func get_forecast_route(c *gin.Context) {
     return
   }
 
-  pf := present_forecast(f)
-
-  render_json(c, pf)
+  render_json(c, f)
 }
 
 func get_wu_forecast_route(c *gin.Context) {
@@ -452,9 +448,7 @@ func get_wu_forecast_route(c *gin.Context) {
     return
   }
 
-  pf := present_forecast(f)
-
-  render_json(c, pf)
+  render_json(c, f)
 }
 
 func render_json(c *gin.Context, data interface{}) {
@@ -476,10 +470,10 @@ func set_cors_headers(c *gin.Context) {
 
 type wu_credentials struct {
   ApiKey    string
-  UpdatedAt int64
+  UpdatedAt float64
 }
 
-func (x wu_credentials) GetCreatedAt() int64 {
+func (x wu_credentials) GetUpdatedAt() float64 {
   return x.UpdatedAt
 }
 
@@ -626,7 +620,7 @@ func get_wu_api_key() (string, error) {
           api_key := matches[1]
           wu_creds := wu_credentials{
             api_key,
-            time.Now().UnixNano(),
+            float64(time.Now().UnixNano())/1e9,
           }
           persist("config", "wu_credentials", &wu_creds)
           return api_key, nil
@@ -664,7 +658,7 @@ func get_wu_api_key_cached() (string, error) {
     }
     wu_creds := wu_credentials{
       api_key,
-      time.Now().UnixNano(),
+      float64(time.Now().UnixNano())/1e9,
     }
     err = persist("config", "wu_api_key", &wu_creds)
     if err != nil {
@@ -694,7 +688,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   dailies := make([]daily_forecast, 0)
   for _, v := range payload.Forecasts {
     dailies = append(dailies, daily_forecast{
-      int64(v.FcstValid) * 1e9,
+      float64(v.FcstValid),
       convert_wu_forecast(v.Day),
       convert_wu_forecast(v.Night),
     })
@@ -702,7 +696,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
 
   f := forecast{
     dailies,
-    time.Now().UnixNano(),
+    float64(time.Now().UnixNano())/1e9,
   }
 
   return &f, nil
@@ -713,7 +707,7 @@ func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
     return nil
   }
   return &day_part_forecast{
-    int64(v.FcstValid) * 1e9,
+    float64(v.FcstValid),
     float64(v.Temp),
     v.Pop,
     v.PrecipType,
