@@ -20,6 +20,8 @@ func present_current_conditions(cc *current_conditions) presented_current_condit
 type presented_day_part_forecast struct {
   Time                 int64   `json:"time"`
   Temp                 float64 `json:"temp"`
+  PrecipProbability int `json:"precip_probability"`
+  PrecipType string `json:"precip_type"`
   ConditionName        string  `json:"condition_name"`
   ConditionDescription string  `json:"condition_description"`
 }
@@ -57,6 +59,8 @@ func present_day_part_forecast(v *day_part_forecast) *presented_day_part_forecas
   return &presented_day_part_forecast{
     v.Time / 1e9,
     v.Temp,
+    v.PrecipProbability,
+    v.PrecipType,
     v.ConditionName,
     v.ConditionDescription,
   }

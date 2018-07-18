@@ -32,7 +32,7 @@ export default class Location extends React.Component {
     if (key == 'forecast') {
       url_key = 'forecast/wu'
     }
-    fetch('http://localhost:8093/locations/' + this.props.params.location + '/' + url_key)
+    fetch('http://localhost:8093/locations/' + this.props.params.location + '/' + url_key + '?network=2')
     .then(resp => resp.json())
     .then(payload => {
       let state_delta = {}
@@ -48,6 +48,7 @@ export default class Location extends React.Component {
   }
 
   render() {
+    console.log(this.state.forecast)
     return <div>
       <h2>{this.props.params.location}</h2>
       
@@ -64,12 +65,12 @@ export default class Location extends React.Component {
         <ul>
         {_.map(this.state.forecast.daily_forecasts, forecast => <li key={forecast.time}>
       <p>{this.format_date(forecast.time)}</p>
-      {forecast.night ?
-      <p>Night: <b>{forecast.night.temp}&deg;</b> {forecast.night.condition_description}</p>
+    {forecast.day ?
+      this.format_short_forecast('Day', forecast.day)
       : <p></p>
     }
-    {forecast.day ?
-      <p>Day: <b>{forecast.day.temp}&deg;</b> {forecast.day.condition_description}</p>
+      {forecast.night ?
+      this.format_short_forecast('Night', forecast.night)
       : <p></p>
     }
       </li>)}
@@ -77,6 +78,18 @@ export default class Location extends React.Component {
       <p>Updated: {this.data_age('forecast')}</p>
       </div>}
     </div>
+  }
+  
+  format_short_forecast(name, dpf) {
+      return <p>{name}:
+        {' '}
+        <b>{dpf.temp}&deg;,
+        {' '}
+        {dpf.precip_type}:
+        {' '}
+        {dpf.precip_probability}%</b>
+        {' '}
+        {dpf.condition_description}</p>
   }
   
   data_age(key) {

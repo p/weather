@@ -8,6 +8,11 @@ import (
   "net/http"
 )
 
+// For wunderground api, night follows day.
+// This means when retrieving a forecast in the middle of a day,
+// there is data for night but not day part
+// of the day on which the forecast is retrieved.
+
 type WuForecastResponseMetadata struct {
   Language      string  `json:"language"`
   TransactionId string  `json:"transaction_id"`
@@ -20,14 +25,26 @@ type WuForecastResponseMetadata struct {
 }
 
 type WuForecastResponseDaypart struct {
+  // UTC timestamp for the forecast, e.g. 1531782000
   FcstValid          int64   `json:"fcst_valid"`
+  // ISO8601 time for the forecast, e.g. "2018-07-16T19:00:00-0400"
   FcstValidLocal     string  `json:"fcst_valid_local"`
+  // "D" for day, "N" for night
   DayInd             string  `json:"day_ind"`
-  ThunderEnum        int     `json:"thunder_enum"`
-  ThunderEnumPhrase  string  `json:"thunder_enum_phrase"`
+  // "Tonight", "Tomorrow", "Wednesday"
   DaypartName        string  `json:"daypart_name"`
+  // "Monday night", "Tuesday night", "Tuesday"
   LongDaypartName    string  `json:"long_daypart_name"`
+  // This is sometimes the same as DaypartName and sometimes same as
+  // LongDaypartName
   AltDaypartName     string  `json:"alt_daypart_name"`
+  // Number of this forecast in the returned data, starting with 1.
+  // Forecasts for day parts (this struct) and days overall have separate numbering.
+  // Forecast for today has num=1. If today only has a night day part,
+  // that night's forecast would have num=1 as well.
+  // Forecast for tomorrow will have num=2, tomorrow's day num=2,
+  // tomorrow's night num=3. The day after tomorrow will have num=3 for the
+  // entire day, num=4 for the day part, num=5 for the night part.
   Num                int     `json:"num"`
   Temp               int     `json:"temp"`
   Hi                 int     `json:"hi"`
@@ -54,6 +71,8 @@ type WuForecastResponseDaypart struct {
   WindPhrase         string  `json:"wind_phrase"`
   Shortcast          string  `json:"shortcast"`
   Narrative          string  `json:"narrative"`
+  ThunderEnum        int     `json:"thunder_enum"`
+  ThunderEnumPhrase  string  `json:"thunder_enum_phrase"`
   Qpf                float64 `json:"qpf"`
   // may be int
   SnowQpf    float64 `json:"snow_qpf"`
@@ -73,13 +92,27 @@ type WuForecastResponseDaypart struct {
 }
 
 type WuForecastResponseForecast struct {
+  // Type of forecast, "fod_long_range_daily" for this data
   Class          string `json:"class"`
+  // UTC timestamp: 1531769805
   ExpireTimeGmt  int64  `json:"expire_time_gmt"`
+  // UTC timestamp: 1531911600
   FcstValid      int64  `json:"fcst_valid"`
+  // ISO8601 time: "2018-07-18T07:00:00-0400"
   FcstValidLocal string `json:"fcst_valid_local"`
+  // Number of this forecast in the returned data, starting with 1.
+  // Forecasts for days (this struct) and day parts have separate numbering.
+  // Forecast for today has num=1. If today only has a night day part,
+  // that night's forecast would have num=1 as well.
+  // Forecast for tomorrow will have num=2, tomorrow's day num=2,
+  // tomorrow's night num=3. The day after tomorrow will have num=3 for the
+  // entire day, num=4 for the day part, num=5 for the night part.
   Num            int    `json:"num"`
+  // Same as Day.Temp, can be null if there is no day data
+  // which will happen when a forecast is retreived late enough in the day
   MaxTemp        *int   `json:"max_temp"`
-  MinTemp        *int   `json:"min_temp"`
+  // Same as Night.Temp
+  MinTemp        int   `json:"min_temp"`
   // was always null
   Torcon *string `json:"torcon"`
   // was always null
@@ -89,6 +122,7 @@ type WuForecastResponseForecast struct {
   // was always null
   BlurbAuthor    *string `json:"blurb_author"`
   LunarPhaseDay  int     `json:"lunar_phase_day"`
+  // Day of week, e.g. "Monday", "Tuesday"
   Dow            string  `json:"dow"`
   LunarPhase     string  `json:"lunar_phase"`
   LunarPhaseCode string  `json:"lunar_phase_code"`
