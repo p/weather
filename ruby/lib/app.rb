@@ -23,7 +23,7 @@ class ResolvedLocation
 
   attr_reader :info
 
-  def_delegators :info, :lat, :lng, :city, :state, :created_at
+  def_delegators :info, :lat, :lng, :city, :state, :updated_at
 
   def wu_current_url
     "https://www.wunderground.com/weather/us/#{state.downcase}/#{city.downcase.gsub(/[^\w]/, '-')}"
@@ -71,7 +71,7 @@ class App < Sinatra::Base
         lng: result.coordinates.last,
         city: result.city,
         state: result.state,
-        created_at: Time.now,
+        updated_at: Time.now.to_f,
       }
       $db["geocode:#{location}"] = coords
       $db.flush

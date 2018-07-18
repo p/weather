@@ -94,7 +94,7 @@ export default class Location extends React.Component {
   
   data_age(key) {
     if (this.state[key]) {
-      let d = new Date().getTime()/1000 - this.state[key].created_at
+      let d = new Date().getTime()/1000 - this.state[key].updated_at
       return moment.duration(d, 'seconds').humanize() + ' ago'
     } else {
       return null
