@@ -299,7 +299,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
   }
 
   l := w.ForecastWeatherJson.(*owm.Forecast5WeatherData).List
-  dailies := make([]daily_forecast, 0, len(l))
+  dailies := make([]daily_forecast, 0)
   for _, v := range l {
     dailies = append(dailies, daily_forecast{
       int64(v.Dt) * 1e9,
@@ -683,7 +683,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
     return nil, err
   }
 
-  dailies := make([]daily_forecast, len(payload.Forecasts))
+  dailies := make([]daily_forecast, 0)
   for _, v := range payload.Forecasts {
     dailies = append(dailies, daily_forecast{
       int64(v.FcstValid) * 1e9,
