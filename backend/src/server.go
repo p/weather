@@ -166,7 +166,7 @@ func resolve_location(location string) (*resolved_location, error) {
       lng,
       "",
       "",
-      float64(time.Now().UnixNano()) / 1e9,
+      now(),
     }
 
     err = persist("geocodes", location, &resloc)
@@ -207,7 +207,7 @@ func get_weather_with_cache(
 
       log.Debug(fmt.Sprintf("Retrieved cached data for %s", location))
 
-      if !online || network == NetworkSkip || float64(time.Now().UnixNano())/1e9-typed.GetUpdatedAt() <= current_age {
+      if !online || network == NetworkSkip || now()-typed.GetUpdatedAt() <= current_age {
         p = typed
       }
     }
@@ -264,7 +264,7 @@ func current_retriever(resloc resolved_location) (persistable, error) {
     w.Main.Temp,
     w.Main.TempMin,
     w.Main.TempMax,
-    float64(time.Now().UnixNano())/1e9,
+    now(),
   }
   return &p, nil
 }
@@ -332,7 +332,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
 
   p := forecast{
     dailies,
-    float64(time.Now().UnixNano())/1e9,
+    now(),
   }
   return &p, nil
 }
@@ -620,7 +620,7 @@ func get_wu_api_key() (string, error) {
           api_key := matches[1]
           wu_creds := wu_credentials{
             api_key,
-            float64(time.Now().UnixNano())/1e9,
+            now(),
           }
           persist("config", "wu_credentials", &wu_creds)
           return api_key, nil
@@ -658,7 +658,7 @@ func get_wu_api_key_cached() (string, error) {
     }
     wu_creds := wu_credentials{
       api_key,
-      float64(time.Now().UnixNano())/1e9,
+      now(),
     }
     err = persist("config", "wu_api_key", &wu_creds)
     if err != nil {
@@ -696,7 +696,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
 
   f := forecast{
     dailies,
-    float64(time.Now().UnixNano())/1e9,
+    now(),
   }
 
   return &f, nil
@@ -739,4 +739,8 @@ func narrative_maybe(v *WuForecastResponseDaypart) string {
   } else {
     return v.Narrative
   }
+}
+
+func now() float64 {
+return float64(time.Now().UnixNano())/1e9
 }
