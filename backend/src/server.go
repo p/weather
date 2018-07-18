@@ -10,7 +10,7 @@ import (
   //"bytes"
   "encoding/gob"
   "encoding/json"
-  //"errors"
+  "errors"
   "fmt"
   "github.com/gin-gonic/gin"
   log "github.com/sirupsen/logrus"
@@ -92,11 +92,9 @@ func get_forecast_route(c *gin.Context) {
   render_json(c, f)
 }
 
-func get_wu_forecast_route(c *gin.Context) {
-  location := c.Param("location")
+func get_network_flag(c *gin.Context) (NetworkUse, error) {
   raw_network := c.Query("network")
   var network NetworkUse
-  var err error
   switch raw_network {
   case "":
     network = NetworkDefault
@@ -107,10 +105,23 @@ func get_wu_forecast_route(c *gin.Context) {
   case "2":
     network = NetworkSkip
   default:
-    c.String(500, "Invalid network value: "+raw_network)
+    return NetworkDefault, errors.New("Invalid network value: "+raw_network)
+  }
+  return network, nil
+}
+
+func get_wu_forecast_route(c *gin.Context) {
+  location := c.Param("location")
+  network, err := get_network_flag(c)
+  if err != nil {
+    c.String(500, err.Error())
     return
   }
   resloc, err := resolve_location(location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
   if err != nil {
     c.String(500, err.Error())
     return
