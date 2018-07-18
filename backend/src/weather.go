@@ -131,13 +131,14 @@ func current_retriever(resloc resolved_location) (persistable, error) {
 }
 
 func get_current_weather(location string,
-  resloc resolved_location) (*current_conditions, error) {
+  resloc resolved_location,
+  network NetworkUse) (*current_conditions, error) {
 
   p, err := get_weather_with_cache(
     location,
     resloc,
     "current_conditions",
-    current_retriever, 0)
+    current_retriever, network)
 
   if err != nil {
     return nil, err

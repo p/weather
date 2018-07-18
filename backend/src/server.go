@@ -67,7 +67,12 @@ func get_conditions_route(c *gin.Context) {
     c.String(500, err.Error())
     return
   }
-  cc, err := get_current_weather(location, *resloc)
+  network, err := get_network_flag(c)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  cc, err := get_current_weather(location, *resloc, network)
   if err != nil {
     c.String(500, "Could not get weather: "+err.Error())
     return
@@ -122,10 +127,6 @@ func get_wu_forecast_route(c *gin.Context) {
     c.String(500, err.Error())
     return
   }
-  if err != nil {
-    c.String(500, err.Error())
-    return
-  }
   f, err := get_wu_forecast(location, *resloc, network)
   if err != nil {
     c.String(500, "Could not get weather: "+err.Error())
@@ -133,6 +134,28 @@ func get_wu_forecast_route(c *gin.Context) {
   }
 
   render_json(c, f)
+}
+
+func location_route(c *gin.Context) {
+  location := c.Param("location")
+  network, err := get_network_flag(c)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  resloc, err := resolve_location(location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  f, err := get_location_everything(location, *resloc, network)
+  if err != nil {
+    c.String(500, "Could not get weather: "+err.Error())
+    return
+  }
+
+  render_json(c, f)
+  f=f
 }
 
 func render_json(c *gin.Context, data interface{}) {
@@ -226,6 +249,7 @@ func main() {
   //router.Use(gin.Recovery())
 
   router.GET("/locations", list_locations_route)
+  router.GET("/locations/:location", location_route)
   router.GET("/locations/:location/current", get_conditions_route)
   router.GET("/locations/:location/forecast", get_forecast_route)
   router.GET("/locations/:location/forecast/wu", get_wu_forecast_route)
@@ -276,4 +300,29 @@ func narrative_maybe(v *WuForecastResponseDaypart) string {
 
 func now() float64 {
   return float64(time.Now().UnixNano()) / 1e9
+}
+
+type location_everything struct {
+  Location resolved_location  `json:"location"`
+  Current current_conditions  `json:"current"`
+  Forecast forecast `json:"forecast"`
+}
+
+func get_location_everything(location string, resloc resolved_location,
+network NetworkUse) (*location_everything, error) {
+  cc, err := get_current_weather(location, resloc, network)
+  if err != nil {
+  return nil, err
+  }
+  f, err := get_wu_forecast(location, resloc, network)
+  if err != nil {
+  return nil, err
+  }
+  
+  return &location_everything{
+    resloc,
+    *cc,
+    *f,
+  }, nil
+  
 }
