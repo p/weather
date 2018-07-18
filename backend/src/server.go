@@ -7,7 +7,7 @@ package main
 // http://www.funcmain.com/gob_encoding_an_interface
 
 import (
-  "bytes"
+  //"bytes"
   "encoding/gob"
   "encoding/json"
   "errors"
@@ -94,51 +94,6 @@ func (f forecast) GetUpdatedAt() float64 {
   return f.UpdatedAt
 }
 
-func persist(bucket_name string, key string, data persistable) error {
-  store := new(bytes.Buffer)
-  enc := gob.NewEncoder(store)
-  err := enc.Encode(&data)
-  if err != nil {
-    return errors.New("Could not encode: " + err.Error())
-  }
-
-  err = db.Update(func(tx *bolt.Tx) error {
-    b := tx.Bucket([]byte(bucket_name))
-    err := b.Put([]byte(key), store.Bytes())
-    return err
-  })
-  if err != nil {
-    return errors.New("Could not store: " + err.Error())
-  }
-  return nil
-}
-
-func lookup(bucket_name string, key string) (interface{}, error) {
-  var encoded []byte
-  err := db.View(func(tx *bolt.Tx) error {
-    b := tx.Bucket([]byte(bucket_name))
-    encoded = b.Get([]byte(key))
-    return nil
-  })
-  if err != nil {
-    return nil, errors.New("Error retrieving data from db: " + err.Error())
-  }
-
-  if encoded == nil {
-    return nil, nil
-  }
-
-  store := bytes.NewBuffer(encoded)
-  dec := gob.NewDecoder(store)
-  var data persistable
-  err = dec.Decode(&data)
-  if err != nil {
-    return nil, errors.New("Could not decode: " + err.Error())
-  }
-
-  return data, nil
-}
-
 func resolve_location(location string) (*resolved_location, error) {
   data, err := lookup("geocodes", location)
   log.Debug("location: " + location)
@@ -181,10 +136,6 @@ func resolve_location(location string) (*resolved_location, error) {
     log.Debug(fmt.Sprintf("Retrieved %s from cache as %f,%f", location, resloc.Lat, resloc.Lng))
   }
   return &resloc, nil
-}
-
-type persistable interface {
-  GetUpdatedAt() float64
 }
 
 func get_weather_with_cache(
