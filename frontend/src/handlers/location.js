@@ -61,22 +61,44 @@ export default class Location extends React.Component {
       </div>}
       
       {this.state.forecast &&
-        <div>
-        <ul>
-        {_.map(this.state.forecast.daily_forecasts, forecast => <li key={forecast.time}>
-      <p>{this.format_date(forecast.time)}</p>
-    {forecast.day ?
-      this.format_short_forecast('Day', forecast.day)
-      : <p></p>
-    }
-      {forecast.night ?
-      this.format_short_forecast('Night', forecast.night)
-      : <p></p>
-    }
-      </li>)}
-      </ul>
+        <table>
+        <thead>
+        <tr><th></th>
+        <th>High</th>
+        <th colSpan='2'>Day</th>
+        <th>Low</th>
+        <th colSpan='2'>Night</th>
+        </tr>
+        </thead>
+        <tbody>
+        {_.map(this.state.forecast.daily_forecasts, forecast => <tr key={forecast.time}>
+      <td>{moment(forecast.time*1000).format('dddd')}
+        <br/>
+      {moment(forecast.time*1000).format('MMM D')}
+        </td>
+    <td>{forecast.day &&
+      forecast.day.temp.toString() + 'deg'}</td>
+    <td>{forecast.day &&
+      <span>
+      {forecast.day.precip_probability}%
+      <br/>
+      {forecast.day.precip_type}
+      </span>}</td>
+    <td>{forecast.day &&
+      forecast.day.condition_description}</td>
+    <td>{
+      forecast.night.temp.toString() + 'deg'}</td>
+    <td>
+      {forecast.night.precip_probability}%
+      <br/>
+      {forecast.night.precip_type}
+    </td>
+    <td>{
+      forecast.night.condition_description}</td>
+      </tr>)}
+      </tbody>
       <p>Updated: {this.data_age('forecast')}</p>
-      </div>}
+      </table>}
     </div>
   }
   
