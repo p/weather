@@ -55,8 +55,8 @@ export default class Location extends React.Component {
       {this.state.current &&
         <div>
       <p>Now: {this.state.current.temp}&deg;</p>
-      <p>Min: {this.state.current.temp_min}&deg;</p>
-      <p>Max: {this.state.current.temp_max}&deg;</p>
+      <p>High: {this.state.current.temp_max}&deg;</p>
+      <p>Low: {this.state.current.temp_min}&deg;</p>
       <p>Updated: {this.data_age('current')}</p>
       </div>}
       
