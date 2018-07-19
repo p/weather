@@ -11,7 +11,7 @@ type persistable interface {
   GetUpdatedAt() float64
 }
 
-func persist(bucket_name string, key string, data persistable) error {
+func persist(bucket_name string, key string, data interface{}) error {
   store := new(bytes.Buffer)
   enc := gob.NewEncoder(store)
   err := enc.Encode(&data)
@@ -34,6 +34,9 @@ func lookup(bucket_name string, key string) (interface{}, error) {
   var encoded []byte
   err := db.View(func(tx *bolt.Tx) error {
     b := tx.Bucket([]byte(bucket_name))
+    if b == nil {
+    return errors.New("Bucket " + bucket_name + " does not exist")
+    }
     encoded = b.Get([]byte(key))
     return nil
   })
@@ -47,7 +50,7 @@ func lookup(bucket_name string, key string) (interface{}, error) {
 
   store := bytes.NewBuffer(encoded)
   dec := gob.NewDecoder(store)
-  var data persistable
+  var data interface{}
   err = dec.Decode(&data)
   if err != nil {
     return nil, errors.New("Could not decode: " + err.Error())

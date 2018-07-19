@@ -136,6 +136,45 @@ func get_wu_forecast_route(c *gin.Context) {
   render_json(c, f)
 }
 
+func get_wu_forecast_raw_route(c *gin.Context) {
+  location := c.Param("location")
+  
+  log.Debug(location)
+  data, err := lookup("wu_forecasts_raw", location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  if data != nil {
+    render_json(c, data)
+    return
+  }
+  
+  resloc, err := resolve_location(location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  f, err := get_wu_forecast(location, *resloc, NetworkDefault)
+  f=f
+  if err != nil {
+    c.String(500, "Could not get weather: "+err.Error())
+    return
+  }
+
+  data, err = lookup("wu_forecasts_raw", location)
+  if err != nil {
+    c.String(500, err.Error())
+    return
+  }
+  if data != nil {
+    render_json(c, data)
+    return
+  }
+    
+    c.String(500, "No wu cached data after retrieving a forecast")
+}
+
 func location_route(c *gin.Context) {
   location := c.Param("location")
   network, err := get_network_flag(c)
@@ -192,7 +231,8 @@ func main() {
 
   db.Update(func(tx *bolt.Tx) error {
     buckets := []string{
-      "geocodes", "current_conditions", "forecasts", "wu_forecasts", "config"}
+      "geocodes", "current_conditions", "forecasts", "wu_forecasts",
+      "wu_forecasts_raw", "config"}
 
     for index, bucket := range buckets {
       b, err := tx.CreateBucketIfNotExists([]byte(bucket))
@@ -210,6 +250,7 @@ func main() {
   gob.Register(&current_conditions{})
   gob.Register(&forecast{})
   gob.Register(&wu_credentials{})
+  gob.Register(&WuForecast10Response{})
 
   // Disable Console Color
   // gin.DisableConsoleColor()
@@ -253,6 +294,7 @@ func main() {
   router.GET("/locations/:location/current", get_conditions_route)
   router.GET("/locations/:location/forecast", get_forecast_route)
   router.GET("/locations/:location/forecast/wu", get_wu_forecast_route)
+  router.GET("/locations/:location/forecast/wu/raw", get_wu_forecast_raw_route)
 
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.

@@ -350,6 +350,8 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   if err != nil {
     return nil, err
   }
+  
+  persist("wu_forecasts_raw", resloc.Query, payload)
 
   dailies := make([]daily_forecast, 0)
   for _, v := range payload.Forecasts {

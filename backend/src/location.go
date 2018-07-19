@@ -8,6 +8,7 @@ import (
 )
 
 type resolved_location struct {
+  Query string `json:"query"`
   Lat       float64 `json:"lat"`
   Lng       float64 `json:"lng"`
   City      string  `json:"city"`
@@ -42,6 +43,7 @@ func resolve_location(location string) (*resolved_location, error) {
     }
 
     resloc = resolved_location{
+    location,
       lat,
       lng,
       "",
