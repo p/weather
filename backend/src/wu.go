@@ -113,7 +113,7 @@ type WuForecastResponseDaypart struct {
   SnowPhrase string  `json:"snow_phrase"`
   SnowCode   string  `json:"snow_code"`
   // this was always null even when qualifier is present, don't know type
-  QualifierCode *string `json:"wind_phrase"`
+  QualifierCode *string `json:"qualifier_code"`
   
   // ex: 7.9
   UvIndexRaw    float64 `json:"uv_index_raw"`
