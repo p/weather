@@ -8,6 +8,7 @@ import (
   log "github.com/sirupsen/logrus"
   "io"
   "io/ioutil"
+  "strings"
   "net/http"
   "regexp"
 )
@@ -370,6 +371,14 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   return &f, nil
 }
 
+func extract_narrative(v WuForecastResponseDaypart) string {
+  n := v.Narrative
+  n = strings.Replace(n, " " + v.WindPhrase, "", 1)
+  n = strings.Replace(n, " " + v.TempPhrase, "", 1)
+  n = strings.Replace(n, " " + v.PopPhrase, "", 1)
+  return n
+}
+
 func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
   if v == nil {
     return nil
@@ -380,6 +389,6 @@ func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
     v.Pop,
     v.PrecipType,
     v.Shortcast,
-    v.Narrative,
+    extract_narrative(*v),
   }
 }
