@@ -64,6 +64,11 @@ type WuForecastResponseDaypart struct {
   Pop                int     `json:"pop"`
   // Probability of precipitation phrase; "Chance of rain 100%."
   PopPhrase          string  `json:"pop_phrase"`
+  // Precipitation accumulation, ex: "Rainfall around a half an inch."
+  AccumulationPhrase string  `json:"accumulation_phrase"`
+  // ex: "A stray shower or thunderstorm is possible."
+  // ex: "Locally heavy rainfall possible."
+  Qualifier     *string `json:"qualifier"`
 
   // Thunder possibility flag: 0-2
   ThunderEnum        int     `json:"thunder_enum"`
@@ -99,12 +104,8 @@ type WuForecastResponseDaypart struct {
   SnowRange  string  `json:"snow_range"`
   SnowPhrase string  `json:"snow_phrase"`
   SnowCode   string  `json:"snow_code"`
-  // Snow accumulation?
-  AccumulationPhrase string  `json:"accumulation_phrase"`
-  // this was always null, don't know type
+  // this was always null even when qualifier is present, don't know type
   QualifierCode *string `json:"wind_phrase"`
-  // ex: "A stray shower or thunderstorm is possible."
-  Qualifier     *string `json:"qualifier"`
   
   // ex: 7.9
   UvIndexRaw    float64 `json:"uv_index_raw"`
