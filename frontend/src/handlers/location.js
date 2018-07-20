@@ -24,7 +24,7 @@ export default class Location extends React.Component {
   
   componentDidMount() {
     this.load_data('current', 10*60*1000)
-    this.load_data('forecast', 2*3600*1000)
+    //this.load_data('forecast', 2*3600*1000)
   }
   
   load_data(key) {
@@ -32,13 +32,13 @@ export default class Location extends React.Component {
     if (key == 'forecast') {
       url_key = 'forecast/wu'
     }
-    fetch('http://localhost:8093/locations/' + this.props.params.location + '/' + url_key + '?network=2')
+    fetch('http://localhost:8093/locations/' + this.props.params.location + '?network=0')
     .then(resp => resp.json())
     .then(payload => {
-      let state_delta = {}
-      state_delta[key] = payload
-      console.log(state_delta)
-      this.setState(state_delta)
+      //let state_delta = {}
+      //state_delta[key] = payload
+      //console.log(state_delta)
+      this.setState(payload)
     })
   }
   
@@ -50,7 +50,12 @@ export default class Location extends React.Component {
   render() {
     console.log(this.state.forecast)
     return <div>
-      <h2>{this.props.params.location}</h2>
+      <h2>
+      {this.state.location ?
+          this.state.location.city + ', ' + this.state.location.state
+        :
+        this.props.params.location}
+        </h2>
       
       {this.state.current &&
         <div>
