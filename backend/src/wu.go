@@ -88,16 +88,24 @@ type WuForecastResponseDaypart struct {
   // Wind information phrase: "Winds SSW at 10 to 15 mph."
   WindPhrase         string  `json:"wind_phrase"`
 
-  IconExtd           int     `json:"icon_extd"`
-  IconCode           int     `json:"icon_code"`
+  // ex: "Sct T-Storms"
   Phrase12Char       string  `json:"phrase_12char"`
+  // ex: "Sct Thunderstorms"
   Phrase22Char       string  `json:"phrase_22char"`
+  // ex: "Scattered Thunderstorms"
   Phrase32Char       string  `json:"phrase_32char"`
+  // ex: "Scattered"
   SubphrasePt1       string  `json:"subphrase_pt1"`
+  // ex: "T-Storms"
   SubphrasePt2       string  `json:"subphrase_pt2"`
+  // Always "" in data I've seen
   SubphrasePt3       string  `json:"subphrase_pt3"`
+
+  // ex: Scattered thunderstorms"
   Shortcast          string  `json:"shortcast"`
+  // ex: "Variable clouds with scattered thunderstorms. High 81F. Winds S at 5 to 10 mph. Chance of rain 60%."
   Narrative          string  `json:"narrative"`
+  
   Qpf                float64 `json:"qpf"`
   // may be int
   SnowQpf    float64 `json:"snow_qpf"`
@@ -115,15 +123,27 @@ type WuForecastResponseDaypart struct {
   // ex: "Very High"
   UvDesc        string  `json:"uv_desc"`
   
-  GolfIndex     int     `json:"golf_index"`
+  // ex: 5
+  GolfIndex     *int     `json:"golf_index"`
+  // ex: "Fair"
+  // "" when GolfIndex is null
   GolfCategory  string  `json:"golf_category"`
 
   // ex: "wx1600"
   Wxman              string  `json:"wxman"`
+  // ex: 82
   Hi                 int     `json:"hi"`
+  // ex: 72
   Wc                 int     `json:"wc"`
+  // ex: 76
   Rh                 int     `json:"rh"`
+  // ex: "D16:DA07:X3700380043:S380043:TL72:W08R04:P9041"
   VocalKey   string  `json:"vocal_key"`
+
+  // ex: 3809
+  IconExtd           int     `json:"icon_extd"`
+  // ex: 47
+  IconCode           int     `json:"icon_code"`
 }
 
 type WuForecastResponseForecast struct {
@@ -133,7 +153,7 @@ type WuForecastResponseForecast struct {
   ExpireTimeGmt int64 `json:"expire_time_gmt"`
   // UTC timestamp: 1531911600
   FcstValid int64 `json:"fcst_valid"`
-  // ISO8601 time: "2018-07-18T07:00:00-0400"
+  // ISO8601 local time: "2018-07-18T07:00:00-0400"
   FcstValidLocal string `json:"fcst_valid_local"`
   // Day of week, e.g. "Monday", "Tuesday"
   Dow            string `json:"dow"`
@@ -164,14 +184,22 @@ type WuForecastResponseForecast struct {
   LunarPhase     string `json:"lunar_phase"`
   // ex: "WXC"
   LunarPhaseCode string `json:"lunar_phase_code"`
+  // ISO8601 local time: "2018-07-17T05:22:44-0400"
   Sunrise        string `json:"sunrise"`
+  // ISO8601 local time: "2018-07-17T20:17:41-0400"
   Sunset         string `json:"sunset"`
+  // ISO8601 local time: "2018-07-17T10:41:01-0400"
   Moonrise       string `json:"moonrise"`
+  // ISO8601 local time: "2018-07-17T23:32:29-0400"
   Moonset        string `json:"moonset"`
   // assuming *string
   QualifierCode *string `json:"qualifier_code"`
   // assuming *string
-  Qualifier string  `json:"qualifier"`
+  // This was null even when a day part forecast had a qualifier
+  Qualifier *string  `json:"qualifier"`
+  // Narrative for the entire day (both day parts), in particular
+  // it includes both high and low temperatures.
+  // ex: "Times of sun and clouds. Highs in the upper 70s and lows in the mid 60s."
   Narrative string  `json:"narrative"`
   Qpf       float64 `json:"qpf"`
   // may be int
