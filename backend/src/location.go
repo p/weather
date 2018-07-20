@@ -35,19 +35,17 @@ func resolve_location(location string) (*resolved_location, error) {
       return nil, errors.New("Cannot geocode - running in offline mode")
     }
 
-    lat, lng, err := geocoder.Geocode(location)
-    lat = lat
-    lng = lng
+    p, err := geocoder.FullGeocode(location)
     if err != nil {
       return nil, errors.New("Could not geocode " + location + ": " + err.Error())
     }
 
     resloc = resolved_location{
     location,
-      lat,
-      lng,
-      "",
-      "",
+      p.Results[0].Locations[0].LatLng.Lat,
+      p.Results[0].Locations[0].LatLng.Lng,
+      p.Results[0].Locations[0].AdminArea5,
+      p.Results[0].Locations[0].AdminArea3,
       now(),
     }
 
