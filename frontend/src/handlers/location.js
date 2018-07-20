@@ -61,44 +61,40 @@ export default class Location extends React.Component {
       </div>}
       
       {this.state.forecast &&
-        <table>
-        <thead>
-        <tr><th></th>
-        <th>High</th>
-        <th colSpan='2'>Day</th>
-        <th>Low</th>
-        <th colSpan='2'>Night</th>
-        </tr>
-        </thead>
-        <tbody>
-        {_.map(this.state.forecast.daily_forecasts, forecast => <tr key={forecast.time}>
-      <td>{moment(forecast.time*1000).format('dddd')}
-        <br/>
-      {moment(forecast.time*1000).format('MMM D')}
-        </td>
-    <td>{forecast.day &&
-      forecast.day.temp.toString() + 'deg'}</td>
-    <td>{forecast.day &&
-      <span>
-      {forecast.day.precip_probability}%
-      <br/>
-      {forecast.day.precip_type}
-      </span>}</td>
-    <td>{forecast.day &&
-      forecast.day.condition_description}</td>
-    <td>{
-      forecast.night.temp.toString() + 'deg'}</td>
-    <td>
-      {forecast.night.precip_probability}%
-      <br/>
-      {forecast.night.precip_type}
-    </td>
-    <td>{
-      forecast.night.condition_description}</td>
-      </tr>)}
-      </tbody>
+        <div>
+        {_.map(this.state.forecast.daily_forecasts, forecast => 
+          <div className='forecast-row' key={forecast.time}>
+      
+        <div className='forecast-date'>
+          <div>{moment(forecast.time*1000).format('dddd')}</div>
+          <div>{moment(forecast.time*1000).format('MMM D')}</div>
+        </div>
+        
+    {forecast.day &&
+      <div className='forecast-day'>
+        <div className='forecast-temp'>{forecast.day.temp.toString() + '\xb0'}</div>
+        <div className='forecast-precip'>
+          <div>{forecast.day.precip_probability}%</div>
+          <div>{forecast.day.precip_type}</div>
+        </div>
+        <div className='forecast-blurb'>
+          {forecast.day.condition_description}
+        </div>
+      </div>
+    }
+      <div className='forecast-night'>
+        <div className='forecast-temp'>{forecast.night.temp.toString() + '\xb0'}</div>
+        <div className='forecast-precip'>
+          <div>{forecast.night.precip_probability}%</div>
+          <div>{forecast.night.precip_type}</div>
+        </div>
+        <div className='forecast-blurb'>
+          {forecast.night.condition_description}
+        </div>
+      </div>
+      </div>)}
       <p>Updated: {this.data_age('forecast')}</p>
-      </table>}
+      </div>}
     </div>
   }
   
