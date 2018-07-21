@@ -40,6 +40,7 @@ type daily_forecast struct {
   Night *day_part_forecast `json:"night"`
   PrecipProbability    int     `json:"precip_probability"`
   PrecipType           string  `json:"precip_type"`
+  Narrative string  `json:"narrative"`
 }
 
 type forecast struct {
@@ -193,6 +194,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
         "",
       },
       0,
+      "",
       "",
     })
   }
@@ -372,6 +374,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
       convert_wu_forecast(&v.Night),
       dpv.Pop,
       dpv.PrecipType,
+      extract_top_level_narrative(v.Narrative),
     })
   }
 
@@ -394,6 +397,10 @@ func extract_narrative(v WuForecastResponseDaypart) string {
   if v.PopPhrase != "" {
     n = strings.Replace(n, " "+v.PopPhrase, "", 1)
   }
+  return n
+}
+
+func extract_top_level_narrative(n string) string {
   return n
 }
 
