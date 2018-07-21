@@ -207,7 +207,7 @@ type WuForecastResponseForecast struct {
   SnowRange  string                     `json:"snow_range"`
   SnowPhrase string                     `json:"snow_phrase"`
   SnowCode   string                     `json:"snow_code"`
-  Night      *WuForecastResponseDaypart `json:"night"`
+  Night      WuForecastResponseDaypart `json:"night"`
   Day        *WuForecastResponseDaypart `json:"day"`
 }
 

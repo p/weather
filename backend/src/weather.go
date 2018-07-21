@@ -30,14 +30,16 @@ type day_part_forecast struct {
   Temp                 float64 `json:"temp"`
   PrecipProbability    int     `json:"precip_probability"`
   PrecipType           string  `json:"precip_type"`
-  ConditionName        string  `json:"condition_name"`
-  ConditionDescription string  `json:"condition_description"`
+  //ShortNarrative string  `json:"short_narrative"`
+  Narrative string  `json:"narrative"`
 }
 
 type daily_forecast struct {
   Time  float64            `json:"time"`
   Day   *day_part_forecast `json:"day"`
   Night *day_part_forecast `json:"night"`
+  PrecipProbability    int     `json:"precip_probability"`
+  PrecipType           string  `json:"precip_type"`
 }
 
 type forecast struct {
@@ -179,7 +181,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
         v.Main.TempMax,
         0,
         "",
-        v.Weather[0].Main,
+        //v.Weather[0].Main,
         v.Weather[0].Description,
       },
       &day_part_forecast{
@@ -187,9 +189,11 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
         v.Main.TempMin,
         0,
         "",
-        "",
+        //"",
         "",
       },
+      0,
+      "",
     })
   }
 
@@ -356,10 +360,18 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
 
   dailies := make([]daily_forecast, 0)
   for _, v := range payload.Forecasts {
+    var dpv WuForecastResponseDaypart
+    if v.Day != nil {
+    dpv = *v.Day
+    } else {
+    dpv = v.Night
+    }
     dailies = append(dailies, daily_forecast{
       float64(v.FcstValid),
       convert_wu_forecast(v.Day),
-      convert_wu_forecast(v.Night),
+      convert_wu_forecast(&v.Night),
+      dpv.Pop,
+      dpv.PrecipType,
     })
   }
 
@@ -394,7 +406,7 @@ func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
     float64(v.Temp),
     v.Pop,
     v.PrecipType,
-    v.Shortcast,
+    //v.Shortcast,
     extract_narrative(*v),
   }
 }

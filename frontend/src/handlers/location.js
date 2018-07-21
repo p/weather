@@ -97,7 +97,7 @@ export default class Location extends React.Component {
           : ''}
         </div>
         <div className='forecast-blurb'>
-          {forecast.condition_description}
+          {forecast.narrative}
         </div>
       </div>
   }
@@ -111,7 +111,7 @@ export default class Location extends React.Component {
         {' '}
         {dpf.precip_probability}%</b>
         {' '}
-        {dpf.condition_description}</p>
+        {dpf.narrative}</p>
   }
   
   data_age(key) {
