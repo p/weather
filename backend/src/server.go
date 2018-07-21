@@ -8,6 +8,7 @@ package main
 
 import (
   //"bytes"
+  "github.com/p/go-weather"
   "encoding/gob"
   "encoding/json"
   "errors"
@@ -250,7 +251,7 @@ func main() {
   gob.Register(&current_conditions{})
   gob.Register(&forecast{})
   gob.Register(&wu_credentials{})
-  gob.Register(&WuForecast10Response{})
+  gob.Register(&weather.Forecast10Response{})
 
   // Disable Console Color
   // gin.DisableConsoleColor()
@@ -324,7 +325,7 @@ func int_ptr_to_float_ptr(v *int) *float64 {
   }
 }
 
-func shortcast_maybe(v *WuForecastResponseDaypart) string {
+func shortcast_maybe(v *weather.ForecastResponseDaypart) string {
   if v == nil {
     return ""
   } else {
@@ -332,7 +333,7 @@ func shortcast_maybe(v *WuForecastResponseDaypart) string {
   }
 }
 
-func narrative_maybe(v *WuForecastResponseDaypart) string {
+func narrative_maybe(v *weather.ForecastResponseDaypart) string {
   if v == nil {
     return ""
   } else {

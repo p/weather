@@ -11,6 +11,7 @@ import (
   "net/http"
   "regexp"
   "strings"
+  "github.com/p/go-weather"
 )
 
 type current_conditions struct {
@@ -348,7 +349,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   }
   log.Debug(api_key)
 
-  c, err := NewWuClient(api_key)
+  c, err := weather.NewClient(api_key)
   if err != nil {
     return nil, err
   }
@@ -362,7 +363,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
 
   dailies := make([]daily_forecast, 0)
   for _, v := range payload.Forecasts {
-    var dpv WuForecastResponseDaypart
+    var dpv weather.ForecastResponseDaypart
     if v.Day != nil {
       dpv = *v.Day
     } else {
@@ -386,7 +387,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   return &f, nil
 }
 
-func extract_narrative(v WuForecastResponseDaypart) string {
+func extract_narrative(v weather.ForecastResponseDaypart) string {
   n := v.Narrative
   if v.WindPhrase != "" {
     n = strings.Replace(n, " "+v.WindPhrase, "", 1)
@@ -404,7 +405,7 @@ func extract_top_level_narrative(n string) string {
   return n
 }
 
-func convert_wu_forecast(v *WuForecastResponseDaypart) *day_part_forecast {
+func convert_wu_forecast(v *weather.ForecastResponseDaypart) *day_part_forecast {
   if v == nil {
     return nil
   }
