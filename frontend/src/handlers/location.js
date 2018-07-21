@@ -32,7 +32,7 @@ export default class Location extends React.Component {
     if (key == 'forecast') {
       url_key = 'forecast/wu'
     }
-    fetch('http://localhost:8093/locations/' + this.props.params.location + '?network=0')
+    fetch('http://localhost:8093/locations/' + this.props.params.location + '?network=2')
     .then(resp => resp.json())
     .then(payload => {
       //let state_delta = {}
@@ -76,31 +76,26 @@ export default class Location extends React.Component {
         </div>
         
     {forecast.day &&
-      <div className='forecast-day'>
-        <div className='forecast-temp'>{forecast.day.temp.toString() + '\xb0'}</div>
-        <div className='forecast-precip'>
-          <div>{forecast.day.precip_probability}%</div>
-          <div>{forecast.day.precip_type}</div>
-        </div>
-        <div className='forecast-blurb'>
-          {forecast.day.condition_description}
-        </div>
-      </div>
-    }
-      <div className='forecast-night'>
-        <div className='forecast-temp'>{forecast.night.temp.toString() + '\xb0'}</div>
-        <div className='forecast-precip'>
-          <div>{forecast.night.precip_probability}%</div>
-          <div>{forecast.night.precip_type}</div>
-        </div>
-        <div className='forecast-blurb'>
-          {forecast.night.condition_description}
-        </div>
-      </div>
-      </div>)}
+      this.render_day_part_forecast('day', forecast.day)}
+    {this.render_day_part_forecast('night', forecast.night)}
+    </div>
+  )}
       <p>Updated: {this.data_age('forecast')}</p>
       </div>}
     </div>
+  }
+  
+  render_day_part_forecast(day_part_name, forecast) {
+      return <div className={'forecast-' + day_part_name}>
+        <div className='forecast-temp'>{forecast.temp.toString() + '\xb0'}</div>
+        <div className='forecast-precip'>
+          <div>{forecast.precip_probability}%</div>
+          <div>{forecast.precip_type}</div>
+        </div>
+        <div className='forecast-blurb'>
+          {forecast.condition_description}
+        </div>
+      </div>
   }
   
   format_short_forecast(name, dpf) {
