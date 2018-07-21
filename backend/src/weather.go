@@ -26,21 +26,21 @@ func (cc current_conditions) GetUpdatedAt() float64 {
 }
 
 type day_part_forecast struct {
-  Time                 float64 `json:"time"`
-  Temp                 float64 `json:"temp"`
-  PrecipProbability    int     `json:"precip_probability"`
-  PrecipType           string  `json:"precip_type"`
+  Time              float64 `json:"time"`
+  Temp              float64 `json:"temp"`
+  PrecipProbability int     `json:"precip_probability"`
+  PrecipType        string  `json:"precip_type"`
   //ShortNarrative string  `json:"short_narrative"`
-  Narrative string  `json:"narrative"`
+  Narrative string `json:"narrative"`
 }
 
 type daily_forecast struct {
-  Time  float64            `json:"time"`
-  Day   *day_part_forecast `json:"day"`
-  Night *day_part_forecast `json:"night"`
-  PrecipProbability    int     `json:"precip_probability"`
-  PrecipType           string  `json:"precip_type"`
-  Narrative string  `json:"narrative"`
+  Time              float64            `json:"time"`
+  Day               *day_part_forecast `json:"day"`
+  Night             *day_part_forecast `json:"night"`
+  PrecipProbability int                `json:"precip_probability"`
+  PrecipType        string             `json:"precip_type"`
+  Narrative         string             `json:"narrative"`
 }
 
 type forecast struct {
@@ -364,9 +364,9 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   for _, v := range payload.Forecasts {
     var dpv WuForecastResponseDaypart
     if v.Day != nil {
-    dpv = *v.Day
+      dpv = *v.Day
     } else {
-    dpv = v.Night
+      dpv = v.Night
     }
     dailies = append(dailies, daily_forecast{
       float64(v.FcstValid),
