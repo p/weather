@@ -89,8 +89,12 @@ export default class Location extends React.Component {
       return <div className={'forecast-' + day_part_name}>
         <div className='forecast-temp'>{forecast.temp.toString() + '\xb0'}</div>
         <div className='forecast-precip'>
+        {forecast.precip_probability ?
+          <div>
           <div>{forecast.precip_probability}%</div>
           <div>{forecast.precip_type}</div>
+          </div>
+          : ''}
         </div>
         <div className='forecast-blurb'>
           {forecast.condition_description}
