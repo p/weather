@@ -8,7 +8,7 @@ package main
 
 import (
   //"bytes"
-  "github.com/p/go-weather"
+  "gopkg.in/weather.v0"
   "encoding/gob"
   "encoding/json"
   "errors"

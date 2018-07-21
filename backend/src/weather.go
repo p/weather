@@ -11,7 +11,7 @@ import (
   "net/http"
   "regexp"
   "strings"
-  "github.com/p/go-weather"
+  "gopkg.in/weather.v0"
 )
 
 type current_conditions struct {
@@ -354,7 +354,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
     return nil, err
   }
   payload, err := c.GetForecast10ByLocation(
-    resloc.Lat, resloc.Lng)
+    resloc.Lat, resloc.Lng, "")
   if err != nil {
     return nil, err
   }
