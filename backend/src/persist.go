@@ -35,7 +35,7 @@ func lookup(bucket_name string, key string) (interface{}, error) {
   err := db.View(func(tx *bolt.Tx) error {
     b := tx.Bucket([]byte(bucket_name))
     if b == nil {
-    return errors.New("Bucket " + bucket_name + " does not exist")
+      return errors.New("Bucket " + bucket_name + " does not exist")
     }
     encoded = b.Get([]byte(key))
     return nil

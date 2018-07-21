@@ -8,9 +8,9 @@ import (
   log "github.com/sirupsen/logrus"
   "io"
   "io/ioutil"
-  "strings"
   "net/http"
   "regexp"
+  "strings"
 )
 
 type current_conditions struct {
@@ -351,7 +351,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   if err != nil {
     return nil, err
   }
-  
+
   persist("wu_forecasts_raw", resloc.Query, payload)
 
   dailies := make([]daily_forecast, 0)
@@ -374,13 +374,13 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
 func extract_narrative(v WuForecastResponseDaypart) string {
   n := v.Narrative
   if v.WindPhrase != "" {
-  n = strings.Replace(n, " " + v.WindPhrase, "", 1)
+    n = strings.Replace(n, " "+v.WindPhrase, "", 1)
   }
   if v.TempPhrase != "" {
-  n = strings.Replace(n, " " + v.TempPhrase, "", 1)
+    n = strings.Replace(n, " "+v.TempPhrase, "", 1)
   }
   if v.PopPhrase != "" {
-  n = strings.Replace(n, " " + v.PopPhrase, "", 1)
+    n = strings.Replace(n, " "+v.PopPhrase, "", 1)
   }
   return n
 }

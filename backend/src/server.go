@@ -110,7 +110,7 @@ func get_network_flag(c *gin.Context) (NetworkUse, error) {
   case "2":
     network = NetworkSkip
   default:
-    return NetworkDefault, errors.New("Invalid network value: "+raw_network)
+    return NetworkDefault, errors.New("Invalid network value: " + raw_network)
   }
   return network, nil
 }
@@ -138,7 +138,7 @@ func get_wu_forecast_route(c *gin.Context) {
 
 func get_wu_forecast_raw_route(c *gin.Context) {
   location := c.Param("location")
-  
+
   log.Debug(location)
   data, err := lookup("wu_forecasts_raw", location)
   if err != nil {
@@ -149,14 +149,14 @@ func get_wu_forecast_raw_route(c *gin.Context) {
     render_json(c, data)
     return
   }
-  
+
   resloc, err := resolve_location(location)
   if err != nil {
     c.String(500, err.Error())
     return
   }
   f, err := get_wu_forecast(location, *resloc, NetworkDefault)
-  f=f
+  f = f
   if err != nil {
     c.String(500, "Could not get weather: "+err.Error())
     return
@@ -171,8 +171,8 @@ func get_wu_forecast_raw_route(c *gin.Context) {
     render_json(c, data)
     return
   }
-    
-    c.String(500, "No wu cached data after retrieving a forecast")
+
+  c.String(500, "No wu cached data after retrieving a forecast")
 }
 
 func location_route(c *gin.Context) {
@@ -194,7 +194,7 @@ func location_route(c *gin.Context) {
   }
 
   render_json(c, f)
-  f=f
+  f = f
 }
 
 func render_json(c *gin.Context, data interface{}) {
@@ -346,25 +346,25 @@ func now() float64 {
 
 type location_everything struct {
   Location resolved_location  `json:"location"`
-  Current current_conditions  `json:"current"`
-  Forecast forecast `json:"forecast"`
+  Current  current_conditions `json:"current"`
+  Forecast forecast           `json:"forecast"`
 }
 
 func get_location_everything(location string, resloc resolved_location,
-network NetworkUse) (*location_everything, error) {
+  network NetworkUse) (*location_everything, error) {
   cc, err := get_current_weather(location, resloc, network)
   if err != nil {
-  return nil, err
+    return nil, err
   }
   f, err := get_wu_forecast(location, resloc, network)
   if err != nil {
-  return nil, err
+    return nil, err
   }
-  
+
   return &location_everything{
     resloc,
     *cc,
     *f,
   }, nil
-  
+
 }
