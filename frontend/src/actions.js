@@ -1,4 +1,4 @@
-import alt from './alt';
+import alt from './alt'
 
 class Actions {
   updateTodo(id, text) {
@@ -6,4 +6,4 @@ class Actions {
   }
 }
 
-export default alt.createActions(Actions);
+export default alt.createActions(Actions)

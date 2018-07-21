@@ -1,5 +1,5 @@
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
-import React from 'react';
+import React from 'react'
 import PropTypes from 'prop-types'
 
 export default class LocationForm extends React.Component {
@@ -12,17 +12,23 @@ export default class LocationForm extends React.Component {
   }
 
   render() {
-    return <form>
-      <input type='text' defaultValue={this.state.location || ''}
+    return (
+      <form>
+        <input
+          type="text"
+          defaultValue={this.state.location || ''}
           onChange={this.location_did_change.bind(this)}
-      />
-      <input type='submit' onClick={preventDefaultWrapper(this.location_did_submit.bind(this))}
-      />
-    </form>
+        />
+        <input
+          type="submit"
+          onClick={preventDefaultWrapper(this.location_did_submit.bind(this))}
+        />
+      </form>
+    )
   }
 
   location_did_change(e) {
-    this.setState({location: e.target.value})
+    this.setState({ location: e.target.value })
   }
 
   location_did_submit(e) {
