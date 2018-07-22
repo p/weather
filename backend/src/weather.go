@@ -6,12 +6,12 @@ import (
   owm "github.com/briandowns/openweathermap"
   "github.com/kr/pretty"
   log "github.com/sirupsen/logrus"
+  "gopkg.in/weather.v0"
   "io"
   "io/ioutil"
   "net/http"
   "regexp"
   "strings"
-  "gopkg.in/weather.v0"
 )
 
 type current_conditions struct {

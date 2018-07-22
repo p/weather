@@ -8,13 +8,13 @@ package main
 
 import (
   //"bytes"
-  "gopkg.in/weather.v0"
   "encoding/gob"
   "encoding/json"
   "errors"
   "fmt"
   "github.com/gin-gonic/gin"
   log "github.com/sirupsen/logrus"
+  "gopkg.in/weather.v0"
   "os"
   "regexp"
   "strconv"
