@@ -325,7 +325,7 @@ func int_ptr_to_float_ptr(v *int) *float64 {
   }
 }
 
-func shortcast_maybe(v *weather.ForecastResponseDaypart) string {
+func shortcast_maybe(v *weather.DaypartForecast) string {
   if v == nil {
     return ""
   } else {
@@ -333,7 +333,7 @@ func shortcast_maybe(v *weather.ForecastResponseDaypart) string {
   }
 }
 
-func narrative_maybe(v *weather.ForecastResponseDaypart) string {
+func narrative_maybe(v *weather.DaypartForecast) string {
   if v == nil {
     return ""
   } else {
