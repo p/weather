@@ -21,18 +21,27 @@ func current_retriever_wu(resloc resolved_location) (persistable, error) {
   log.Debug(api_key)
 
   c := weather.NewClient(api_key)
-  payload, err := c.GetCurrentByLocation(
+  current, err := c.GetCurrentByLocation(
     resloc.Lat, resloc.Lng, "e")
   if err != nil {
     return nil, err
   }
 
-  persist("wu_currents_raw", resloc.Query, payload)
+  persist("wu_currents_raw", resloc.Query, current)
+
+  wwir, err := c.GetWwirByLocation(
+    resloc.Lat, resloc.Lng, "e")
+  if err != nil {
+    return nil, err
+  }
+
+  persist("wu_wwirs_raw", resloc.Query, wwir)
 
   p := current_conditions{
-    float64(payload.Observation.Imperial.Temp),
-    float64(payload.Observation.Imperial.TempMin24hour),
-    float64(payload.Observation.Imperial.TempMax24hour),
+    float64(current.Observation.Imperial.Temp),
+    float64(current.Observation.Imperial.TempMin24hour),
+    float64(current.Observation.Imperial.TempMax24hour),
+    wwir.Forecast.Phrase,
     now(),
   }
   return &p, nil

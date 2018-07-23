@@ -4,6 +4,7 @@ type current_conditions struct {
   Temp    float64 `json:"temp"`
   TempMin float64 `json:"temp_min"`
   TempMax float64 `json:"temp_max"`
+  WwirPhrase string `json:"wwir_phrase"`
 
   UpdatedAt float64 `json:"updated_at"`
 }

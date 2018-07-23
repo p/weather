@@ -37,6 +37,7 @@ func current_retriever_owm(resloc resolved_location) (persistable, error) {
     w.Main.Temp,
     w.Main.TempMin,
     w.Main.TempMax,
+    "",
     now(),
   }
   return &p, nil
