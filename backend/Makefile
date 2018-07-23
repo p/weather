@@ -1,7 +1,7 @@
 GOPATH?=$$HOME/go
 
-bare_sources=server.go weather.go location.go persist.go schema.go
-sources=src/server.go src/weather.go src/location.go src/persist.go src/schema.go
+bare_sources=server.go weather.go location.go persist.go schema.go types.go
+sources=src/server.go src/weather.go src/location.go src/persist.go src/schema.go src/types.go
 
 all: b
 
