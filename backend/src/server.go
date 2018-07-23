@@ -230,22 +230,12 @@ func main() {
   }
   defer db.Close()
 
-  db.Update(func(tx *bolt.Tx) error {
-    buckets := []string{
-      "geocodes", "current_conditions", "forecasts", "wu_forecasts",
-      "wu_forecasts_raw", "config"}
-
-    for index, bucket := range buckets {
-      b, err := tx.CreateBucketIfNotExists([]byte(bucket))
-      if err != nil {
-        log.Fatal("Cannot create " + bucket + " bucket")
-      }
-
-      b = b
-      index = index
-    }
-    return nil
-  })
+  
+  err = create_buckets()
+  if err != nil { panic(err) }
+  err = check_schema()
+  if err != nil { panic(err) }
+  
 
   gob.Register(&resolved_location{})
   gob.Register(&current_conditions{})
@@ -309,6 +299,7 @@ func main() {
       log.Fatal(err)
     }
   }
+  log.Info(fmt.Sprintf("Listening on port %d", iport))
   router.Run(fmt.Sprintf(":%d", iport))
   // router.Run(":3000") for a hard coded port
 
