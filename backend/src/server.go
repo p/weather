@@ -230,12 +230,14 @@ func main() {
   }
   defer db.Close()
 
-  
   err = create_buckets()
-  if err != nil { panic(err) }
+  if err != nil {
+    panic(err)
+  }
   err = check_schema()
-  if err != nil { panic(err) }
-  
+  if err != nil {
+    panic(err)
+  }
 
   gob.Register(&resolved_location{})
   gob.Register(&current_conditions{})
