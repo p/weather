@@ -106,7 +106,7 @@ func get_weather_with_cache(
   return p, nil
 }
 
-func current_retriever(resloc resolved_location) (persistable, error) {
+func current_retriever_owm(resloc resolved_location) (persistable, error) {
   w, err := owm.NewCurrent("F", "en", owm_api_key)
   if err != nil {
     return nil, errors.New("Could not make current: " + err.Error())
@@ -135,15 +135,45 @@ func current_retriever(resloc resolved_location) (persistable, error) {
   return &p, nil
 }
 
+func current_retriever_wu(resloc resolved_location) (persistable, error) {
+  api_key, err := get_wu_api_key_cached()
+  if err != nil {
+    return nil, errors.New("Error retrieving wu api key:" + err.Error())
+  }
+  log.Debug(api_key)
+
+  c := weather.NewClient(api_key)
+  payload, err := c.GetCurrentByLocation(
+    resloc.Lat, resloc.Lng, "e")
+  if err != nil {
+    return nil, err
+  }
+
+  persist("wu_currents_raw", resloc.Query, payload)
+
+  p := current_conditions{
+    float64(payload.Observation.Imperial.Temp),
+    float64(payload.Observation.Imperial.TempMin24hour),
+    float64(payload.Observation.Imperial.TempMax24hour),
+    now(),
+  }
+  return &p, nil
+}
+
 func get_current_weather(location string,
   resloc resolved_location,
+  service string,
   network NetworkUse) (*current_conditions, error) {
+  
+  var cr func (resloc resolved_location) (persistable, error)
+  if service == "wu"{cr=current_retriever_wu
+  }else{cr=current_retriever_owm}
 
   p, err := get_weather_with_cache(
     location,
     resloc,
     "current_conditions",
-    current_retriever, network)
+    cr, network)
 
   if err != nil {
     return nil, err

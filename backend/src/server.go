@@ -73,7 +73,7 @@ func get_conditions_route(c *gin.Context) {
     c.String(500, err.Error())
     return
   }
-  cc, err := get_current_weather(location, *resloc, network)
+  cc, err := get_current_weather(location, *resloc, "wu", network)
   if err != nil {
     c.String(500, "Could not get weather: "+err.Error())
     return
@@ -346,7 +346,7 @@ type location_everything struct {
 
 func get_location_everything(location string, resloc resolved_location,
   network NetworkUse) (*location_everything, error) {
-  cc, err := get_current_weather(location, resloc, network)
+  cc, err := get_current_weather(location, resloc, "wu",network)
   if err != nil {
     return nil, err
   }

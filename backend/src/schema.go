@@ -30,6 +30,7 @@ func create_buckets() error {
   err := db.Update(func(tx *bolt.Tx) error {
     buckets := []string{
       "geocodes", "current_conditions", "forecasts", "wu_forecasts",
+      "wu_currents_raw",
       "wu_forecasts_raw", "config"}
 
     for index, bucket := range buckets {
