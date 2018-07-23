@@ -337,28 +337,3 @@ func narrative_maybe(v *weather.DaypartForecast) string {
 func now() float64 {
   return float64(time.Now().UnixNano()) / 1e9
 }
-
-type location_everything struct {
-  Location resolved_location  `json:"location"`
-  Current  current_conditions `json:"current"`
-  Forecast forecast           `json:"forecast"`
-}
-
-func get_location_everything(location string, resloc resolved_location,
-  network NetworkUse) (*location_everything, error) {
-  cc, err := get_current_weather(location, resloc, "wu",network)
-  if err != nil {
-    return nil, err
-  }
-  f, err := get_wu_forecast(location, resloc, network)
-  if err != nil {
-    return nil, err
-  }
-
-  return &location_everything{
-    resloc,
-    *cc,
-    *f,
-  }, nil
-
-}
