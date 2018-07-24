@@ -45,7 +45,7 @@ export default class Locations extends React.Component {
         <h2>Locations</h2>
         {_.map(this.state.locations, location => (
           <p key={location}>
-            <Link to="Location" params={{ location: location }}>
+            <Link to="BriefLocation" params={{ location: location }}>
               {location}
             </Link>
             &nbsp;

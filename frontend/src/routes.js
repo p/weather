@@ -3,9 +3,14 @@ import { AppBase } from './app'
 
 export default {
   Locations: { path: '/', component: Handlers.Locations, wrapper: AppBase },
-  Location: {
+  BriefLocation: {
     path: '/:location',
-    component: Handlers.Location,
+    component: Handlers.BriefLocation,
+    wrapper: AppBase,
+  },
+  FullLocation: {
+    path: '/:location/full',
+    component: Handlers.FullLocation,
     wrapper: AppBase,
   },
 }

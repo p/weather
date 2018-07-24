@@ -4,11 +4,10 @@ import { Link } from 'react-easy-router'
 import Immutable from 'seamless-immutable'
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
-import connectToStores from 'alt-utils/lib/connectToStores'
 import React from 'react'
 import Store from '../store'
 
-export default class Location extends React.Component {
+export default class BriefLocation extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -137,7 +136,7 @@ export default class Location extends React.Component {
   }
 }
 
-Location.propTypes = {
+BriefLocation.propTypes = {
   params: PropTypes.shape({
     location: PropTypes.string,
   }),

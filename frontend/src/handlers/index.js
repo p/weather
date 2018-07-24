@@ -1,7 +1,9 @@
-import location from './location'
-import locations from './locations'
+import BriefLocation from './brief_location'
+import FullLocation from './full_location'
+import Locations from './locations'
 
 export default {
-  Location: location,
-  Locations: locations,
+  BriefLocation: BriefLocation,
+  FullLocation: FullLocation,
+  Locations: Locations,
 }
