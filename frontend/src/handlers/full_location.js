@@ -6,50 +6,9 @@ import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
+import BaseLocation from './base_location'
 
-export default class FullLocation extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
-  static getStores() {
-    return [Store]
-  }
-
-  static getPropsFromStores() {
-    return Store.getState()
-  }
-
-  componentDidMount() {
-    this.load_data('current', 10 * 60 * 1000)
-    //this.load_data('forecast', 2*3600*1000)
-  }
-
-  load_data(key) {
-    let url_key = key
-    if (key == 'forecast') {
-      url_key = 'forecast/wu'
-    }
-    fetch(
-      'http://localhost:8093/locations/' +
-        this.props.params.location +
-        '?network=2',
-    )
-      .then(resp => resp.json())
-      .then(payload => {
-        //let state_delta = {}
-        //state_delta[key] = payload
-        //console.log(state_delta)
-        this.setState(payload)
-      })
-  }
-
-  load_data_periodically(key, interval) {
-    this.load_data(key)
-    setTimeout(this.load_data_periodically.bind(this, key, interval), interval)
-  }
-
+export default class FullLocation extends BaseLocation {
   render() {
     console.log(this.state.forecast)
     return (
@@ -120,24 +79,4 @@ export default class FullLocation extends React.Component {
       </p>
     )
   }
-
-  data_age(key) {
-    if (this.state[key]) {
-      let d = new Date().getTime() / 1000 - this.state[key].updated_at
-      return moment.duration(d, 'seconds').humanize() + ' ago'
-    } else {
-      return null
-    }
-  }
-
-  format_date(timestamp) {
-    let date = new Date(timestamp * 1000)
-    return moment(date).format('dddd, MMM D')
-  }
-}
-
-FullLocation.propTypes = {
-  params: PropTypes.shape({
-    location: PropTypes.string,
-  }),
 }
