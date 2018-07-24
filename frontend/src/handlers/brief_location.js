@@ -6,7 +6,7 @@ import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
-import {data_age } from '../util'
+import { data_age } from '../util'
 import Current from '../components/current'
 import BaseLocation from './base_location'
 
@@ -21,9 +21,7 @@ export default class BriefLocation extends BaseLocation {
             : this.props.params.location}
         </h2>
 
-        {this.state.current && 
-          <Current current={this.state.current}/>
-        }
+        {this.state.current && <Current current={this.state.current} />}
 
         {this.state.forecast && (
           <div>

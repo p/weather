@@ -1,4 +1,4 @@
-import {data_age } from '../util'
+import { data_age } from '../util'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Link } from 'react-easy-router'
@@ -21,9 +21,7 @@ export default class FullLocation extends BaseLocation {
             : this.props.params.location}
         </h2>
 
-        {this.state.current && 
-          <Current current={this.state.current}/>
-        }
+        {this.state.current && <Current current={this.state.current} />}
 
         {this.state.forecast && (
           <div>
