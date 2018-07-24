@@ -1,3 +1,4 @@
+import {data_age } from '../util'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Link } from 'react-easy-router'
@@ -7,6 +8,7 @@ import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
 import BaseLocation from './base_location'
+import Current from '../components/current'
 
 export default class FullLocation extends BaseLocation {
   render() {
@@ -19,14 +21,9 @@ export default class FullLocation extends BaseLocation {
             : this.props.params.location}
         </h2>
 
-        {this.state.current && (
-          <div>
-            <p>Now: {this.state.current.temp}&deg;</p>
-            <p>High: {this.state.current.temp_max}&deg;</p>
-            <p>Low: {this.state.current.temp_min}&deg;</p>
-            <p>Updated: {this.data_age('current')}</p>
-          </div>
-        )}
+        {this.state.current && 
+          <Current current={this.state.current}/>
+        }
 
         {this.state.forecast && (
           <div>
@@ -42,7 +39,7 @@ export default class FullLocation extends BaseLocation {
                 {this.render_day_part_forecast('night', forecast.night)}
               </div>
             ))}
-            <p>Updated: {this.data_age('forecast')}</p>
+            <p>Updated: {data_age(this.state.forecast)}</p>
           </div>
         )}
       </div>

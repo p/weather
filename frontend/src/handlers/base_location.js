@@ -50,15 +50,6 @@ export default class BaseLocation extends React.Component {
     setTimeout(this.load_data_periodically.bind(this, key, interval), interval)
   }
 
-  data_age(key) {
-    if (this.state[key]) {
-      let d = new Date().getTime() / 1000 - this.state[key].updated_at
-      return moment.duration(d, 'seconds').humanize() + ' ago'
-    } else {
-      return null
-    }
-  }
-
   format_date(timestamp) {
     let date = new Date(timestamp * 1000)
     return moment(date).format('dddd, MMM D')
