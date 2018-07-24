@@ -4,5 +4,5 @@ set -e
 
 mkdir -p frontend/public/icons/wu
 for i in `seq 50`; do
-  curl -o frontend/public/icons/wu/$i.svg https://icons.wxug.com/i/c/v4/$i.svg
+  curl -fo frontend/public/icons/wu/$i.svg https://icons.wxug.com/i/c/v4/$i.svg
 done
