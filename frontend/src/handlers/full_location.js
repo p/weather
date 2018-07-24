@@ -12,7 +12,7 @@ import Current from '../components/current'
 
 export default class FullLocation extends BaseLocation {
   render() {
-    console.log(this.state.forecast)
+    //console.log(this.state.forecast)
     return (
       <div>
         <h2>
