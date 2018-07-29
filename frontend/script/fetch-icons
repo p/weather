@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+mkdir -p public/icons/wu
+for i in `seq 50`; do
+  if ! curl -fo public/icons/wu/$i.svg https://icons.wxug.com/i/c/v4/$i.svg; then
+    break
+  fi
+done

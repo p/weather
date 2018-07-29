@@ -7,6 +7,7 @@ dist:
 	./node_modules/.bin/webpack --config webpack.config.prod.js -p
 	cp build/* dist/static
 	cp index.html dist
+	./script/fetch-icons
 	rsync -a public/ dist
 
 .PHONY: dist
