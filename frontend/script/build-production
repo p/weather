@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+rm -rf dist
+mkdir dist dist/static
+./node_modules/.bin/webpack --config webpack.config.prod.js -p --env.API_URL=$API_URL
+cp build/* dist/static
+cp index.html dist
+./script/fetch-icons
+rsync -a public/ dist

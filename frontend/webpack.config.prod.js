@@ -2,7 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
   const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-module.exports = {
+module.exports = function(env){
+  return {
     mode: 'production',
     devtool: 'source-map',
   entry: [
@@ -18,6 +19,9 @@ module.exports = {
   plugins: [
     new webpack.NamedModulesPlugin(),
   new UglifyJSPlugin({sourceMap:true}),
+  new webpack.DefinePlugin({
+    API_URL:env.API_URL,
+  }),
   ],
   module: {
     rules: [{
@@ -27,4 +31,5 @@ module.exports = {
     },
     ]
   }
+}
 };

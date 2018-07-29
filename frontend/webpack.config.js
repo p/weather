@@ -20,7 +20,10 @@ module.exports = {
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+  new webpack.DefinePlugin({
+    API_URL:'http://localhost:8093',
+  }),
   ],
   module: {
     rules: [{

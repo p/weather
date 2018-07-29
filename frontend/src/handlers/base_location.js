@@ -32,7 +32,7 @@ export default class BaseLocation extends React.Component {
       url_key = 'forecast/wu'
     }
     fetch(
-      'http://localhost:8093/locations/' +
+      "API_URL" + '/locations/' +
         this.props.params.location +
         '?network=2',
     )
