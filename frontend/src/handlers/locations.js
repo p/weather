@@ -19,7 +19,7 @@ export default class Locations extends React.Component {
   }
 
   componentDidMount() {
-    fetch("API_URL" + '/locations')
+    fetch(API_URL + '/locations')
       .then(resp => resp.json())
       .then(payload => {
         this.setState({ locations: payload })
