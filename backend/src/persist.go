@@ -60,4 +60,16 @@ func lookup(bucket_name string, key string) (interface{}, error) {
   return data, nil
 }
 
+func lookup_expiring(bucket_name string, key string) (interface{persistable}, error) {
+data, err:=lookup(bucket_name,key)
+if err!=nil{
+return nil,err}
+p :=data.(persistable)
+  
+  if p.GetExpiresAt()<now(){
+  return nil,nil
+  }
+  return p,nil
+}
+
 const start_of_2020 = float64(1577854800)

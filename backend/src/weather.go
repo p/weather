@@ -23,7 +23,7 @@ func get_weather_with_cache(
   var err error
 
   if network != NetworkForce {
-    data, err := lookup(bucket_name, location)
+    data, err := lookup_expiring(bucket_name, location)
     if err != nil {
       return nil, errors.New("Error retrieving from cache: " + err.Error())
     }
