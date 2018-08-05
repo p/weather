@@ -26,11 +26,43 @@ class ResolvedLocation
   def_delegators :info, :lat, :lng, :city, :state, :updated_at
 
   def wu_current_url
-    "https://www.wunderground.com/weather/us/#{state.downcase}/#{city.downcase.gsub(/[^\w]/, '-')}"
+    "https://www.wunderground.com/weather/us/ny/new-york"
   end
 end
 
 class App < Sinatra::Base
+  private def wu_api_request(path, resloc)
+    attempt = 1
+    payload = nil
+    while true
+      begin
+        url = "https://api.weather.com/v1/geocode/#{resloc.lat}/#{resloc.lng}/#{path}.json?apiKey=#{api_key}&units=e"
+        puts url
+        payload = JSON.parse(open(url).read)
+        break
+      rescue OpenURI::HTTPError => e
+        if attempt > 1
+          raise
+        elsif e.message =~ /\A401\b/
+          # This is probably not correct as my 401 was from a wrong URL
+          reset_api_key
+          attempt += 1
+        else
+          raise
+        end
+      end
+    end
+    payload
+  end
+
+  private def reset_api_key
+    @api_key = $db['wu_api_key'] = nil
+  end
+
+  private def api_key
+    @api_key ||= wu_api_key("https://www.wunderground.com/weather/us/ny/new-york")
+  end
+
   get '/locations' do
     locations = $db['locations'] || []
     content_type :json
@@ -40,8 +72,13 @@ class App < Sinatra::Base
   get '/locations/:location/current' do |location|
     resloc = resolve(location)
     api_key = wu_api_key(resloc.wu_current_url)
+    payload = wu_api_request('observations/current', resloc)
+    response = {
+      location: resloc.info,
+      current: payload,
+    }
     content_type :json
-    JSON.generate(resloc.info)
+    JSON.generate(response)
   end
 
   get '/locations/:location/forecast' do |location|
