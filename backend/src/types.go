@@ -1,10 +1,10 @@
 package main
 
 type current_conditions struct {
-  Temp    float64 `json:"temp"`
-  TempMin float64 `json:"temp_min"`
-  TempMax float64 `json:"temp_max"`
-  WwirPhrase string `json:"wwir_phrase"`
+  Temp       float64 `json:"temp"`
+  TempMin    float64 `json:"temp_min"`
+  TempMax    float64 `json:"temp_max"`
+  WwirPhrase string  `json:"wwir_phrase"`
 
   UpdatedAt float64 `json:"updated_at"`
   ExpiresAt float64 `json:"expires_at"`
@@ -39,7 +39,7 @@ type daily_forecast struct {
 type forecast struct {
   DailyForecasts []daily_forecast `json:"daily_forecasts"`
   UpdatedAt      float64          `json:"updated_at"`
-  ExpiresAt float64 `json:"expires_at"`
+  ExpiresAt      float64          `json:"expires_at"`
 }
 
 func (f forecast) GetUpdatedAt() float64 {

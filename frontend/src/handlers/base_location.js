@@ -7,7 +7,7 @@ import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
 
-let NETWORK=NODE_ENV=='production'?0:2
+let NETWORK = NODE_ENV == 'production' ? 0 : 2
 
 export default class BaseLocation extends React.Component {
   constructor(props) {
@@ -34,9 +34,11 @@ export default class BaseLocation extends React.Component {
       url_key = 'forecast/wu'
     }
     fetch(
-      API_URL + '/locations/' +
+      API_URL +
+        '/locations/' +
         this.props.params.location +
-        '?network='+NETWORK,
+        '?network=' +
+        NETWORK,
     )
       .then(resp => resp.json())
       .then(payload => {

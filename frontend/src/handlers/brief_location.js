@@ -25,41 +25,47 @@ export default class FullLocation extends BaseLocation {
 
         {this.state.forecast && (
           <div>
-            {_.map(this.state.forecast.daily_forecasts, forecast => (
-              forecast.day ?
-              this.render_row('day', forecast) :
-              this.render_row('night', forecast)
-              ))}
+            {_.map(
+              this.state.forecast.daily_forecasts,
+              forecast =>
+                forecast.day
+                  ? this.render_row('day', forecast)
+                  : this.render_row('night', forecast),
+            )}
             <p>Updated: {data_age(this.state.forecast)}</p>
           </div>
         )}
       </div>
     )
   }
-  
+
   render_row(day_part_name, forecast) {
     forecast = ForecastPresenter(forecast)
-              return <div className="forecast-row" key={forecast.time}>
-                <div className="forecast-date">
-                  <div>{moment(forecast.time * 1000).format('dddd')}</div>
-                  <div>{moment(forecast.time * 1000).format('MMM D')}</div>
-                </div>
-
-      <div className={'forecast-' + day_part_name}>
-        <div className="forecast-temp">{forecast.temp.toString() + '\xb0'}</div>
-        <div className="forecast-precip">
-          {forecast.precip_probability > 10 ? (
-            <div>
-              <div>{forecast.precip_probability}%</div>
-              <div>{forecast.precip_type}</div>
-            </div>
-          ) : (
-            ''
-          )}
+    return (
+      <div className="forecast-row" key={forecast.time}>
+        <div className="forecast-date">
+          <div>{moment(forecast.time * 1000).format('dddd')}</div>
+          <div>{moment(forecast.time * 1000).format('MMM D')}</div>
         </div>
-        <div className="forecast-blurb">{forecast.narrative}</div>
-      </div>
+
+        <div className={'forecast-' + day_part_name}>
+          <div className="forecast-temp">
+            {forecast.temp.toString() + '\xb0'}
+          </div>
+          <div className="forecast-precip">
+            {forecast.precip_probability > 10 ? (
+              <div>
+                <div>{forecast.precip_probability}%</div>
+                <div>{forecast.precip_type}</div>
               </div>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="forecast-blurb">{forecast.narrative}</div>
+        </div>
+      </div>
+    )
   }
 
   format_short_forecast(name, dpf) {

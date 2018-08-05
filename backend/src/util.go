@@ -1,6 +1,8 @@
 package main
 
-import("time")
+import (
+  "time"
+)
 
 func int_ptr_to_float_ptr(v *int) *float64 {
   if v == nil {

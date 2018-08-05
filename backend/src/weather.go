@@ -69,10 +69,13 @@ func get_current_weather(location string,
   resloc resolved_location,
   service string,
   network NetworkUse) (*current_conditions, error) {
-  
-  var cr func (resloc resolved_location) (persistable, error)
-  if service == "wu"{cr=current_retriever_wu
-  }else{cr=current_retriever_owm}
+
+  var cr func(resloc resolved_location) (persistable, error)
+  if service == "wu" {
+    cr = current_retriever_wu
+  } else {
+    cr = current_retriever_owm
+  }
 
   p, err := get_weather_with_cache(
     location,
@@ -111,7 +114,7 @@ type location_everything struct {
 
 func get_location_everything(location string, resloc resolved_location,
   network NetworkUse) (*location_everything, error) {
-  cc, err := get_current_weather(location, resloc, "wu",network)
+  cc, err := get_current_weather(location, resloc, "wu", network)
   if err != nil {
     return nil, err
   }
