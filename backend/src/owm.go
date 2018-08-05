@@ -39,6 +39,7 @@ func current_retriever_owm(resloc resolved_location) (persistable, error) {
     w.Main.TempMax,
     "",
     now(),
+    now()+300,
   }
   return &p, nil
 }
@@ -94,6 +95,7 @@ func forecast_retriever(resloc resolved_location) (persistable, error) {
   p := forecast{
     dailies,
     now(),
+    now()+900,
   }
   return &p, nil
 }

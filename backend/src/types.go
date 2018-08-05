@@ -7,10 +7,15 @@ type current_conditions struct {
   WwirPhrase string `json:"wwir_phrase"`
 
   UpdatedAt float64 `json:"updated_at"`
+  ExpiresAt float64 `json:"expires_at"`
 }
 
 func (cc current_conditions) GetUpdatedAt() float64 {
   return cc.UpdatedAt
+}
+
+func (cc current_conditions) GetExpiresAt() float64 {
+  return cc.ExpiresAt
 }
 
 type day_part_forecast struct {
@@ -34,8 +39,13 @@ type daily_forecast struct {
 type forecast struct {
   DailyForecasts []daily_forecast `json:"daily_forecasts"`
   UpdatedAt      float64          `json:"updated_at"`
+  ExpiresAt float64 `json:"expires_at"`
 }
 
 func (f forecast) GetUpdatedAt() float64 {
   return f.UpdatedAt
+}
+
+func (f forecast) GetExpiresAt() float64 {
+  return f.ExpiresAt
 }

@@ -2,6 +2,7 @@ package main
 
 import (
   "errors"
+  "math"
   //"fmt"
   //"github.com/kr/pretty"
   log "github.com/sirupsen/logrus"
@@ -43,6 +44,8 @@ func current_retriever_wu(resloc resolved_location) (persistable, error) {
     float64(current.Observation.Imperial.TempMax24hour),
     wwir.Forecast.Phrase,
     now(),
+    math.Min(float64(current.Metadata.ExpireTimeGmt),
+      float64(wwir.Metadata.ExpireTimeGmt)),
   }
   return &p, nil
 }
@@ -70,6 +73,10 @@ type wu_credentials struct {
 
 func (x wu_credentials) GetUpdatedAt() float64 {
   return x.UpdatedAt
+}
+
+func (x wu_credentials) GetExpiresAt() float64 {
+  return start_of_2020
 }
 
 const WU_API_KEY_REGEXP = "apiKey=([a-zA-Z0-9]+)[^A-Za-z0-9]"
@@ -203,6 +210,7 @@ func wu_forecast_retriever(resloc resolved_location) (persistable, error) {
   f := forecast{
     dailies,
     now(),
+    float64(payload.Metadata.ExpireTimeGmt),
   }
 
   return &f, nil

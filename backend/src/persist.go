@@ -9,6 +9,7 @@ import (
 
 type persistable interface {
   GetUpdatedAt() float64
+  GetExpiresAt() float64
 }
 
 func persist(bucket_name string, key string, data interface{}) error {
@@ -58,3 +59,5 @@ func lookup(bucket_name string, key string) (interface{}, error) {
 
   return data, nil
 }
+
+const start_of_2020 = float64(1577854800)

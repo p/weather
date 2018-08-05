@@ -20,6 +20,10 @@ func (resloc resolved_location) GetUpdatedAt() float64 {
   return resloc.UpdatedAt
 }
 
+func (resloc resolved_location) GetExpiresAt() float64 {
+  return start_of_2020
+}
+
 func resolve_location(location string) (*resolved_location, error) {
   data, err := lookup("geocodes", location)
   log.Debug("location: " + location)
