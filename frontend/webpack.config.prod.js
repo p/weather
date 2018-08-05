@@ -21,6 +21,7 @@ module.exports = function(env){
   new UglifyJSPlugin({sourceMap:true}),
   new webpack.DefinePlugin({
     API_URL:env.API_URL,
+    NODE_ENV:'"production"',
   }),
   ],
   module: {

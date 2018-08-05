@@ -22,7 +22,8 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   new webpack.DefinePlugin({
-    API_URL:'http://localhost:8093',
+    API_URL:'"http://localhost:8093"',
+    NODE_ENV:'"development"',
   }),
   ],
   module: {

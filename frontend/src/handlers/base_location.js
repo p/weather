@@ -7,6 +7,8 @@ import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
 
+let NETWORK=NODE_ENV=='production'?0:2
+
 export default class BaseLocation extends React.Component {
   constructor(props) {
     super(props)
@@ -34,7 +36,7 @@ export default class BaseLocation extends React.Component {
     fetch(
       API_URL + '/locations/' +
         this.props.params.location +
-        '?network=2',
+        '?network='+NETWORK,
     )
       .then(resp => resp.json())
       .then(payload => {
