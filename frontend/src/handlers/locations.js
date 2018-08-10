@@ -1,3 +1,4 @@
+import history from '../history'
 import PropTypes from 'prop-types'
 import { Link } from 'react-easy-router'
 import Immutable from 'seamless-immutable'
@@ -64,8 +65,7 @@ export default class Locations extends React.Component {
   }
 
   location_did_submit(location) {
-    this.setState({ location: location })
-    this.add_location(location)
+    history.push('/' + location)
   }
 
   add_location(location) {
