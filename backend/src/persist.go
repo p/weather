@@ -65,6 +65,9 @@ func lookup_expiring(bucket_name string, key string) (interface{ persistable }, 
   if err != nil {
     return nil, err
   }
+  if data == nil {
+    return nil, nil
+  }
   p := data.(persistable)
 
   if p.GetExpiresAt() < now() {
