@@ -39,9 +39,19 @@ const (
   NetworkSkip
 )
 
+var debug bool
 var online bool
 var owm_api_key string
 var db *bolt.DB
+
+func return_500(c *gin.Context, msg string) {
+  log.Info(msg)
+  if (debug) {
+    c.String(500, msg)
+  } else {
+    c.String(500, "There was an internal error")
+  }
+}
 
 func list_locations_route(c *gin.Context) {
   var locations []string
@@ -54,7 +64,7 @@ func list_locations_route(c *gin.Context) {
     return nil
   })
   if err != nil {
-    c.String(500, "Problem: "+err.Error())
+    return_500(c, "Problem: "+err.Error())
     return
   }
 
@@ -65,17 +75,17 @@ func get_conditions_route(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   network, err := get_network_flag(c)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   cc, err := get_current_weather(location, *resloc, "wu", network)
   if err != nil {
-    c.String(500, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather: "+err.Error())
     return
   }
 
@@ -86,12 +96,12 @@ func get_forecast_route(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   f, err := get_forecast(location, *resloc, 0)
   if err != nil {
-    c.String(500, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather: "+err.Error())
     return
   }
 
@@ -120,17 +130,17 @@ func get_wu_forecast_route(c *gin.Context) {
   location := c.Param("location")
   network, err := get_network_flag(c)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   resloc, err := resolve_location(location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   f, err := get_wu_forecast(location, *resloc, network)
   if err != nil {
-    c.String(500, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather: "+err.Error())
     return
   }
 
@@ -143,7 +153,7 @@ func get_wu_forecast_raw_route(c *gin.Context) {
   log.Debug(location)
   data, err := lookup("wu_forecasts_raw", location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   if data != nil {
@@ -153,19 +163,19 @@ func get_wu_forecast_raw_route(c *gin.Context) {
 
   resloc, err := resolve_location(location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   f, err := get_wu_forecast(location, *resloc, NetworkDefault)
   f = f
   if err != nil {
-    c.String(500, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather: "+err.Error())
     return
   }
 
   data, err = lookup("wu_forecasts_raw", location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   if data != nil {
@@ -173,24 +183,24 @@ func get_wu_forecast_raw_route(c *gin.Context) {
     return
   }
 
-  c.String(500, "No wu cached data after retrieving a forecast")
+  return_500(c, "No wu cached data after retrieving a forecast")
 }
 
 func location_route(c *gin.Context) {
   location := c.Param("location")
   network, err := get_network_flag(c)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   resloc, err := resolve_location(location)
   if err != nil {
-    c.String(500, err.Error())
+    return_500(c, err.Error())
     return
   }
   f, err := get_location_everything(location, *resloc, network)
   if err != nil {
-    c.String(500, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather: "+err.Error())
     return
   }
 
@@ -201,7 +211,7 @@ func location_route(c *gin.Context) {
 func render_json(c *gin.Context, data interface{}) {
   payload, err := json.Marshal(data)
   if err != nil {
-    c.String(500, "Could not jsonify: "+err.Error())
+    return_500(c, "Could not jsonify: "+err.Error())
     return
   }
 
@@ -248,12 +258,14 @@ func main() {
   // Disable Console Color
   // gin.DisableConsoleColor()
 
-  debug := os.Getenv("DEBUG")
-  if debug == "" {
+  _debug := os.Getenv("DEBUG")
+  if _debug == "" {
     gin.SetMode(gin.ReleaseMode)
     log.SetLevel(log.WarnLevel)
+    debug = false
   } else {
     log.SetLevel(log.DebugLevel)
+    debug = true
   }
 
   offline := os.Getenv("OFFLINE")
