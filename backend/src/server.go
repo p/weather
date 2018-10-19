@@ -222,7 +222,7 @@ func render_json(c *gin.Context, data interface{}) {
 
 func set_cors_headers(c *gin.Context) {
   c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-  c.Writer.Header().Set("Access-Control-Allow-Method", "*")
+  c.Writer.Header().Set("Access-Control-Allow-Methods", "GET")
 }
 
 func main() {
