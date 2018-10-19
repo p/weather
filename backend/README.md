@@ -1,8 +1,8 @@
 # Weather Backend
 
-A server to cache weather data.
+A server to retrieve and cache weather data.
 
-## Usage
+## Configuration
 
 The server recognizes the following environment variables at runtime:
 
@@ -12,6 +12,8 @@ The server recognizes the following environment variables at runtime:
 - OFFLINE: do not make any network requests, use old data indefinitely
 - OWM_API_KEY: OpenWeatherMap API key
 - MAPQUEST_API_KEY: MapQuest API key (for geocoding)
+
+## Endpoints
 
 ## License
 
