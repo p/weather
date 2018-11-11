@@ -11,6 +11,7 @@ import (
   //"time"
 
   bolt "github.com/coreos/bbolt"
+  detector "gopkg.in/network-detect.v0"
   //"html/template"
 )
 
@@ -169,6 +170,24 @@ func location_route(c *gin.Context) {
   f = f
 }
 
+var nd *detector.NetworkDetector
+
+func network_route(c *gin.Context){
+if nd==nil{
+and:=detector.NewNetworkDetector()
+nd=&and
+}
+up,err:=nd.Up()
+  if err != nil {
+    return_500(c, "Could not figure out network status", err)
+    return
+  }
+  ns:=network_status{
+  up}
+  render_json(c,ns)
+
+}
+
 func define_routes(router *gin.Engine) {
   router.GET("/locations", list_locations_route)
   router.GET("/locations/:location", location_route)
@@ -176,4 +195,5 @@ func define_routes(router *gin.Engine) {
   router.GET("/locations/:location/forecast", get_forecast_route)
   router.GET("/locations/:location/forecast/wu", get_wu_forecast_route)
   router.GET("/locations/:location/forecast/wu/raw", get_wu_forecast_raw_route)
+  router.GET("/network", network_route)
 }

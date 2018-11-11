@@ -49,3 +49,7 @@ func (f forecast) GetUpdatedAt() float64 {
 func (f forecast) GetExpiresAt() float64 {
   return f.ExpiresAt
 }
+
+type network_status struct{
+Up bool `json:"up"`
+}
