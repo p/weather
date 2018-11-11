@@ -8,3 +8,13 @@ export function  data_age(struct) {
       return null
     }
   }
+
+    export function unim(any){
+    if(any&&
+      any.toJS){
+        return any.toJS()
+      }else{
+        return any
+      }
+    }
+    

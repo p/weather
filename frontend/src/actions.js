@@ -1,9 +1,11 @@
-import alt from './alt'
+import reactor from './reactor'
 
-class Actions {
-  updateTodo(id, text) {
-    return { id, text }
+export default {
+  fetch_network(){
+    fetch(API_URL + '/network')
+      .then(resp => resp.json())
+      .then(payload => {
+        reactor.dispatch('receive_network', payload)
+      })
   }
 }
-
-export default alt.createActions(Actions)

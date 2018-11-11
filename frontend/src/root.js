@@ -8,13 +8,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader'
 import history from './history'
+import NetworkDetect from './components/network-detect'
 
 import './store'
 
 class Root extends React.Component {
   render() {
     return <Provider reactor={reactor}>
+    <NetworkDetect>
     <Router history={history} routes={routes} />
+    </NetworkDetect>
     </Provider>
   }
 }
