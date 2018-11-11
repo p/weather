@@ -7,6 +7,7 @@ all: b
 
 d:
 	go get github.com/codegangsta/gin
+	go get golang.org/x/tools/cmd/goimports
 	go-get-deps
 
 b:
@@ -20,4 +21,7 @@ rr:
 	env `cat .env` DEBUG=1 go run $(sources)
 
 fmt:
-	for f in src/*.go; do go fmt $$f && sed -i -e 's/	/  /g' $$f; done
+	for f in src/*.go; do \
+		${GOPATH}/bin/goimports -w $$f && \
+		go fmt $$f && sed -i -e 's/	/  /g' $$f; \
+	done
