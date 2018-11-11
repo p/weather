@@ -44,12 +44,17 @@ var online bool
 var owm_api_key string
 var db *bolt.DB
 
-func return_500(c *gin.Context, msg string) {
-  log.Info(msg)
+// err can be nil here
+func return_500(c *gin.Context, msg string, err error) {
+var full_msg string
+if (err!=nil){
+  full_msg = msg + ": " + err.Error()
+  }else{full_msg=msg}
+  log.Warn(full_msg)
   if (debug) {
-    c.String(500, msg)
+    c.String(500, full_msg)
   } else {
-    c.String(500, "There was an internal error")
+    c.String(500, msg)
   }
 }
 
@@ -64,7 +69,7 @@ func list_locations_route(c *gin.Context) {
     return nil
   })
   if err != nil {
-    return_500(c, "Problem: "+err.Error())
+    return_500(c, "Problem listing locations", err)
     return
   }
 
@@ -75,17 +80,17 @@ func get_conditions_route(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not resolve location: " + location, err)
     return
   }
   network, err := get_network_flag(c)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Problem getting the network flag", err)
     return
   }
   cc, err := get_current_weather(location, *resloc, "wu", network)
   if err != nil {
-    return_500(c, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather for location: " + location, err)
     return
   }
 
@@ -96,12 +101,12 @@ func get_forecast_route(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not resolve location: " + location, err)
     return
   }
   f, err := get_forecast(location, *resloc, 0)
   if err != nil {
-    return_500(c, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather for location: " + location, err)
     return
   }
 
@@ -130,17 +135,17 @@ func get_wu_forecast_route(c *gin.Context) {
   location := c.Param("location")
   network, err := get_network_flag(c)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Problem getting the network flag", err)
     return
   }
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not resolve location: " + location, err)
     return
   }
   f, err := get_wu_forecast(location, *resloc, network)
   if err != nil {
-    return_500(c, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather for location: " + location, err)
     return
   }
 
@@ -153,7 +158,7 @@ func get_wu_forecast_raw_route(c *gin.Context) {
   log.Debug(location)
   data, err := lookup("wu_forecasts_raw", location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not get raw forecast for location: " + location, err)
     return
   }
   if data != nil {
@@ -163,19 +168,19 @@ func get_wu_forecast_raw_route(c *gin.Context) {
 
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not resolve location: " + location, err)
     return
   }
   f, err := get_wu_forecast(location, *resloc, NetworkDefault)
   f = f
   if err != nil {
-    return_500(c, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather for location: " + location, err)
     return
   }
 
   data, err = lookup("wu_forecasts_raw", location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not get raw forecast for location: " + location, err)
     return
   }
   if data != nil {
@@ -183,24 +188,24 @@ func get_wu_forecast_raw_route(c *gin.Context) {
     return
   }
 
-  return_500(c, "No wu cached data after retrieving a forecast")
+  return_500(c, "No wu cached data after retrieving a forecast", nil)
 }
 
 func location_route(c *gin.Context) {
   location := c.Param("location")
   network, err := get_network_flag(c)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Problem getting the network flag", err)
     return
   }
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, err.Error())
+    return_500(c, "Could not resolve location: " + location, err)
     return
   }
   f, err := get_location_everything(location, *resloc, network)
   if err != nil {
-    return_500(c, "Could not get weather: "+err.Error())
+    return_500(c, "Could not get weather for location: " + location, err)
     return
   }
 
@@ -211,7 +216,7 @@ func location_route(c *gin.Context) {
 func render_json(c *gin.Context, data interface{}) {
   payload, err := json.Marshal(data)
   if err != nil {
-    return_500(c, "Could not jsonify: "+err.Error())
+    return_500(c, "Could not jsonify response", err)
     return
   }
 
