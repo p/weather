@@ -9,7 +9,13 @@ import React from 'react'
 import Store from '../store'
 import BaseLocation from './base_location'
 import Current from '../components/current'
+import { mapProps } from '@rq/react-map-props';
 
+@mapProps({
+  params: {
+    location: unescape,
+  }
+})
 export default class FullLocation extends BaseLocation {
   render() {
     //console.log(this.state.forecast)

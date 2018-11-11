@@ -18,6 +18,10 @@
     url-pattern "1.x"
     urljoin "0.x"
 
+"@rq/react-map-props@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@rq/react-map-props/-/react-map-props-0.1.1.tgz#79f554d9b36c2bb15ad02ddd7207073b4a70d8dd"
+
 "@webassemblyjs/ast@1.5.13":
   version "1.5.13"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.5.13.tgz#81155a570bd5803a30ec31436bc2c9c0ede38f25"
