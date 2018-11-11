@@ -17,6 +17,22 @@ function receive_network(state, network){
   return state.merge(network)
 }
 
+// locations
+
+let LocationsStore = Store({
+  getInitialState() {
+    return toImmutable([])
+  },
+
+  initialize() {
+    this.on('receive_locations', receive_locations)
+  }
+})
+
+function receive_locations(state, locations){
+  return locations
+}
+
 // forecast
 
 let ForecastStore = Store({
@@ -38,4 +54,5 @@ function receive_forecast(state, {location_query, forecast}){
 reactor.registerStores({
   network: NetworkStore,
   forecast: ForecastStore,
+  locations: LocationsStore,
 })

@@ -21,5 +21,14 @@ export default {
       .then(payload => {
         reactor.dispatch('receive_forecast', {location_query, forecast:payload})
       })
-  }
+  },
+  
+  fetch_locations(){
+    fetch(API_URL + '/locations')
+      .then(resp => resp.json())
+      .then(payload => {
+        reactor.dispatch('receive_locations', payload)
+      })
+  },
+  
 }
