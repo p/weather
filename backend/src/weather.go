@@ -59,7 +59,11 @@ func get_weather_with_cache(
   }
 
   if p == nil {
-    return nil, errors.New("Could not retrieve weather")
+  if network==NetworkSkip{
+    return nil, errors.New("Could not retrieve weather (in offline mode)")
+    }else{
+    return nil, errors.New("Could not retrieve weather (in online mode)")
+    }
   }
 
   return p, nil
