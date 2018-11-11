@@ -6,7 +6,7 @@ import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
 import connectToStores from 'alt-utils/lib/connectToStores'
 import React from 'react'
-import LocationForm from '../location-form'
+import LocationForm from '../components/location-form'
 import Store from '../store'
 
 @connectToStores
