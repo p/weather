@@ -1,8 +1,6 @@
 import actions from '../actions'
 import { unim } from '../util'
-import {
-  connect,
-} from 'nuclear-js-react-addons-chefsplate'
+import { connect } from 'nuclear-js-react-addons-chefsplate'
 import history from '../history'
 import PropTypes from 'prop-types'
 import { Link } from '@rq/react-easy-router'
@@ -17,12 +15,12 @@ import Store from '../store'
   locations: [['locations'], unim],
 }))
 export default class Locations extends React.Component {
-    constructor(props){
-        super(props)
-        this.state={
-            location:'',
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      location: '',
     }
+  }
   render() {
     return (
       <div>

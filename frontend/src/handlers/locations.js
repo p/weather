@@ -1,8 +1,6 @@
 import actions from '../actions'
 import { unim } from '../util'
-import {
-  connect,
-} from 'nuclear-js-react-addons-chefsplate'
+import { connect } from 'nuclear-js-react-addons-chefsplate'
 import BriefLocation from '../components/brief-location'
 import { data_age } from '../util'
 import PropTypes from 'prop-types'
@@ -26,10 +24,10 @@ import { mapProps } from '@rq/react-map-props'
   locations: [['locations'], unim],
 }))
 export default class LocationsHandler extends React.Component {
-    componentDidMount(){
-            actions.fetch_locations()
-    }
+  componentDidMount() {
+    actions.fetch_locations()
+  }
   render() {
-    return <Locations/>
+    return <Locations />
   }
 }

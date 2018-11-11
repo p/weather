@@ -1,7 +1,5 @@
-import {
-  connect,
-} from 'nuclear-js-react-addons-chefsplate'
-import { network_flag,unim } from '../util'
+import { connect } from 'nuclear-js-react-addons-chefsplate'
+import { network_flag, unim } from '../util'
 import { data_age } from '../util'
 import PropTypes from 'prop-types'
 import moment from 'moment'

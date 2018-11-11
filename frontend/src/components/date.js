@@ -9,8 +9,8 @@ import Store from '../store'
 import { data_age } from '../util'
 
 export default function Date(props) {
-    let date = new Date(props.timestamp * 1000)
-    return moment(date).format('dddd, MMM D')
+  let date = new Date(props.timestamp * 1000)
+  return moment(date).format('dddd, MMM D')
 }
 
 Date.propTypes = {

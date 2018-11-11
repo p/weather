@@ -172,19 +172,19 @@ func location_route(c *gin.Context) {
 
 var nd *detector.NetworkDetector
 
-func network_route(c *gin.Context){
-if nd==nil{
-and:=detector.NewNetworkDetector()
-nd=&and
-}
-up,err:=nd.Up()
+func network_route(c *gin.Context) {
+  if nd == nil {
+    and := detector.NewNetworkDetector()
+    nd = &and
+  }
+  up, err := nd.Up()
   if err != nil {
     return_500(c, "Could not figure out network status", err)
     return
   }
-  ns:=network_status{
-  up}
-  render_json(c,ns)
+  ns := network_status{
+    up}
+  render_json(c, ns)
 
 }
 
