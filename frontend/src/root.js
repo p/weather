@@ -1,4 +1,4 @@
-import { Router } from 'react-easy-router'
+import { Router } from '@rq/react-easy-router'
 import routes from './routes'
 import React from 'react'
 import ReactDOM from 'react-dom'

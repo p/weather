@@ -7,6 +7,7 @@ export default {
     path: '/:location',
     component: Handlers.BriefLocation,
     wrapper: AppBase,
+    options: {segmentValueCharset: 'a-zA-Z0-9, -'},
   },
   FullLocation: {
     path: '/:location/full',

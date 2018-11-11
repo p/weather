@@ -1,7 +1,7 @@
 import { data_age } from '../util'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Link } from 'react-easy-router'
+import { Link } from '@rq/react-easy-router'
 import Immutable from 'seamless-immutable'
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'

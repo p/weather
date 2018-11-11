@@ -6,6 +6,18 @@
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@rq/prevent-default-wrapper/-/prevent-default-wrapper-0.0.4.tgz#3b0c62941daf244689c4594553a7a22d00c3864d"
 
+"@rq/react-easy-router@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@rq/react-easy-router/-/react-easy-router-3.0.10.tgz#039cd4ff5a5c2a1b9aa34d2188e4555f24935093"
+  dependencies:
+    history "^4.7.2"
+    query-string "^5.0.0"
+    react "15.x || 16.x"
+    react-dom "15.x || 16.x"
+    shallowequal "1.x"
+    url-pattern "1.x"
+    urljoin "0.x"
+
 "@webassemblyjs/ast@1.5.13":
   version "1.5.13"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.5.13.tgz#81155a570bd5803a30ec31436bc2c9c0ede38f25"
@@ -3986,18 +3998,6 @@ rc@^1.2.7:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-react-easy-router@^3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/react-easy-router/-/react-easy-router-3.0.10.tgz#ac4b8ee624a0b6a8530dc0f09c78d01bdd9585bf"
-  dependencies:
-    history "^4.7.2"
-    query-string "^5.0.0"
-    react "15.x || 16.x"
-    react-dom "15.x || 16.x"
-    shallowequal "1.x"
-    url-pattern "1.x"
-    urljoin "0.x"
 
 react-helmet@^5.2.0:
   version "5.2.0"
