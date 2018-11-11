@@ -21,6 +21,9 @@ export default class BriefLocationHandler extends React.Component {
   render() {
     return <Forecast location_query={this.props.params.location}>
     <BriefLocation location_query={this.props.params.location}/>
+    <Link to='FullLocation' params={{location:this.props.params.location}}>
+    Full View
+    </Link>
     </Forecast>
   }
 }
