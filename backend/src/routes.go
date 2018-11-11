@@ -169,7 +169,7 @@ func location_route(c *gin.Context) {
   f = f
 }
 
-func define_routes(router *gin.Router) {
+func define_routes(router *gin.Engine) {
   router.GET("/locations", list_locations_route)
   router.GET("/locations/:location", location_route)
   router.GET("/locations/:location/current", get_conditions_route)
