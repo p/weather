@@ -18,3 +18,7 @@ export function  data_age(struct) {
       }
     }
     
+    export function network_flag(up){
+      return up?0:2
+    }
+    
