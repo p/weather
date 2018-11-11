@@ -2,7 +2,6 @@ import { Link } from '@rq/react-easy-router'
 import Immutable from 'seamless-immutable'
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
-import connectToStores from 'alt-utils/lib/connectToStores'
 import React from 'react'
 import Store from './store'
 
