@@ -1,27 +1,22 @@
-import alt from './alt'
-import Actions from './actions'
+import reactor from './reactor'
+import { Store, toImmutable } from 'nuclear-js'
 
-class Store {
-  constructor() {
-    this.bindListeners({
-      updateTodo: Actions.updateTodo,
-    })
+let NetworkStore = Store({
+  getInitialState() {
+    return toImmutable({})
+  },
 
-    let locations = localStorage.getItem('locations') || '[]'
-    try {
-      locations = JSON.parse(locations)
-    } catch (e) {
-      locations = []
-    }
-
-    this.state = {
-      locations: locations,
-    }
+  initialize() {
+    this.on('receive_network', receive_network)
   }
+})
 
-  updateTodo(todo) {
-    this.setState({ todos: this.state.todos.concat(todo) })
-  }
+function receive_network(state, network){
+  return state.merge(network)
 }
 
-export default alt.createStore(Store, 'Store')
+reactor.registerStores({
+  network: NetworkStore,
+})
+
+export default NetworkStore
