@@ -3,6 +3,7 @@ package main
 import (
   "errors"
   "fmt"
+
   //"github.com/kr/pretty"
   log "github.com/sirupsen/logrus"
   //"io"
@@ -59,10 +60,10 @@ func get_weather_with_cache(
   }
 
   if p == nil {
-  if network==NetworkSkip{
-    return nil, errors.New("Could not retrieve weather (in offline mode)")
-    }else{
-    return nil, errors.New("Could not retrieve weather (in online mode)")
+    if network == NetworkSkip {
+      return nil, errors.New("Could not retrieve weather (in offline mode)")
+    } else {
+      return nil, errors.New("Could not retrieve weather (in online mode)")
     }
   }
 

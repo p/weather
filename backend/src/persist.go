@@ -4,6 +4,7 @@ import (
   "bytes"
   "encoding/gob"
   "errors"
+
   bolt "github.com/coreos/bbolt"
 )
 

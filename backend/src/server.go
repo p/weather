@@ -10,14 +10,15 @@ import (
   //"bytes"
   "encoding/gob"
   "encoding/json"
-  "errors"
   "fmt"
-  "github.com/gin-gonic/gin"
-  log "github.com/sirupsen/logrus"
-  "gopkg.in/weather.v0"
   "os"
   "regexp"
   "strconv"
+
+  "github.com/gin-gonic/gin"
+  log "github.com/sirupsen/logrus"
+  "gopkg.in/weather.v0"
+
   //"time"
 
   bolt "github.com/coreos/bbolt"
@@ -46,12 +47,14 @@ var db *bolt.DB
 
 // err can be nil here
 func return_500(c *gin.Context, msg string, err error) {
-var full_msg string
-if (err!=nil){
-  full_msg = msg + ": " + err.Error()
-  }else{full_msg=msg}
+  var full_msg string
+  if err != nil {
+    full_msg = msg + ": " + err.Error()
+  } else {
+    full_msg = msg
+  }
   log.Warn(full_msg)
-  if (debug) {
+  if debug {
     c.String(500, full_msg)
   } else {
     c.String(500, msg)
@@ -143,7 +146,7 @@ func main() {
 
   //router.Use(gin.Recovery())
 
-define_routes(router)
+  define_routes(router)
 
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.

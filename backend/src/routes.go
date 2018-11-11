@@ -2,22 +2,16 @@ package main
 
 import (
   //"bytes"
-  "encoding/gob"
-  "encoding/json"
+
   "errors"
-  "fmt"
+
   "github.com/gin-gonic/gin"
   log "github.com/sirupsen/logrus"
-  "gopkg.in/weather.v0"
-  "os"
-  "regexp"
-  "strconv"
+
   //"time"
 
   bolt "github.com/coreos/bbolt"
   //"html/template"
-  "github.com/jasonwinn/geocoder"
-  "github.com/kr/pretty"
 )
 
 func list_locations_route(c *gin.Context) {
@@ -42,7 +36,7 @@ func get_conditions_route(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, "Could not resolve location: " + location, err)
+    return_500(c, "Could not resolve location: "+location, err)
     return
   }
   network, err := get_network_flag(c)
@@ -52,7 +46,7 @@ func get_conditions_route(c *gin.Context) {
   }
   cc, err := get_current_weather(location, *resloc, "wu", network)
   if err != nil {
-    return_500(c, "Could not get weather for location: " + location, err)
+    return_500(c, "Could not get weather for location: "+location, err)
     return
   }
 
@@ -63,12 +57,12 @@ func get_forecast_route(c *gin.Context) {
   location := c.Param("location")
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, "Could not resolve location: " + location, err)
+    return_500(c, "Could not resolve location: "+location, err)
     return
   }
   f, err := get_forecast(location, *resloc, 0)
   if err != nil {
-    return_500(c, "Could not get weather for location: " + location, err)
+    return_500(c, "Could not get weather for location: "+location, err)
     return
   }
 
@@ -102,12 +96,12 @@ func get_wu_forecast_route(c *gin.Context) {
   }
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, "Could not resolve location: " + location, err)
+    return_500(c, "Could not resolve location: "+location, err)
     return
   }
   f, err := get_wu_forecast(location, *resloc, network)
   if err != nil {
-    return_500(c, "Could not get weather for location: " + location, err)
+    return_500(c, "Could not get weather for location: "+location, err)
     return
   }
 
@@ -120,7 +114,7 @@ func get_wu_forecast_raw_route(c *gin.Context) {
   log.Debug(location)
   data, err := lookup("wu_forecasts_raw", location)
   if err != nil {
-    return_500(c, "Could not get raw forecast for location: " + location, err)
+    return_500(c, "Could not get raw forecast for location: "+location, err)
     return
   }
   if data != nil {
@@ -130,19 +124,19 @@ func get_wu_forecast_raw_route(c *gin.Context) {
 
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, "Could not resolve location: " + location, err)
+    return_500(c, "Could not resolve location: "+location, err)
     return
   }
   f, err := get_wu_forecast(location, *resloc, NetworkDefault)
   f = f
   if err != nil {
-    return_500(c, "Could not get weather for location: " + location, err)
+    return_500(c, "Could not get weather for location: "+location, err)
     return
   }
 
   data, err = lookup("wu_forecasts_raw", location)
   if err != nil {
-    return_500(c, "Could not get raw forecast for location: " + location, err)
+    return_500(c, "Could not get raw forecast for location: "+location, err)
     return
   }
   if data != nil {
@@ -162,12 +156,12 @@ func location_route(c *gin.Context) {
   }
   resloc, err := resolve_location(location)
   if err != nil {
-    return_500(c, "Could not resolve location: " + location, err)
+    return_500(c, "Could not resolve location: "+location, err)
     return
   }
   f, err := get_location_everything(location, *resloc, network)
   if err != nil {
-    return_500(c, "Could not get weather for location: " + location, err)
+    return_500(c, "Could not get weather for location: "+location, err)
     return
   }
 
@@ -175,7 +169,7 @@ func location_route(c *gin.Context) {
   f = f
 }
 
-func define_routes(router *gin.Router){
+func define_routes(router *gin.Router) {
   router.GET("/locations", list_locations_route)
   router.GET("/locations/:location", location_route)
   router.GET("/locations/:location/current", get_conditions_route)

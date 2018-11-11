@@ -3,6 +3,7 @@ package main
 import (
   "errors"
   "fmt"
+
   "github.com/jasonwinn/geocoder"
   log "github.com/sirupsen/logrus"
 )

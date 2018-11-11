@@ -3,6 +3,7 @@ package main
 import (
   "errors"
   "fmt"
+
   owm "github.com/briandowns/openweathermap"
   "github.com/kr/pretty"
   log "github.com/sirupsen/logrus"

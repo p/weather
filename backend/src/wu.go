@@ -3,15 +3,17 @@ package main
 import (
   "errors"
   "math"
+
   //"fmt"
   //"github.com/kr/pretty"
-  log "github.com/sirupsen/logrus"
-  "gopkg.in/weather.v0"
   "io"
   "io/ioutil"
   "net/http"
   "regexp"
   "strings"
+
+  log "github.com/sirupsen/logrus"
+  "gopkg.in/weather.v0"
 )
 
 func current_retriever_wu(resloc resolved_location) (persistable, error) {
