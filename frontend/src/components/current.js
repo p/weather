@@ -11,9 +11,9 @@ import { data_age } from '../util'
 export default function Current(props) {
   return (
     <div>
-      <p>Now: {props.current.temp}&deg;</p>
-      <p>High: {props.current.temp_max}&deg;</p>
-      <p>Low: {props.current.temp_min}&deg;</p>
+      <p>Now: {props.current.temp}°</p>
+      <p>High: {props.current.temp_max}°</p>
+      <p>Low: {props.current.temp_min}°</p>
       <p>Updated: {data_age(props.current)}</p>
     </div>
   )
