@@ -1,3 +1,4 @@
+require 'child_process_helper'
 require 'daybreak_cache'
 require 'weathercom'
 require 'hashie/mash'
@@ -91,10 +92,8 @@ class App < Sinatra::Base
   end
 
   get '/locations/:location/forecast' do |location|
-    resloc = resolve(location)
-    api_key = wu_api_key(resloc.wu_current_url)
-    url = "https://api.weather.com/v1/geocode/#{resloc.lat}/#{resloc.lng}/forecast/daily/10day.json?apiKey=#{api_key}&units=e"
-    payload = JSON.parse(open(url).read)
+    loc = wc_client.geocode(location)
+    forecast = loc.daily_forecast_10
     forecasts = payload['forecasts'].map do |forecast|
       {
         time: forecast['fcst_valid'],
@@ -104,6 +103,23 @@ class App < Sinatra::Base
     end
     content_type :json
     JSON.generate(forecasts)
+  end
+
+  get '/network' do
+    up = false
+    output = ChildProcessHelper.check_output(%w(ip a))
+    output.split("\n").each do |line|
+      if line =~ /^\d+: (eth|wlan)\d+:/
+        if line =~ /\bNO-CARRIER\b/
+          next
+        elsif line =~ /\bUP\b/
+          up = true
+          break
+        end
+      end
+    end
+
+    render_json(up: up)
   end
 
   private def resolve(location)
@@ -147,5 +163,9 @@ class App < Sinatra::Base
       condition_description: forecast['narrative'],
       precip_prob: forecast['pop'],
     }
+  end
+
+  private def render_json(payload)
+    JSON.generate(payload)
   end
 end
