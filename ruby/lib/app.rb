@@ -165,7 +165,20 @@ class App < Sinatra::Base
     }
   end
 
-  private def render_json(payload)
+  def render_json(payload)
+    set_cors_headers
+    content_type :json
     JSON.generate(payload)
+  end
+
+  private def set_cors_headers
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "content-type"
+  end
+
+  options '*' do
+    set_cors_headers
+    ''
   end
 end

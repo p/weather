@@ -1,6 +1,6 @@
 class LocationPresenter
   def initialize(location)
-    @answer = location
+    @location = location
   end
 
   attr_reader :location
