@@ -1,3 +1,5 @@
+require 'daybreak_cache'
+require 'weathercom'
 require 'hashie/mash'
 require 'open-uri'
 require 'forwardable'
@@ -6,6 +8,10 @@ require 'geocoder'
 require 'json'
 require 'sinatra'
 require 'daybreak'
+
+Dir[File.join(File.dirname(__FILE__), 'presenters', '*.rb')].each do |path|
+  require path[File.dirname(__FILE__).length+1...path.length].sub(/\.rb$/, '')
+end
 
 $db = Daybreak::DB.new(ENV['DB_PATH'] || 'ruby.db')
 
@@ -63,6 +69,10 @@ class App < Sinatra::Base
     @api_key ||= wu_api_key("https://www.wunderground.com/weather/us/ny/new-york")
   end
 
+  private def wc_client
+    @wc_client ||= WeatherCom::Client.new(cache: DaybreakCache.new($db))
+  end
+
   get '/locations' do
     locations = $db['locations'] || []
     content_type :json
@@ -70,12 +80,11 @@ class App < Sinatra::Base
   end
 
   get '/locations/:location/current' do |location|
-    resloc = resolve(location)
-    api_key = wu_api_key(resloc.wu_current_url)
-    payload = wu_api_request('observations/current', resloc)
+    loc = wc.geocode(location)
+    obs = loc.current_observation
     response = {
-      location: resloc.info,
-      current: payload,
+      location: LocationPresenter.new(loc).to_hash,
+      current: ObservationPresenter.new(obs).to_hash,
     }
     content_type :json
     JSON.generate(response)
