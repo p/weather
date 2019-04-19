@@ -70,7 +70,7 @@ class App < Sinatra::Base
   end
 
   private def wc_client
-    @wc_client ||= WeatherCom::Client.new(cache: DaybreakCache.new($db))
+    @wc_client ||= Weathercom::Client.new(cache: DaybreakCache.new($db))
   end
 
   get '/locations' do
@@ -80,7 +80,7 @@ class App < Sinatra::Base
   end
 
   get '/locations/:location/current' do |location|
-    loc = wc.geocode(location)
+    loc = wc_client.geocode(location)
     obs = loc.current_observation
     response = {
       location: LocationPresenter.new(loc).to_hash,
