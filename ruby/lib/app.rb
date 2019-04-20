@@ -37,6 +37,12 @@ class ResolvedLocation
   end
 end
 
+Location = Struct.new(
+  :wc_client,
+  :lat, :lng, :city, :state_abbr,
+) do
+end
+
 class App < Sinatra::Base
   private def wu_api_request(path, resloc)
     attempt = 1
@@ -74,25 +80,64 @@ class App < Sinatra::Base
     @wc_client ||= Weathercom::Client.new(cache: DaybreakCache.new($db))
   end
 
+  private def geocode(query)
+    cache_key = "geocode:#{query}"
+    if data = $db[cache_key]
+      if data['expires_at'] > Time.now.to_i
+        return Weathercom::Location.new(
+          data['result']['lat'], data['result']['lng'], wc_client)
+      else
+        $db[cache_key] = nil
+      end
+    end
+
+    loc = wc_client.geocode(location)
+    result = {
+      'lat' => loc.lat,
+      'lng' => loc.lng,
+      'city' => loc.city,
+      'state_abbr' => loc.state_abbr,
+    }
+    data = {
+      'expires_at' => Time.now.to_i + 100*86400,
+      'result' => result,
+    }
+
+    $db[cache_key] = data
+    $db.flush
+    loc
+  end
+
   get '/locations' do
     locations = $db['locations'] || []
     content_type :json
-    JSON.generate(locations)
+    render_json(locations)
   end
 
-  get '/locations/:location/current' do |location|
-    loc = wc_client.geocode(location)
+  get '/locations/:location' do |location|
+    loc = geocode(location)
     obs = loc.current_observation
     response = {
       location: LocationPresenter.new(loc).to_hash,
       current: ObservationPresenter.new(obs).to_hash,
     }
     content_type :json
-    JSON.generate(response)
+    render_json(response)
+  end
+
+  get '/locations/:location/current' do |location|
+    loc = geocode(location)
+    obs = loc.current_observation
+    response = {
+      location: LocationPresenter.new(loc).to_hash,
+      current: ObservationPresenter.new(obs).to_hash,
+    }
+    content_type :json
+    render_json(response)
   end
 
   get '/locations/:location/forecast' do |location|
-    loc = wc_client.geocode(location)
+    loc = geocode(location)
     forecast = loc.daily_forecast_10
     forecasts = payload['forecasts'].map do |forecast|
       {
@@ -102,7 +147,7 @@ class App < Sinatra::Base
       }
     end
     content_type :json
-    JSON.generate(forecasts)
+    render_json(forecasts)
   end
 
   get '/network' do
