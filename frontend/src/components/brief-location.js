@@ -10,7 +10,6 @@ import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
-import { mapProps } from '@rq/react-map-props'
 
 @connect(props => ({
   forecast: [['forecast', props.location_query, 'forecast'], unim],
