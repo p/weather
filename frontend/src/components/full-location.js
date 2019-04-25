@@ -11,12 +11,7 @@ import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
 
-@connect(props => ({
-  forecast: [['forecast', props.location_query, 'forecast'], unim],
-  current: [['forecast', props.location_query, 'current'], unim],
-  location: [['forecast', props.location_query, 'location'], unim],
-}))
-export default class FullLocation extends React.Component {
+class FullLocationImpl extends React.Component {
   render() {
     //console.log(this.props.forecast)
     return (
@@ -80,4 +75,44 @@ export default class FullLocation extends React.Component {
       </p>
     )
   }
+}
+
+FullLocationImpl.propTypes = {
+  locationQuery: PropTypes.string.isRequired,
+  
+  location: PropTypes.shape({
+    city: PropTypes.string.isRequired,
+    state_abbr: PropTypes.string.isRequired,
+  }),
+  
+  forecast: PropTypes.shape({
+    daily_forecasts: PropTypes.arrayOf(PropTypes.shape({
+      // UTC timestamp
+      time: PropTypes.number.isRequired,
+      // UTC timestamp
+      updated_at: PropTypes.number.isRequired,
+      day: PropTYpes.shape({
+        temp: PropTypes.number.isRequired,
+        precip_probability: PropTypes.number.isRequired,
+        precip_type: PropTypes.string.isRequired,
+      }),
+      night: PropTYpes.shape({
+        temp: PropTypes.number.isRequired,
+        precip_probability: PropTypes.number.isRequired,
+        precip_type: PropTypes.string.isRequired,
+      }),
+    }),
+  })),
+  
+  current: Current.propTypes.current,
+}
+
+export default const FullLocation = connect(props => ({
+  forecast: [['forecast', props.location_query, 'forecast'], unim],
+  current: [['forecast', props.location_query, 'current'], unim],
+  location: [['forecast', props.location_query, 'location'], unim],
+}))(FullLocationImpl)
+
+FullLocation.propTypes = {
+  locationQuery: PropTypes.string.isRequired,
 }
