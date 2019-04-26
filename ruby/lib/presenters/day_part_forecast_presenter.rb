@@ -7,7 +7,11 @@ class DayPartForecastPresenter
 
   def to_hash
     {
+      start_timestamp: forecast.start_timestamp,
       temp: forecast.temp,
+      precip_probability: forecast.precip_probability,
+      precip_type: forecast.precip_type,
+      narrative: forecast.narrative,
     }
   end
 end

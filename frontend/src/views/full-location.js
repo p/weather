@@ -25,10 +25,10 @@ export default class FullLocationView extends React.Component {
         {this.props.daily_forecasts&& (
           <div>
             {_.map(this.props.daily_forecasts, forecast => (
-              <div key={forecast.time} className="forecast-row" key={forecast.time}>
+              <div key={forecast.start_timestamp} className="forecast-row" >
                 <div className="forecast-date">
-                  <div>{moment(forecast.time * 1000).format('dddd')}</div>
-                  <div>{moment(forecast.time * 1000).format('MMM D')}</div>
+                  <div>{moment(forecast.start_timestamp * 1000).format('dddd')}</div>
+                  <div>{moment(forecast.start_timestamp * 1000).format('MMM D')}</div>
                 </div>
 
                 {forecast.day &&
@@ -36,7 +36,6 @@ export default class FullLocationView extends React.Component {
                 {this.render_day_part_forecast('night', forecast.night)}
               </div>
             ))}
-            <p>Updated: {data_age(this.props.forecast)}</p>
           </div>
         )}
       </div>
@@ -79,6 +78,7 @@ const DayPartPropTypes =PropTypes.shape({
         temp: PropTypes.number.isRequired,
         precip_probability: PropTypes.number.isRequired,
         precip_type: PropTypes.string.isRequired,
+        narrative: PropTypes.string.isRequired,
       })
 
 FullLocationView.propTypes = {
@@ -92,9 +92,9 @@ FullLocationView.propTypes = {
   daily_forecasts: PropTypes.arrayOf(
     PropTypes.shape({
       // UTC timestamp
-      time: PropTypes.number.isRequired,
+      start_timestamp: PropTypes.number.isRequired,
       // UTC timestamp
-      expires_at: PropTypes.number.isRequired,
+      expire_timestamp: PropTypes.number.isRequired,
       day: DayPartPropTypes,
       night: DayPartPropTypes,
     }),

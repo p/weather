@@ -7,7 +7,8 @@ class DailyForecastPresenter
 
   def to_hash
     {
-      expires_at: forecast.expire_time_gmt,
+      expire_timestamp: forecast.expire_timestamp,
+      start_timestamp: forecast.start_timestamp,
       day: forecast.day_forecast && DayPartForecastPresenter.new(forecast.day_forecast).to_hash,
       night: DayPartForecastPresenter.new(forecast.night_forecast).to_hash,
     }
