@@ -75,7 +75,7 @@ class FullLocationView extends React.Component {
   }
 }
 
-FullLocationImpl.propTypes = {
+FullLocationView.propTypes = {
   location_query: PropTypes.string.isRequired,
   
   location: PropTypes.shape({
@@ -89,12 +89,12 @@ FullLocationImpl.propTypes = {
       time: PropTypes.number.isRequired,
       // UTC timestamp
       updated_at: PropTypes.number.isRequired,
-      day: PropTYpes.shape({
+      day: PropTypes.shape({
         temp: PropTypes.number.isRequired,
         precip_probability: PropTypes.number.isRequired,
         precip_type: PropTypes.string.isRequired,
       }),
-      night: PropTYpes.shape({
+      night: PropTypes.shape({
         temp: PropTypes.number.isRequired,
         precip_probability: PropTypes.number.isRequired,
         precip_type: PropTypes.string.isRequired,

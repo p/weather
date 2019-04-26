@@ -5,8 +5,12 @@ extends: 'eslint:recommended'
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
+  module: readonly
+  NODE_ENV: readonly
+  API_URL: readonly
 parser: babel-eslint
 plugins:
   - react
 rules:
   no-unused-vars: off
+  no-console: off
