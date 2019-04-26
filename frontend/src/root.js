@@ -1,7 +1,5 @@
 import reactor from './reactor'
-import {
-  Provider,
-} from 'nuclear-js-react-addons-chefsplate'
+import { Provider } from 'nuclear-js-react-addons-chefsplate'
 import { Router } from '@rq/react-easy-router'
 import routes from './routes'
 import React from 'react'
@@ -14,11 +12,13 @@ import './store'
 
 class Root extends React.Component {
   render() {
-    return <Provider reactor={reactor}>
-    <NetworkDetect>
-    <Router history={history} routes={routes} />
-    </NetworkDetect>
-    </Provider>
+    return (
+      <Provider reactor={reactor}>
+        <NetworkDetect>
+          <Router history={history} routes={routes} />
+        </NetworkDetect>
+      </Provider>
+    )
   }
 }
 

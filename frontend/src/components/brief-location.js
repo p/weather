@@ -32,12 +32,10 @@ class BriefLocation extends React.Component {
 
         {this.props.forecast && (
           <div>
-            {_.map(
-              this.props.forecast.daily_forecasts,
-              forecast =>
-                forecast.day
-                  ? this.render_row('day', forecast)
-                  : this.render_row('night', forecast),
+            {_.map(this.props.forecast.daily_forecasts, forecast =>
+              forecast.day
+                ? this.render_row('day', forecast)
+                : this.render_row('night', forecast),
             )}
           </div>
         )}

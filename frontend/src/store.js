@@ -10,10 +10,10 @@ let NetworkStore = Store({
 
   initialize() {
     this.on('receive_network', receive_network)
-  }
+  },
 })
 
-function receive_network(state, network){
+function receive_network(state, network) {
   return state.merge(network)
 }
 
@@ -26,10 +26,10 @@ let LocationsStore = Store({
 
   initialize() {
     this.on('receive_locations', receive_locations)
-  }
+  },
 })
 
-function receive_locations(state, locations){
+function receive_locations(state, locations) {
   return locations
 }
 
@@ -42,12 +42,12 @@ let ForecastStore = Store({
 
   initialize() {
     this.on('receive_forecast', receive_forecast)
-  }
+  },
 })
 
-function receive_forecast(state, {location_query, forecast}){
+function receive_forecast(state, { location_query, forecast }) {
   let delta = {}
-  delta[location_query]=forecast
+  delta[location_query] = forecast
   return state.merge(delta)
 }
 

@@ -23,11 +23,11 @@ class FullLocation extends React.Component {
   render() {
     return (
       <FullLocationView
-    location_query={this.props.location_query}
-    forecast={this.props.forecast}
-    current={this.props.current}
-    location={this.props.location}
-    />
+        location_query={this.props.location_query}
+        forecast={this.props.forecast}
+        current={this.props.current}
+        location={this.props.location}
+      />
     )
   }
 }
