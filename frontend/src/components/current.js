@@ -14,7 +14,6 @@ export default function Current(props) {
       <p>Now: {props.current.temp}°</p>
       <p>High: {props.current.temp_max}°</p>
       <p>Low: {props.current.temp_min}°</p>
-      <p>Updated: {data_age(props.current)}</p>
     </div>
   )
 }
@@ -24,6 +23,5 @@ Current.propTypes = {
     temp: PropTypes.number.isRequired,
     temp_min: PropTypes.number.isRequired,
     temp_max: PropTypes.number.isRequired,
-    updated_at: PropTypes.number.isRequired,
   }),
 }

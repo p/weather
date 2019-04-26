@@ -9,6 +9,8 @@ class LocationPresenter
     {
       lat: location.lat,
       lng: location.lng,
+      city: location.city,
+      state_abbr: location.state_abbr,
     }
   end
 end

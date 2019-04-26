@@ -24,7 +24,7 @@ class BriefLocation extends React.Component {
       <div>
         <h2>
           {this.props.location
-            ? this.props.location.city + ', ' + this.props.location.state
+            ? this.props.location.city + ', ' + this.props.location.state_abbr
             : this.props.location_query}
         </h2>
 
@@ -39,7 +39,6 @@ class BriefLocation extends React.Component {
                   ? this.render_row('day', forecast)
                   : this.render_row('night', forecast),
             )}
-            <p>Updated: {data_age(this.props.forecast)}</p>
           </div>
         )}
       </div>

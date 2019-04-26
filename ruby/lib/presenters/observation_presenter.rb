@@ -9,6 +9,8 @@ class ObservationPresenter
     {
       expire_time_gmt: obs.expire_time_gmt,
       temp: obs.temp,
+      temp_min: obs.temp_min_24hour,
+      temp_max: obs.temp_max_24hour,
       feels_like: obs.feels_like,
       phrase: obs.phrase_32char,
     }
