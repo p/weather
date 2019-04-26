@@ -81,7 +81,7 @@ class App < Sinatra::Base
   end
 
   private def geocode(query)
-    wc_client.cached_geocode(query, ttl: 86400*100)
+    wc_client.geocode(query, ttl: 86400*100)
   end
 
   get '/locations' do
