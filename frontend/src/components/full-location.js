@@ -15,16 +15,18 @@ import { mapProps } from '@rq/react-map-props'
 
 export default
 @connect(props => ({
-  forecast: [['forecast', props.location_query, 'forecast'], unim],
-  current: [['forecast', props.location_query, 'current'], unim],
-  location: [['forecast', props.location_query, 'location'], unim],
+  daily_forecasts: [['weather', props.location_query, 'daily_forecasts'], unim],
+  hourly_forecasts: [['weather', props.location_query, 'hourly_forecasts'], unim],
+  current: [['weather', props.location_query, 'current'], unim],
+  location: [['weather', props.location_query, 'location'], unim],
 }))
 class FullLocation extends React.Component {
   render() {
     return (
       <FullLocationView
         location_query={this.props.location_query}
-        forecast={this.props.forecast}
+        daily_forecasts={this.props.daily_forecasts}
+        hourly_forecasts={this.props.hourly_forecasts}
         current={this.props.current}
         location={this.props.location}
       />

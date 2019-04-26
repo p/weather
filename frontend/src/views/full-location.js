@@ -16,7 +16,7 @@ export default class FullLocationView extends React.Component {
       <div>
         <h2>
           {this.props.location
-            ? this.props.location.city + ', ' + this.props.location.state
+            ? this.props.location.city + ', ' + this.props.location.state_abbr
             : this.props.location_query}
         </h2>
 
@@ -83,26 +83,24 @@ FullLocationView.propTypes = {
     state_abbr: PropTypes.string.isRequired,
   }),
 
-  forecast: PropTypes.shape({
-    daily_forecasts: PropTypes.arrayOf(
-      PropTypes.shape({
-        // UTC timestamp
-        time: PropTypes.number.isRequired,
-        // UTC timestamp
-        updated_at: PropTypes.number.isRequired,
-        day: PropTypes.shape({
-          temp: PropTypes.number.isRequired,
-          precip_probability: PropTypes.number.isRequired,
-          precip_type: PropTypes.string.isRequired,
-        }),
-        night: PropTypes.shape({
-          temp: PropTypes.number.isRequired,
-          precip_probability: PropTypes.number.isRequired,
-          precip_type: PropTypes.string.isRequired,
-        }),
+  daily_forecasts: PropTypes.arrayOf(
+    PropTypes.shape({
+      // UTC timestamp
+      time: PropTypes.number.isRequired,
+      // UTC timestamp
+      expires_at: PropTypes.number.isRequired,
+      day: PropTypes.shape({
+        temp: PropTypes.number.isRequired,
+        precip_probability: PropTypes.number.isRequired,
+        precip_type: PropTypes.string.isRequired,
       }),
-    ),
-  }),
+      night: PropTypes.shape({
+        temp: PropTypes.number.isRequired,
+        precip_probability: PropTypes.number.isRequired,
+        precip_type: PropTypes.string.isRequired,
+      }),
+    }),
+  ),
 
   current: Current.propTypes.current,
 }
