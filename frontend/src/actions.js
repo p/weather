@@ -1,4 +1,5 @@
 import reactor from './reactor'
+import {merge} from './util'
 
 export default {
   fetch_network() {
@@ -15,14 +16,11 @@ export default {
     }
   },
 
-  fetch_forecast(location_query, network_flag) {
+  fetch_weather(location_query, network_flag) {
     fetch(API_URL + '/locations/' + location_query + '?network=' + network_flag)
       .then(resp => resp.json())
       .then(payload => {
-        reactor.dispatch('receive_forecast', {
-          location_query,
-          forecast: payload,
-        })
+        reactor.dispatch('receive_weather', {location_query, payload})
       })
   },
 

@@ -93,9 +93,17 @@ class App < Sinatra::Base
   get '/locations/:location' do |location|
     loc = geocode(location)
     obs = loc.current_observation
+    daily_forecasts = loc.daily_forecasts
+    hourly_forecasts = loc.hourly_forecasts
     response = {
       location: LocationPresenter.new(loc).to_hash,
       current: ObservationPresenter.new(obs).to_hash,
+      hourly_forecasts: hourly_forecasts.map do |f|
+        HourlyForecastPresenter.new(f).to_hash
+      end,
+      daily_forecasts: daily_forecasts.map do |f|
+        DailyForecastPresenter.new(f).to_hash
+      end,
     }
     content_type :json
     render_json(response)

@@ -14,24 +14,24 @@ import actions from '../actions'
 export default
 @connect(props => ({
   network: [['network'], unim],
-  forecast: [['forecast', props.location_query], unim],
+  weather: [['weather', props.location_query], unim],
 }))
 @ReactTimeout
 class Forecast extends React.Component {
   componentDidMount() {
-    if (!this.props.forecast) {
-      actions.fetch_forecast(
+    if (!this.props.weather) {
+      actions.fetch_weather(
         this.props.location_query,
         network_flag(this.props.network.up),
       )
     }
     this.props.setInterval(function() {
-      actions.fetch_forecast(this.props.location_query)
+      actions.fetch_weather(this.props.location_query)
     }, 10 * 60 * 1000)
   }
 
   render() {
-    if (this.props.forecast) {
+    if (this.props.weather) {
       return <div>{this.props.children}</div>
     } else {
       return <div>Loading...</div>

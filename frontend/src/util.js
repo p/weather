@@ -20,3 +20,16 @@ export function unim(any) {
 export function network_flag(up) {
   return up ? 0 : 2
 }
+
+export function merge(dest, src){
+  return Object.assign({},dest,src)
+}
+
+export function make_hash(){
+  let hash={}
+  for(let i =0;i<arguments.length;i+=2){
+    hash[arguments[i]] = arguments[i+1]
+  }
+  return hash
+  
+}

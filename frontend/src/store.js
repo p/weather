@@ -1,3 +1,4 @@
+import {make_hash,merge} from './util'
 import reactor from './reactor'
 import { Store, toImmutable } from 'nuclear-js'
 
@@ -35,24 +36,24 @@ function receive_locations(state, locations) {
 
 // forecast
 
-let ForecastStore = Store({
+let WeatherStore = Store({
   getInitialState() {
     return toImmutable({})
   },
 
   initialize() {
-    this.on('receive_forecast', receive_forecast)
+    this.on('receive_weather', receive_weather)
   },
 })
 
-function receive_forecast(state, { location_query, forecast }) {
-  let delta = {}
-  delta[location_query] = forecast
+function receive_weather(state, {location_query, payload}) {
+  let new_payload = merge(state[location_query] || {}, payload)
+  let delta = make_hash(location_query, payload)
   return state.merge(delta)
 }
 
 reactor.registerStores({
   network: NetworkStore,
-  forecast: ForecastStore,
+  weather: WeatherStore,
   locations: LocationsStore,
 })
