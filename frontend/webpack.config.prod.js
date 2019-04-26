@@ -7,7 +7,7 @@ module.exports = function(env){
     mode: 'production',
     devtool: 'source-map',
   entry: [
-    'babel-polyfill',
+    '@babel/polyfill',
     'whatwg-fetch',
     './src/index'
   ],

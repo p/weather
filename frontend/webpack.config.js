@@ -8,7 +8,7 @@ module.exports = {
     hot: true,
   },
   entry: [
-    'babel-polyfill',
+    '@babel/polyfill',
     'whatwg-fetch',
     'react-hot-loader/patch',
     './src/index'

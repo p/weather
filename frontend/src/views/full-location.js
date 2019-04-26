@@ -10,7 +10,7 @@ import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
 
-class FullLocationView extends React.Component {
+export default class FullLocationView extends React.Component {
   render() {
     return (
       <div>

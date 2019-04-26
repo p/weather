@@ -1,5 +1,5 @@
 import Handlers from './handlers'
-import { AppBase } from './app'
+import AppBase from './app'
 
 export default {
   Locations: { path: '/', component: Handlers.Locations, wrapper: AppBase },
