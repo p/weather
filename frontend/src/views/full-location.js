@@ -99,8 +99,8 @@ FullLocationImpl.propTypes = {
         precip_probability: PropTypes.number.isRequired,
         precip_type: PropTypes.string.isRequired,
       }),
-    }),
-  })),
+    })),
+  }),
   
   current: Current.propTypes.current,
 }
