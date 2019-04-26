@@ -114,10 +114,10 @@ class App < Sinatra::Base
 
   get '/locations/:location/hourly' do |location|
     loc = geocode(location)
-    forecast = loc.hourly_forecast
+    forecasts = loc.hourly_forecasts
     response = {
       location: LocationPresenter.new(loc).to_hash,
-      current: HourlyForecastPresenter.new(forecast).to_hash,
+      forecasts: forecasts.map { |f| HourlyForecastPresenter.new(f).to_hash },
     }
     content_type :json
     render_json(response)
@@ -125,10 +125,10 @@ class App < Sinatra::Base
 
   get '/locations/:location/daily' do |location|
     loc = geocode(location)
-    forecast = loc.daily_forecast
+    forecasts = loc.daily_forecasts
     response = {
       location: LocationPresenter.new(loc).to_hash,
-      current: DailyForecastPresenter.new(forecast).to_hash,
+      forecasts: forecasts.map { |f| DailyForecastPresenter.new(f).to_hash },
     }
     content_type :json
     render_json(response)
