@@ -33,5 +33,10 @@ module.exports = {
       include: path.join(__dirname, 'src')
     },
     ]
-  }
+  },
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
+}
 };
