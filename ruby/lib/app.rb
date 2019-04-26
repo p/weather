@@ -123,6 +123,17 @@ class App < Sinatra::Base
     render_json(response)
   end
 
+  get '/locations/:location/daily' do |location|
+    loc = geocode(location)
+    forecast = loc.daily_forecast
+    response = {
+      location: LocationPresenter.new(loc).to_hash,
+      current: DailyForecastPresenter.new(forecast).to_hash,
+    }
+    content_type :json
+    render_json(response)
+  end
+
   get '/locations/:location/forecast' do |location|
     loc = geocode(location)
     forecast = loc.daily_forecast_10
