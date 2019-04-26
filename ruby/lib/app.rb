@@ -81,31 +81,7 @@ class App < Sinatra::Base
   end
 
   private def geocode(query)
-    cache_key = "geocode:#{query}"
-    if data = $db[cache_key]
-      if data['expires_at'] && data['expires_at'] > Time.now.to_i
-        return Weathercom::Location.new(
-          data['result']['lat'], data['result']['lng'], wc_client)
-      else
-        $db[cache_key] = nil
-      end
-    end
-
-    loc = wc_client.cached_geocode(query, 86400*100)
-    result = {
-      'lat' => loc.lat,
-      'lng' => loc.lng,
-      'city' => loc.city,
-      'state_abbr' => loc.state_abbr,
-    }
-    data = {
-      'expires_at' => Time.now.to_i + 100*86400,
-      'result' => result,
-    }
-
-    $db[cache_key] = data
-    $db.flush
-    loc
+    wc_client.cached_geocode(query, ttl: 86400*100)
   end
 
   get '/locations' do
