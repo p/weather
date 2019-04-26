@@ -83,7 +83,7 @@ class App < Sinatra::Base
   private def geocode(query)
     cache_key = "geocode:#{query}"
     if data = $db[cache_key]
-      if data['expires_at'] > Time.now.to_i
+      if data['expires_at'] && data['expires_at'] > Time.now.to_i
         return Weathercom::Location.new(
           data['result']['lat'], data['result']['lng'], wc_client)
       else
@@ -91,7 +91,7 @@ class App < Sinatra::Base
       end
     end
 
-    loc = wc_client.geocode(location)
+    loc = wc_client.cached_geocode(query, 86400*100)
     result = {
       'lat' => loc.lat,
       'lng' => loc.lng,
@@ -131,6 +131,17 @@ class App < Sinatra::Base
     response = {
       location: LocationPresenter.new(loc).to_hash,
       current: ObservationPresenter.new(obs).to_hash,
+    }
+    content_type :json
+    render_json(response)
+  end
+
+  get '/locations/:location/hourly' do |location|
+    loc = geocode(location)
+    forecast = loc.hourly_forecast
+    response = {
+      location: LocationPresenter.new(loc).to_hash,
+      current: HourlyForecastPresenter.new(forecast).to_hash,
     }
     content_type :json
     render_json(response)
