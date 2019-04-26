@@ -11,12 +11,13 @@ import React from 'react'
 import Store from '../store'
 import actions from '../actions'
 
+export default
 @connect(props => ({
   network: [['network'], unim],
   forecast: [['forecast', props.location_query], unim],
 }))
 @ReactTimeout
-export default class Forecast extends React.Component {
+class Forecast extends React.Component {
   componentDidMount() {
     if (!this.props.forecast) {
       actions.fetch_forecast(

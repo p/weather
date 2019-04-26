@@ -11,12 +11,13 @@ import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
 
+export default
 @connect(props => ({
   forecast: [['forecast', props.location_query, 'forecast'], unim],
   current: [['forecast', props.location_query, 'current'], unim],
   location: [['forecast', props.location_query, 'location'], unim],
 }))
-export default class BriefLocation extends React.Component {
+class BriefLocation extends React.Component {
   render() {
     //console.log(this.props.forecast)
     return (

@@ -12,12 +12,13 @@ import Current from '../components/current'
 import Forecast from '../data/forecast'
 import { mapProps } from '@rq/react-map-props'
 
+export default
 @mapProps({
   params: {
     location: unescape,
   },
 })
-export default class BriefLocationHandler extends React.Component {
+class BriefLocationHandler extends React.Component {
   render() {
     return (
       <Forecast location_query={this.props.params.location}>

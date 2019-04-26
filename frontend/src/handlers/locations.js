@@ -15,6 +15,7 @@ import Current from '../components/current'
 import Locations from '../components/locations'
 import { mapProps } from '@rq/react-map-props'
 
+export default
 @mapProps({
   params: {
     location: unescape,
@@ -23,7 +24,7 @@ import { mapProps } from '@rq/react-map-props'
 @connect(props => ({
   locations: [['locations'], unim],
 }))
-export default class LocationsHandler extends React.Component {
+class LocationsHandler extends React.Component {
   componentDidMount() {
     actions.fetch_locations()
   }

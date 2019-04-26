@@ -13,12 +13,13 @@ import Store from '../store'
 import Current from '../components/current'
 import { mapProps } from '@rq/react-map-props'
 
+export default
 @connect(props => ({
   forecast: [['forecast', props.location_query, 'forecast'], unim],
   current: [['forecast', props.location_query, 'current'], unim],
   location: [['forecast', props.location_query, 'location'], unim],
 }))
-export default class FullLocation extends React.Component {
+class FullLocation extends React.Component {
   render() {
     return (
       <FullLocationView
@@ -27,6 +28,7 @@ export default class FullLocation extends React.Component {
     current={this.props.current}
     location={this.props.location}
     />
+    )
   }
 }
 

@@ -11,10 +11,11 @@ import React from 'react'
 import LocationForm from '../components/location-form'
 import Store from '../store'
 
+export default
 @connect(props => ({
   locations: [['locations'], unim],
 }))
-export default class Locations extends React.Component {
+class Locations extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

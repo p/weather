@@ -11,10 +11,11 @@ import Store from '../store'
 import { data_age } from '../util'
 import { connect } from 'nuclear-js-react-addons-chefsplate'
 
+export default
 @connect(props => ({
   network: [['network'], unim],
 }))
-export default class NetworkDetect extends React.Component {
+class NetworkDetect extends React.Component {
   componentDidMount() {
     if (!('up' in this.props.network)) {
       actions.fetch_network()
