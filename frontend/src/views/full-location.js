@@ -1,3 +1,4 @@
+import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
 import PropTypes from 'prop-types'
@@ -50,7 +51,9 @@ export default class FullLocationView extends React.Component {
           {forecast.precip_probability ? (
             <div>
               <div>{forecast.precip_probability}%</div>
-              <div>{forecast.precip_type}</div>
+              <div><PrecipType
+              precip_type={forecast.precip_type} start_timestamp={forecast.start_timestamp}
+              /></div>
             </div>
           ) : (
             ''
