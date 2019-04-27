@@ -16,7 +16,10 @@ import { mapProps } from '@rq/react-map-props'
 export default
 @connect(props => ({
   daily_forecasts: [['weather', props.location_query, 'daily_forecasts'], unim],
-  hourly_forecasts: [['weather', props.location_query, 'hourly_forecasts'], unim],
+  hourly_forecasts: [
+    ['weather', props.location_query, 'hourly_forecasts'],
+    unim,
+  ],
   current: [['weather', props.location_query, 'current'], unim],
   location: [['weather', props.location_query, 'location'], unim],
 }))

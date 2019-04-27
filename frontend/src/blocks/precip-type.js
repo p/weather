@@ -9,11 +9,11 @@ import Store from '../store'
 import { data_age } from '../util'
 
 export default function PrecipType(props) {
-  let date = new Date(props.start_timestamp*1000)
-  let month = date.getMonth()+1
-  if (month>=4 && month<= 11&&props.precip_type=='rain'){
+  let date = new Date(props.start_timestamp * 1000)
+  let month = date.getMonth() + 1
+  if (month >= 4 && month <= 11 && props.precip_type == 'rain') {
     return null
-  }else{
+  } else {
     return props.precip_type
   }
 }

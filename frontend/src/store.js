@@ -1,4 +1,4 @@
-import {make_hash,merge} from './util'
+import { make_hash, merge } from './util'
 import reactor from './reactor'
 import { Store, toImmutable } from 'nuclear-js'
 
@@ -46,7 +46,7 @@ let WeatherStore = Store({
   },
 })
 
-function receive_weather(state, {location_query, payload}) {
+function receive_weather(state, { location_query, payload }) {
   let new_payload = merge(state[location_query] || {}, payload)
   let delta = make_hash(location_query, payload)
   return state.merge(delta)

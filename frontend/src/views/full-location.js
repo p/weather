@@ -23,13 +23,17 @@ export default class FullLocationView extends React.Component {
 
         {this.props.current && <Current current={this.props.current} />}
 
-        {this.props.daily_forecasts&& (
+        {this.props.daily_forecasts && (
           <div>
             {_.map(this.props.daily_forecasts, forecast => (
-              <div key={forecast.start_timestamp} className="forecast-row" >
+              <div key={forecast.start_timestamp} className="forecast-row">
                 <div className="forecast-date">
-                  <div>{moment(forecast.start_timestamp * 1000).format('dddd')}</div>
-                  <div>{moment(forecast.start_timestamp * 1000).format('MMM D')}</div>
+                  <div>
+                    {moment(forecast.start_timestamp * 1000).format('dddd')}
+                  </div>
+                  <div>
+                    {moment(forecast.start_timestamp * 1000).format('MMM D')}
+                  </div>
                 </div>
 
                 {forecast.day &&
@@ -51,9 +55,12 @@ export default class FullLocationView extends React.Component {
           {forecast.precip_probability ? (
             <div>
               <div>{forecast.precip_probability}%</div>
-              <div><PrecipType
-              precip_type={forecast.precip_type} start_timestamp={forecast.start_timestamp}
-              /></div>
+              <div>
+                <PrecipType
+                  precip_type={forecast.precip_type}
+                  start_timestamp={forecast.start_timestamp}
+                />
+              </div>
             </div>
           ) : (
             ''
@@ -77,12 +84,12 @@ export default class FullLocationView extends React.Component {
   }
 }
 
-const DayPartPropTypes =PropTypes.shape({
-        temp: PropTypes.number.isRequired,
-        precip_probability: PropTypes.number.isRequired,
-        precip_type: PropTypes.string.isRequired,
-        narrative: PropTypes.string.isRequired,
-      })
+const DayPartPropTypes = PropTypes.shape({
+  temp: PropTypes.number.isRequired,
+  precip_probability: PropTypes.number.isRequired,
+  precip_type: PropTypes.string.isRequired,
+  narrative: PropTypes.string.isRequired,
+})
 
 FullLocationView.propTypes = {
   location_query: PropTypes.string.isRequired,
