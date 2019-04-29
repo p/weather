@@ -1,4 +1,4 @@
-import {DailyForecastPropTypes} from '../data/prop-types'
+import { DailyForecastPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -100,9 +100,7 @@ FullLocationView.propTypes = {
     state_abbr: PropTypes.string.isRequired,
   }),
 
-  daily_forecasts: PropTypes.arrayOf(
-  DailyForecastPropTypes
-  ),
+  daily_forecasts: PropTypes.arrayOf(DailyForecastPropTypes),
 
   current: Current.propTypes.current,
 }

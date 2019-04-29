@@ -1,4 +1,4 @@
-import {DailyForecastPropTypes,DayPartPropTypes} from '../data/prop-types'
+import { DailyForecastPropTypes, DayPartPropTypes } from '../data/prop-types'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Link } from '@rq/react-easy-router'
@@ -10,11 +10,11 @@ import Store from '../store'
 import { data_age } from '../util'
 
 export default function SingleDayTemp(props) {
-    if (props.forecast.day){
-        return props.forecast.day.temp
-    } else{
-        return props.forecast.night.temp
-    }
+  if (props.forecast.day) {
+    return props.forecast.day.temp
+  } else {
+    return props.forecast.night.temp
+  }
 }
 
 SingleDayTemp.propTypes = {

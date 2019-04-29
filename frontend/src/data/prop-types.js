@@ -7,11 +7,11 @@ export const DayPartPropTypes = PropTypes.shape({
   narrative: PropTypes.string.isRequired,
 })
 
-export const DailyForecastPropTypes=    PropTypes.shape({
-      // UTC timestamp
-      start_timestamp: PropTypes.number.isRequired,
-      // UTC timestamp
-      expire_timestamp: PropTypes.number.isRequired,
-      day: DayPartPropTypes,
-      night: DayPartPropTypes,
-    })
+export const DailyForecastPropTypes = PropTypes.shape({
+  // UTC timestamp
+  start_timestamp: PropTypes.number.isRequired,
+  // UTC timestamp
+  expire_timestamp: PropTypes.number.isRequired,
+  day: DayPartPropTypes,
+  night: DayPartPropTypes,
+})

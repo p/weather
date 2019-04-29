@@ -1,5 +1,5 @@
 import SingleDayTemp from '../blocks/single-day-temp'
-import {DayPartPropTypes} from '../data/prop-types'
+import { DayPartPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -38,9 +38,13 @@ export default class BriefLocationView extends React.Component {
                   </div>
                 </div>
 
-                {forecast.day ?
-                  this.render_day_part_forecast('day', forecast.day,forecast):
-                this.render_day_part_forecast('night', forecast.night,forecast)}
+                {forecast.day
+                  ? this.render_day_part_forecast('day', forecast.day, forecast)
+                  : this.render_day_part_forecast(
+                      'night',
+                      forecast.night,
+                      forecast,
+                    )}
               </div>
             ))}
           </div>
@@ -54,7 +58,7 @@ export default class BriefLocationView extends React.Component {
       <div className="forecast-row" key={forecast.time}>
         <div className={'forecast-' + day_part_name}>
           <div className="forecast-temp">
-        <SingleDayTemp forecast={full_forecast}/>
+            <SingleDayTemp forecast={full_forecast} />
             {'\xb0'}
           </div>
           <div className="forecast-precip">
