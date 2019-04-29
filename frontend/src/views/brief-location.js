@@ -1,4 +1,5 @@
-import {DailyForecastPropTypes} from '../data/prop-types'
+import SingleDayTemp from '../blocks/single-day-temp'
+import {DayPartPropTypes} from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -12,7 +13,7 @@ import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
 
-export default class FullLocationView extends React.Component {
+export default class BriefLocationView extends React.Component {
   render() {
     return (
       <div>
@@ -37,9 +38,9 @@ export default class FullLocationView extends React.Component {
                   </div>
                 </div>
 
-                {forecast.day &&
-                  this.render_day_part_forecast('day', forecast.day)}
-                {this.render_day_part_forecast('night', forecast.night)}
+                {forecast.day ?
+                  this.render_day_part_forecast('day', forecast.day,forecast):
+                this.render_day_part_forecast('night', forecast.night,forecast)}
               </div>
             ))}
           </div>
@@ -48,26 +49,26 @@ export default class FullLocationView extends React.Component {
     )
   }
 
-  render_day_part_forecast(day_part_name, forecast) {
+  render_day_part_forecast(day_part_name, forecast, full_forecast) {
     return (
-      <div className={'forecast-' + day_part_name}>
-        <div className="forecast-temp">{forecast.temp.toString() + '\xb0'}</div>
-        <div className="forecast-precip">
-          {forecast.precip_probability ? (
-            <div>
-              <div>{forecast.precip_probability}%</div>
+      <div className="forecast-row" key={forecast.time}>
+        <div className={'forecast-' + day_part_name}>
+          <div className="forecast-temp">
+        <SingleDayTemp forecast={full_forecast}/>
+            {'\xb0'}
+          </div>
+          <div className="forecast-precip">
+            {forecast.precip_probability > 10 ? (
               <div>
-                <PrecipType
-                  precip_type={forecast.precip_type}
-                  start_timestamp={forecast.start_timestamp}
-                />
+                <div>{forecast.precip_probability}%</div>
+                <div>{forecast.precip_type}</div>
               </div>
-            </div>
-          ) : (
-            ''
-          )}
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="forecast-blurb">{forecast.narrative}</div>
         </div>
-        <div className="forecast-blurb">{forecast.narrative}</div>
       </div>
     )
   }
@@ -85,14 +86,7 @@ export default class FullLocationView extends React.Component {
   }
 }
 
-const DayPartPropTypes = PropTypes.shape({
-  temp: PropTypes.number.isRequired,
-  precip_probability: PropTypes.number.isRequired,
-  precip_type: PropTypes.string.isRequired,
-  narrative: PropTypes.string.isRequired,
-})
-
-FullLocationView.propTypes = {
+BriefLocationView.propTypes = {
   location_query: PropTypes.string.isRequired,
 
   location: PropTypes.shape({
@@ -101,7 +95,14 @@ FullLocationView.propTypes = {
   }),
 
   daily_forecasts: PropTypes.arrayOf(
-  DailyForecastPropTypes
+    PropTypes.shape({
+      // UTC timestamp
+      start_timestamp: PropTypes.number.isRequired,
+      // UTC timestamp
+      expire_timestamp: PropTypes.number.isRequired,
+      day: DayPartPropTypes,
+      night: DayPartPropTypes,
+    }),
   ),
 
   current: Current.propTypes.current,
