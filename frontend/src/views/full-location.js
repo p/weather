@@ -1,3 +1,5 @@
+import ForecastDayOfWeek from '../blocks/forecast-day-of-week'
+import ForecastDate from '../blocks/forecast-date'
 import { LocationPropTypes, DailyForecastPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
@@ -30,10 +32,10 @@ export default class FullLocationView extends React.Component {
               <div key={forecast.start_timestamp} className="forecast-row">
                 <div className="forecast-date">
                   <div>
-                    {moment(forecast.start_timestamp * 1000).format('dddd')}
+              <ForecastDayOfWeek forecast={forecast}/>
                   </div>
                   <div>
-                    {moment(forecast.start_timestamp * 1000).format('MMM D')}
+              <ForecastDate forecast={forecast}/>
                   </div>
                 </div>
 

@@ -1,3 +1,5 @@
+import ForecastDayOfWeek from '../blocks/forecast-day-of-week'
+import ForecastDate from '../blocks/forecast-date'
 import SingleDayTemp from '../blocks/single-day-temp'
 import {
   DailyForecastPropTypes,
@@ -35,10 +37,10 @@ export default class BriefLocationView extends React.Component {
               <div key={forecast.start_timestamp} className="forecast-row">
                 <div className="forecast-date">
                   <div>
-                    {moment(forecast.start_timestamp * 1000).format('dddd')}
+              <ForecastDayOfWeek forecast={forecast}/>
                   </div>
                   <div>
-                    {moment(forecast.start_timestamp * 1000).format('MMM D')}
+              <ForecastDate forecast={forecast}/>
                   </div>
                 </div>
 
