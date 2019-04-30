@@ -1,5 +1,9 @@
 import SingleDayTemp from '../blocks/single-day-temp'
-import { DailyForecastPropTypes,LocationPropTypes,DayPartPropTypes } from '../data/prop-types'
+import {
+  DailyForecastPropTypes,
+  LocationPropTypes,
+  DayPartPropTypes,
+} from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -66,10 +70,10 @@ export default class BriefLocationView extends React.Component {
               <div>
                 <div>{forecast.precip_probability}%</div>
                 <div>
-                <PrecipType
-                  precip_type={forecast.precip_type}
-                  start_timestamp={forecast.start_timestamp}
-                />
+                  <PrecipType
+                    precip_type={forecast.precip_type}
+                    start_timestamp={forecast.start_timestamp}
+                  />
                 </div>
               </div>
             ) : (

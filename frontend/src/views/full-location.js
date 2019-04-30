@@ -1,4 +1,4 @@
-import { LocationPropTypes,DailyForecastPropTypes } from '../data/prop-types'
+import { LocationPropTypes, DailyForecastPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'

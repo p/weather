@@ -16,8 +16,7 @@ export const DailyForecastPropTypes = PropTypes.shape({
   night: DayPartPropTypes,
 })
 
-export const LocationPropTypes=PropTypes.shape({
-    city: PropTypes.string.isRequired,
-    state_abbr: PropTypes.string.isRequired,
-  })
-  
+export const LocationPropTypes = PropTypes.shape({
+  city: PropTypes.string.isRequired,
+  state_abbr: PropTypes.string.isRequired,
+})
