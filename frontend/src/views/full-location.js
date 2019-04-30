@@ -1,4 +1,4 @@
-import { DailyForecastPropTypes } from '../data/prop-types'
+import { LocationPropTypes,DailyForecastPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -85,22 +85,12 @@ export default class FullLocationView extends React.Component {
   }
 }
 
-const DayPartPropTypes = PropTypes.shape({
-  temp: PropTypes.number.isRequired,
-  precip_probability: PropTypes.number.isRequired,
-  precip_type: PropTypes.string.isRequired,
-  narrative: PropTypes.string.isRequired,
-})
-
 FullLocationView.propTypes = {
   location_query: PropTypes.string.isRequired,
 
-  location: PropTypes.shape({
-    city: PropTypes.string.isRequired,
-    state_abbr: PropTypes.string.isRequired,
-  }),
+  location: LocationPropTypes.isRequired,
 
-  daily_forecasts: PropTypes.arrayOf(DailyForecastPropTypes),
+  daily_forecasts: PropTypes.arrayOf(DailyForecastPropTypes).isRequired,
 
-  current: Current.propTypes.current,
+  current: Current.propTypes.current.isRequired,
 }

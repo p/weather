@@ -7,7 +7,12 @@ class HourlyForecastPresenter
 
   def to_hash
     {
-      expires_at: forecast.expire_time_gmt,
+      expire_timestamp: forecast.expire_timestamp,
+      start_timestamp: forecast.start_timestamp,
+      temp: forecast.temp,
+      precip_probability: forecast.precip_probability,
+      precip_type: forecast.precip_type,
+      narrative: forecast.narrative,
     }
   end
 end

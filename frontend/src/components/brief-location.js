@@ -35,3 +35,7 @@ class BriefLocation extends React.Component {
     )
   }
 }
+
+BriefLocation.propTypes = {
+  location_query: PropTypes.string.isRequired,
+}

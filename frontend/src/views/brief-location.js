@@ -1,5 +1,5 @@
 import SingleDayTemp from '../blocks/single-day-temp'
-import { DayPartPropTypes } from '../data/prop-types'
+import { DailyForecastPropTypes,LocationPropTypes,DayPartPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -65,7 +65,12 @@ export default class BriefLocationView extends React.Component {
             {forecast.precip_probability > 10 ? (
               <div>
                 <div>{forecast.precip_probability}%</div>
-                <div>{forecast.precip_type}</div>
+                <div>
+                <PrecipType
+                  precip_type={forecast.precip_type}
+                  start_timestamp={forecast.start_timestamp}
+                />
+                </div>
               </div>
             ) : (
               ''
@@ -93,21 +98,9 @@ export default class BriefLocationView extends React.Component {
 BriefLocationView.propTypes = {
   location_query: PropTypes.string.isRequired,
 
-  location: PropTypes.shape({
-    city: PropTypes.string.isRequired,
-    state_abbr: PropTypes.string.isRequired,
-  }),
+  location: LocationPropTypes.isRequired,
 
-  daily_forecasts: PropTypes.arrayOf(
-    PropTypes.shape({
-      // UTC timestamp
-      start_timestamp: PropTypes.number.isRequired,
-      // UTC timestamp
-      expire_timestamp: PropTypes.number.isRequired,
-      day: DayPartPropTypes,
-      night: DayPartPropTypes,
-    }),
-  ),
+  daily_forecasts: PropTypes.arrayOf(DailyForecastPropTypes).isRequired,
 
-  current: Current.propTypes.current,
+  current: Current.propTypes.current.isRequired,
 }
