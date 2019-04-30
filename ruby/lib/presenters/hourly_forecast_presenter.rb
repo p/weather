@@ -12,7 +12,7 @@ class HourlyForecastPresenter
       temp: forecast.temp,
       precip_probability: forecast.precip_probability,
       precip_type: forecast.precip_type,
-      narrative: forecast.narrative,
+      phrase: forecast.phrase,
     }
   end
 end

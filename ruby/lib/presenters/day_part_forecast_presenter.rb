@@ -11,7 +11,8 @@ class DayPartForecastPresenter
       temp: forecast.temp,
       precip_probability: forecast.precip_probability,
       precip_type: forecast.precip_type,
-      narrative: forecast.narrative,
+      narrative: forecast.cut_narrative,
+      phrase: forecast.phrase,
     }
   end
 end
