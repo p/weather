@@ -84,76 +84,99 @@ class App < Sinatra::Base
     wc_client.geocode(query, ttl: 86400*100)
   end
 
+  private def cache_response(key)
+    if params[:network].to_i == 2
+      if response = $db["response:#{key}"]
+        return response
+      end
+    end
+
+    yield.tap do |response|
+      $db["response:#{key}"] = response
+      $db.flush
+    end
+  end
+
   get '/locations' do
     locations = $db['locations'] || []
     content_type :json
     render_json(locations)
   end
 
-  get '/locations/:location' do |location|
-    loc = geocode(location)
-    obs = loc.current_observation
-    daily_forecasts = loc.daily_forecasts
-    hourly_forecasts = loc.hourly_forecasts
-    response = {
-      location: LocationPresenter.new(loc).to_hash,
-      current: ObservationPresenter.new(obs).to_hash,
-      hourly_forecasts: hourly_forecasts.map do |f|
-        HourlyForecastPresenter.new(f).to_hash
-      end,
-      daily_forecasts: daily_forecasts.map do |f|
-        DailyForecastPresenter.new(f).to_hash
-      end,
-    }
-    content_type :json
-    render_json(response)
-  end
-
-  get '/locations/:location/current' do |location|
-    loc = geocode(location)
-    obs = loc.current_observation
-    response = {
-      location: LocationPresenter.new(loc).to_hash,
-      current: ObservationPresenter.new(obs).to_hash,
-    }
-    content_type :json
-    render_json(response)
-  end
-
-  get '/locations/:location/hourly' do |location|
-    loc = geocode(location)
-    forecasts = loc.hourly_forecasts
-    response = {
-      location: LocationPresenter.new(loc).to_hash,
-      forecasts: forecasts.map { |f| HourlyForecastPresenter.new(f).to_hash },
-    }
-    content_type :json
-    render_json(response)
-  end
-
-  get '/locations/:location/daily' do |location|
-    loc = geocode(location)
-    forecasts = loc.daily_forecasts
-    response = {
-      location: LocationPresenter.new(loc).to_hash,
-      forecasts: forecasts.map { |f| DailyForecastPresenter.new(f).to_hash },
-    }
-    content_type :json
-    render_json(response)
-  end
-
-  get '/locations/:location/forecast' do |location|
-    loc = geocode(location)
-    forecast = loc.daily_forecast_10
-    forecasts = payload['forecasts'].map do |forecast|
+  get '/locations/:location' do |location_query|
+    response = cache_response("all:#{location_query}") do
+      loc = geocode(location_query)
+      obs = loc.current_observation
+      daily_forecasts = loc.daily_forecasts
+      hourly_forecasts = loc.hourly_forecasts
       {
-        time: forecast['fcst_valid'],
-        day: map_forecast(forecast['day']),
-        night: map_forecast(forecast['night']),
+        location: LocationPresenter.new(loc).to_hash,
+        current: ObservationPresenter.new(obs).to_hash,
+        hourly_forecasts: hourly_forecasts.map do |f|
+          HourlyForecastPresenter.new(f).to_hash
+        end,
+        daily_forecasts: daily_forecasts.map do |f|
+          DailyForecastPresenter.new(f).to_hash
+        end,
       }
     end
     content_type :json
-    render_json(forecasts)
+    render_json(response)
+  end
+
+  get '/locations/:location/current' do |location_query|
+    response = cache_response("current:#{location_query}") do
+      loc = geocode(location_query)
+      obs = loc.current_observation
+      {
+        location: LocationPresenter.new(loc).to_hash,
+        current: ObservationPresenter.new(obs).to_hash,
+      }
+    end
+    content_type :json
+    render_json(response)
+  end
+
+  get '/locations/:location/hourly' do |location_query|
+    response = cache_response("hourly:#{location_query}") do
+      loc = geocode(location_query)
+      forecasts = loc.hourly_forecasts
+      {
+        location: LocationPresenter.new(loc).to_hash,
+        forecasts: forecasts.map { |f| HourlyForecastPresenter.new(f).to_hash },
+      }
+    end
+    content_type :json
+    render_json(response)
+  end
+
+  get '/locations/:location/daily' do |location_query|
+    response = cache_response("daily:#{location_query}") do
+      loc = geocode(location_query)
+      forecasts = loc.daily_forecasts
+      {
+        location: LocationPresenter.new(loc).to_hash,
+        forecasts: forecasts.map { |f| DailyForecastPresenter.new(f).to_hash },
+      }
+    end
+    content_type :json
+    render_json(response)
+  end
+
+  get '/locations/:location/forecast' do |location_query|
+    response = cache_response("forecasts:#{location_query}") do
+      loc = geocode(location_query)
+      forecast = loc.daily_forecast_10
+      payload['forecasts'].map do |forecast|
+        {
+          time: forecast['fcst_valid'],
+          day: map_forecast(forecast['day']),
+          night: map_forecast(forecast['night']),
+        }
+      end
+    end
+    content_type :json
+    render_json(response)
   end
 
   get '/network' do
