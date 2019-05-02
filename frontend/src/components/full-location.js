@@ -8,6 +8,7 @@ import { Link } from '@rq/react-easy-router'
 import Immutable from 'seamless-immutable'
 import preventDefaultWrapper from '@rq/prevent-default-wrapper'
 import _ from 'underscore'
+import {merge_hourly_into_daily_forecasts} from '../data/merger'
 import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
@@ -27,8 +28,8 @@ class FullLocation extends React.Component {
     return (
       <FullLocationView
         location_query={this.props.location_query}
-        daily_forecasts={this.props.daily_forecasts}
-        hourly_forecasts={this.props.hourly_forecasts}
+        daily_forecasts={merge_hourly_into_daily_forecasts(
+          this.props.daily_forecasts,this.props.hourly_forecasts)}
         current={this.props.current}
         location={this.props.location}
       />
