@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "test": "mocha --require @babel/register test/**/*-test.js"
+  },
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -20,6 +23,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
     "@hot-loader/react-dom": "16",
     "@rq/prevent-default-wrapper": "^0.0.4",
     "@rq/react-easy-router": "^3.0.10",
@@ -32,6 +36,7 @@
     "eslint-plugin-react": "^7.12.4",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
+    "mocha": "^6.1.4",
     "moment": "^2.22.2",
     "nuclear-js": "^1.4.0",
     "nuclear-js-react-addons-chefsplate": "^1.0.1",
