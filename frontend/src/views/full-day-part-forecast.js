@@ -1,5 +1,6 @@
 import ForecastDayOfWeek from '../format/forecast-day-of-week'
 import Temp from '../format/temp'
+import PrecipProbability from '../format/precip-probability'
 import ForecastDate from '../format/forecast-date'
 import ForecastTime from '../format/forecast-time'
 import {
@@ -26,7 +27,7 @@ export default class FullDayPartForecastView extends React.Component {
         <div className="forecast-precip">
           {forecast.precip_probability ? (
             <div>
-              <div>{forecast.precip_probability}%</div>
+              <div><PrecipProbability precip_probability={forecast.precip_probability}/></div>
               <div>
                 <PrecipType
                   precip_type={forecast.precip_type}
@@ -43,6 +44,7 @@ export default class FullDayPartForecastView extends React.Component {
         {_.map(forecast.hourly,hfc=><div key={hfc.start_timestamp}>
         <ForecastTime forecast={hfc}/>
         <Temp temp={hfc.temp}/>
+        <PrecipProbability precip_probability={hfc.precip_probability}/>
         </div>)}
         </div>
       </div>
