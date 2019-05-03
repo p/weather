@@ -1,11 +1,11 @@
-import ForecastDayOfWeek from '../blocks/forecast-day-of-week'
-import Temp from '../blocks/temp'
-import ForecastDate from '../blocks/forecast-date'
-import ForecastTime from '../blocks/forecast-time'
+import ForecastDayOfWeek from '../format/forecast-day-of-week'
+import Temp from '../format/temp'
+import ForecastDate from '../format/forecast-date'
+import ForecastTime from '../format/forecast-time'
 import {
   DayPartWithHourlyPropTypes
 } from '../data/prop-types'
-import PrecipType from '../blocks/precip-type'
+import PrecipType from '../format/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
 import PropTypes from 'prop-types'
