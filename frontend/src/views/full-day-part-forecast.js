@@ -1,5 +1,7 @@
 import ForecastDayOfWeek from '../blocks/forecast-day-of-week'
+import Temp from '../blocks/temp'
 import ForecastDate from '../blocks/forecast-date'
+import ForecastTime from '../blocks/forecast-time'
 import {
   DayPartWithHourlyPropTypes
 } from '../data/prop-types'
@@ -20,7 +22,7 @@ export default class FullDayPartForecastView extends React.Component {
       let {day_part_name,forecast} = this.props
     return (
       <div className={'forecast-' + day_part_name}>
-        <div className="forecast-temp">{forecast.temp.toString() + '\xb0'}</div>
+        <div className="forecast-temp"><Temp temp={forecast.temp}/></div>
         <div className="forecast-precip">
           {forecast.precip_probability ? (
             <div>
@@ -37,6 +39,12 @@ export default class FullDayPartForecastView extends React.Component {
           )}
         </div>
         <div className="forecast-blurb">{forecast.narrative}</div>
+        <div>
+        {_.map(forecast.hourly,hfc=><div key={hfc.start_timestamp}>
+        <ForecastTime forecast={hfc}/>
+        <Temp temp={hfc.temp}/>
+        </div>)}
+        </div>
       </div>
     )
   }
