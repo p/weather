@@ -12,5 +12,7 @@ export default function ForecastDayOfWeek(props) {
 }
 
 ForecastDayOfWeek.propTypes = {
+  forecast:PropTypes.shape({
   start_timestamp: PropTypes.number.isRequired,
+  })
 }
