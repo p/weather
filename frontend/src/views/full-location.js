@@ -1,6 +1,6 @@
 import ForecastDayOfWeek from '../blocks/forecast-day-of-week'
 import ForecastDate from '../blocks/forecast-date'
-import { LocationPropTypes, DailyForecastPropTypes } from '../data/prop-types'
+import { DailyWithHourlyForecastPropTypes,LocationPropTypes, DailyForecastPropTypes } from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -91,7 +91,7 @@ FullLocationView.propTypes = {
 
   location: LocationPropTypes.isRequired,
 
-  daily_forecasts: PropTypes.arrayOf(DailyForecastPropTypes).isRequired,
+  daily_forecasts: PropTypes.arrayOf(DailyWithHourlyForecastPropTypes).isRequired,
 
   current: Current.propTypes.current.isRequired,
 }

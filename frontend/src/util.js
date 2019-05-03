@@ -21,8 +21,8 @@ export function network_flag(up) {
   return up ? 0 : 2
 }
 
-export function merge(dest, src) {
-  return Object.assign({}, dest, src)
+export function merge(dest, ...args) {
+  return Object.assign({}, dest, ...args)
 }
 
 export function make_hash() {
