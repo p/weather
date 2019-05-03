@@ -51,7 +51,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
       assert.deepEqual(actual, expected)
     })
   })
-  
+
   describe('1 daily & 1 hourly into night', () => {
     const daily_fcs = [
       {
@@ -98,7 +98,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
       assert.deepEqual(actual, expected)
     })
   })
-  
+
   describe('1 daily & 1 hourly for day not aligned with daily start time', () => {
     const daily_fcs = [
       {
@@ -145,7 +145,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
       assert.deepEqual(actual, expected)
     })
   })
-  
+
   describe('2 daily & 1 hourly for second day', () => {
     const daily_fcs = [
       {
@@ -186,7 +186,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
         night: {
           start_timestamp: 2,
           temp: 20,
-          hourly:[],
+          hourly: [],
         },
       },
       {
@@ -200,7 +200,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
         night: {
           start_timestamp: 4,
           temp: 20,
-          hourly:[],
+          hourly: [],
         },
       },
     ]
@@ -210,7 +210,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
       assert.deepEqual(actual, expected)
     })
   })
-  
+
   describe('2 daily & 1 hourly for night not aligned with first start time', () => {
     const daily_fcs = [
       {
@@ -247,7 +247,7 @@ describe('merge_hourly_into_daily_forecasts', function() {
       {
         start_timestamp: 2,
         expire_timestamp: 1,
-        day:undefined,
+        day: undefined,
         night: {
           start_timestamp: 2,
           temp: 20,
