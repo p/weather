@@ -12,7 +12,7 @@ export default function ForecastDate(props) {
 }
 
 ForecastDate.propTypes = {
-  forecast:PropTypes.shape({
-  start_timestamp: PropTypes.number.isRequired,
-  })
+  forecast: PropTypes.shape({
+    start_timestamp: PropTypes.number.isRequired,
+  }),
 }

@@ -33,12 +33,15 @@ export function merge_hourly_into_daily_forecasts(
   let current_dfc = day_part(out_dfcs, daily_index)
 
   _.each(hourly_forecasts, hfc => {
-    console.log(daily_forecasts.length*2 , daily_index,
-    hfc.start_timestamp,
-    day_part(daily_forecasts, daily_index + 1).start_timestamp)
-    
+    console.log(
+      daily_forecasts.length * 2,
+      daily_index,
+      hfc.start_timestamp,
+      day_part(daily_forecasts, daily_index + 1).start_timestamp,
+    )
+
     if (
-      daily_forecasts.length*2 > daily_index &&
+      daily_forecasts.length * 2 > daily_index &&
       hfc.start_timestamp >=
         day_part(daily_forecasts, daily_index + 1).start_timestamp
     ) {
