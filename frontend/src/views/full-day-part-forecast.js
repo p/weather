@@ -39,13 +39,15 @@ export default class FullDayPartForecastView extends React.Component {
             ''
           )}
         </div>
-        <div className="forecast-blurb">{forecast.narrative}</div>
+        <div className="forecast-blurb">{forecast.narrative}
         <div>
-        {_.map(forecast.hourly,hfc=><div key={hfc.start_timestamp}>
-        <ForecastTime forecast={hfc}/>
-        <Temp temp={hfc.temp}/>
-        <PrecipProbability precip_probability={hfc.precip_probability}/>
+        {_.map(forecast.hourly,hfc=><div key={hfc.start_timestamp}
+        style={{display:'inline-block',textAlign:'center',margin:5}}>
+        <div><ForecastTime forecast={hfc}/></div>
+        <div><Temp temp={hfc.temp}/></div>
+        <div><PrecipProbability precip_probability={hfc.precip_probability}/></div>
         </div>)}
+        </div>
         </div>
       </div>
     )
