@@ -3,9 +3,7 @@ import Temp from '../format/temp'
 import PrecipProbability from '../format/precip-probability'
 import ForecastDate from '../format/forecast-date'
 import ForecastTime from '../format/forecast-time'
-import {
-  DayPartWithHourlyPropTypes
-} from '../data/prop-types'
+import { DayPartWithHourlyPropTypes } from '../data/prop-types'
 import PrecipType from '../format/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -20,14 +18,20 @@ import Current from '../components/current'
 
 export default class FullDayPartForecastView extends React.Component {
   render() {
-      let {day_part_name,forecast} = this.props
+    let { day_part_name, forecast } = this.props
     return (
       <div className={'forecast-' + day_part_name}>
-        <div className="forecast-temp"><Temp temp={forecast.temp}/></div>
+        <div className="forecast-temp">
+          <Temp temp={forecast.temp} />
+        </div>
         <div className="forecast-precip">
           {forecast.precip_probability ? (
             <div>
-              <div><PrecipProbability precip_probability={forecast.precip_probability}/></div>
+              <div>
+                <PrecipProbability
+                  precip_probability={forecast.precip_probability}
+                />
+              </div>
               <div>
                 <PrecipType
                   precip_type={forecast.precip_type}
@@ -39,15 +43,32 @@ export default class FullDayPartForecastView extends React.Component {
             ''
           )}
         </div>
-        <div className="forecast-blurb">{forecast.narrative}
-        <div>
-        {_.map(forecast.hourly,hfc=><div key={hfc.start_timestamp}
-        style={{display:'inline-block',textAlign:'center',margin:5}}>
-        <div><ForecastTime forecast={hfc}/></div>
-        <div><Temp temp={hfc.temp}/></div>
-        <div><PrecipProbability precip_probability={hfc.precip_probability}/></div>
-        </div>)}
-        </div>
+        <div className="forecast-blurb">
+          {forecast.narrative}
+          <div>
+            {_.map(forecast.hourly, hfc => (
+              <div
+                key={hfc.start_timestamp}
+                style={{
+                  display: 'inline-block',
+                  textAlign: 'center',
+                  margin: 5,
+                }}
+              >
+                <div>
+                  <ForecastTime forecast={hfc} />
+                </div>
+                <div>
+                  <Temp temp={hfc.temp} />
+                </div>
+                <div>
+                  <PrecipProbability
+                    precip_probability={hfc.precip_probability}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     )
@@ -55,6 +76,6 @@ export default class FullDayPartForecastView extends React.Component {
 }
 
 FullDayPartForecastView.propTypes = {
-    day_part_name: PropTypes.string.isRequired,
+  day_part_name: PropTypes.string.isRequired,
   forecast: DayPartWithHourlyPropTypes.isRequired,
 }

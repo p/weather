@@ -9,8 +9,8 @@ import Store from '../store'
 import { data_age } from '../util'
 
 export default function PrecipProbability(props) {
-    const {precip_probability}=props
-    return `${precip_probability}%`
+  const { precip_probability } = props
+  return `${precip_probability}%`
 }
 
 PrecipProbability.propTypes = {

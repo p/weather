@@ -7,10 +7,10 @@ import _ from 'underscore'
 import React from 'react'
 
 export default function Temp(props) {
-    let {temp}=props
+  let { temp } = props
   return temp.toString() + '\xb0'
 }
 
 Temp.propTypes = {
-    temp: PropTypes.number.isRequired,
+  temp: PropTypes.number.isRequired,
 }

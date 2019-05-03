@@ -43,12 +43,16 @@ export default class FullLocationView extends React.Component {
                   </div>
                 </div>
 
-                {forecast.day &&
-                  <FullDayPartForecastView forecast={forecast.day}
-                  day_part_name='day'/>
-                  }
-                  <FullDayPartForecastView forecast={forecast.night}
-                  day_part_name='night'/>
+                {forecast.day && (
+                  <FullDayPartForecastView
+                    forecast={forecast.day}
+                    day_part_name="day"
+                  />
+                )}
+                <FullDayPartForecastView
+                  forecast={forecast.night}
+                  day_part_name="night"
+                />
               </div>
             ))}
           </div>
