@@ -1,48 +1,51 @@
 import _ from 'underscore'
 import * as u from '../util'
 
-
-export function merge_hourly_into_daily_forecasts(daily_forecasts,hourly_forecasts){
-  if(daily_forecasts.length==0){
+export function merge_hourly_into_daily_forecasts(
+  daily_forecasts,
+  hourly_forecasts,
+) {
+  if (daily_forecasts.length == 0) {
     return []
   }
-  
-  function day_part(forecasts, index){
-    let daily_index = parseInt(index/2)
+
+  function day_part(forecasts, index) {
+    let daily_index = parseInt(index / 2)
     let day = forecasts[daily_index]
-    if (index%2){
+    if (index % 2) {
       return day.night
-    }else{
+    } else {
       return day.day
     }
   }
-  
-  let out_dfcs = _.map(daily_forecasts, dfc=>
-    u.merge(dfc, {day: dfc.day && u.merge(dfc.day, {hourly:[]}),
-      night: u.merge(dfc.night, {hourly:[]})})
-      )
-      
-  let daily_index=0
-  if(!daily_forecasts[0].day){
+
+  let out_dfcs = _.map(daily_forecasts, dfc =>
+    u.merge(dfc, {
+      day: dfc.day && u.merge(dfc.day, { hourly: [] }),
+      night: u.merge(dfc.night, { hourly: [] }),
+    }),
+  )
+
+  let daily_index = 0
+  if (!daily_forecasts[0].day) {
     ++daily_index
   }
-  let current_dfc=day_part(out_dfcs, daily_index)
-  
-  _.each(hourly_forecasts,hfc=>{
-    if (daily_forecasts.length>daily_index+1 &&
-    hfc.start_timestamp>=day_part(daily_forecasts, daily_index+1).start_timestamp){
+  let current_dfc = day_part(out_dfcs, daily_index)
+
+  _.each(hourly_forecasts, hfc => {
+    if (
+      daily_forecasts.length > daily_index + 1 &&
+      hfc.start_timestamp >=
+        day_part(daily_forecasts, daily_index + 1).start_timestamp
+    ) {
       ++daily_index
-      current_dfc=day_part(out_dfcs,daily_index)
+      current_dfc = day_part(out_dfcs, daily_index)
     }
-    
-    
+
     current_dfc.hourly.push(hfc)
   })
-    
-    
-    
-    return out_dfcs
-    
+
+  return out_dfcs
 }
 
 // for each hourlyforecast,

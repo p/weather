@@ -7,8 +7,8 @@ import _ from 'underscore'
 import React from 'react'
 
 export default function ForecastDate(props) {
-    const {forecast} = props
-    return moment(forecast.start_timestamp * 1000).format('MMM D')
+  const { forecast } = props
+  return moment(forecast.start_timestamp * 1000).format('MMM D')
 }
 
 ForecastDate.propTypes = {

@@ -1,6 +1,10 @@
 import ForecastDayOfWeek from '../blocks/forecast-day-of-week'
 import ForecastDate from '../blocks/forecast-date'
-import { DailyWithHourlyForecastPropTypes,LocationPropTypes, DailyForecastPropTypes } from '../data/prop-types'
+import {
+  DailyWithHourlyForecastPropTypes,
+  LocationPropTypes,
+  DailyForecastPropTypes,
+} from '../data/prop-types'
 import PrecipType from '../blocks/precip-type'
 import { network_flag, unim } from '../util'
 import { data_age } from '../util'
@@ -31,10 +35,10 @@ export default class FullLocationView extends React.Component {
               <div key={forecast.start_timestamp} className="forecast-row">
                 <div className="forecast-date">
                   <div>
-              <ForecastDayOfWeek forecast={forecast}/>
+                    <ForecastDayOfWeek forecast={forecast} />
                   </div>
                   <div>
-              <ForecastDate forecast={forecast}/>
+                    <ForecastDate forecast={forecast} />
                   </div>
                 </div>
 
@@ -91,7 +95,8 @@ FullLocationView.propTypes = {
 
   location: LocationPropTypes.isRequired,
 
-  daily_forecasts: PropTypes.arrayOf(DailyWithHourlyForecastPropTypes).isRequired,
+  daily_forecasts: PropTypes.arrayOf(DailyWithHourlyForecastPropTypes)
+    .isRequired,
 
   current: Current.propTypes.current.isRequired,
 }

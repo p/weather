@@ -36,10 +36,10 @@ export default class BriefLocationView extends React.Component {
               <div key={forecast.start_timestamp} className="forecast-row">
                 <div className="forecast-date">
                   <div>
-              <ForecastDayOfWeek forecast={forecast}/>
+                    <ForecastDayOfWeek forecast={forecast} />
                   </div>
                   <div>
-              <ForecastDate forecast={forecast}/>
+                    <ForecastDate forecast={forecast} />
                   </div>
                 </div>
 

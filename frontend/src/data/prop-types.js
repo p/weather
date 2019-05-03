@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export const HourlyForecastPropTypes=PropTypes.shape({
+export const HourlyForecastPropTypes = PropTypes.shape({
   temp: PropTypes.number.isRequired,
   precip_probability: PropTypes.number.isRequired,
   precip_type: PropTypes.string.isRequired,
