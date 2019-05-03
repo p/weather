@@ -16,6 +16,7 @@ import _ from 'underscore'
 import React from 'react'
 import Store from '../store'
 import Current from '../components/current'
+import FullDayPartForecastView from './full-day-part-forecast'
 
 export default class FullLocationView extends React.Component {
   render() {
@@ -43,49 +44,16 @@ export default class FullLocationView extends React.Component {
                 </div>
 
                 {forecast.day &&
-                  this.render_day_part_forecast('day', forecast.day)}
-                {this.render_day_part_forecast('night', forecast.night)}
+                  <FullDayPartForecastView forecast={forecast.day}
+                  day_part_name='day'/>
+                  }
+                  <FullDayPartForecastView forecast={forecast.night}
+                  day_part_name='night'/>
               </div>
             ))}
           </div>
         )}
       </div>
-    )
-  }
-
-  render_day_part_forecast(day_part_name, forecast) {
-    return (
-      <div className={'forecast-' + day_part_name}>
-        <div className="forecast-temp">{forecast.temp.toString() + '\xb0'}</div>
-        <div className="forecast-precip">
-          {forecast.precip_probability ? (
-            <div>
-              <div>{forecast.precip_probability}%</div>
-              <div>
-                <PrecipType
-                  precip_type={forecast.precip_type}
-                  start_timestamp={forecast.start_timestamp}
-                />
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="forecast-blurb">{forecast.narrative}</div>
-      </div>
-    )
-  }
-
-  format_short_forecast(name, dpf) {
-    return (
-      <p>
-        {name}:{' '}
-        <b>
-          {dpf.temp}&deg;, {dpf.precip_type}: {dpf.precip_probability}%
-        </b>{' '}
-        {dpf.narrative}
-      </p>
     )
   }
 }
