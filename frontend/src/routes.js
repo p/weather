@@ -14,4 +14,9 @@ export default {
     component: Handlers.FullLocation,
     wrapper: AppBase,
   },
+  TodayLocation: {
+    path: '/:location/today',
+    component: Handlers.TodayLocation,
+    wrapper: AppBase,
+  },
 }

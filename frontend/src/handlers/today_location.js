@@ -1,4 +1,4 @@
-import BriefLocation from '../components/brief-location'
+import TodayLocation from '../components/today-location'
 import { data_age } from '../util'
 import PropTypes from 'prop-types'
 import moment from 'moment'
@@ -18,11 +18,11 @@ export default
     location: unescape,
   },
 })
-class BriefLocationHandler extends React.Component {
+class TodayLocationHandler extends React.Component {
   render() {
     return (
       <Forecast location_query={this.props.params.location}>
-        <BriefLocation location_query={this.props.params.location} />
+        <TodayLocation location_query={this.props.params.location} />
         <Link
           to="FullLocation"
           params={{ location: this.props.params.location }}
@@ -31,10 +31,10 @@ class BriefLocationHandler extends React.Component {
         </Link>
           {' '}
         <Link
-          to="TodayLocation"
+          to="BriefLocation"
           params={{ location: this.props.params.location }}
         >
-          Today
+          Brief View
         </Link>
       </Forecast>
     )
