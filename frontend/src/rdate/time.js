@@ -34,6 +34,16 @@ export default class Time {
     const date = new Date(...args)
     return new Time(date.getTime() / 1000)
   }
+  
+  static at(timestamp){
+    return new Time(timestamp)
+}
+
+start_of_hour(){
+}
+
+add(delta){
+}
 }
 
 Time.toJSDate = Time.to_js_date

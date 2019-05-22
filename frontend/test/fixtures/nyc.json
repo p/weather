@@ -1,0 +1,2414 @@
+{
+    "location": {
+      "lat": 40.765
+    , "lng": -73.981
+    , "city": "New York City"
+    , "state_abbr": "NY"
+  }
+  , "current": {
+      "expire_time_gmt": 1558499635
+    , "temp": 61
+    , "temp_min": 58
+    , "temp_max": 72
+    , "feels_like": 61
+    , "phrase": "Clear"
+  }
+  , "hourly_forecasts": [
+      {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558501200
+      , "start_at": "2019-05-22T01:00:00-04:00"
+      , "temp": 59
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558504800
+      , "start_at": "2019-05-22T02:00:00-04:00"
+      , "temp": 58
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558508400
+      , "start_at": "2019-05-22T03:00:00-04:00"
+      , "temp": 57
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558512000
+      , "start_at": "2019-05-22T04:00:00-04:00"
+      , "temp": 56
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558515600
+      , "start_at": "2019-05-22T05:00:00-04:00"
+      , "temp": 55
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558519200
+      , "start_at": "2019-05-22T06:00:00-04:00"
+      , "temp": 55
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558499635
+      , "start_timestamp": 1558522800
+      , "start_at": "2019-05-22T07:00:00-04:00"
+      , "temp": 56
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558526400
+      , "start_at": "2019-05-22T08:00:00-04:00"
+      , "temp": 59
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558530000
+      , "start_at": "2019-05-22T09:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558533600
+      , "start_at": "2019-05-22T10:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558537200
+      , "start_at": "2019-05-22T11:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558540800
+      , "start_at": "2019-05-22T12:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558544400
+      , "start_at": "2019-05-22T13:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558548000
+      , "start_at": "2019-05-22T14:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558551600
+      , "start_at": "2019-05-22T15:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558555200
+      , "start_at": "2019-05-22T16:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558558800
+      , "start_at": "2019-05-22T17:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558562400
+      , "start_at": "2019-05-22T18:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558566000
+      , "start_at": "2019-05-22T19:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558569600
+      , "start_at": "2019-05-22T20:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558573200
+      , "start_at": "2019-05-22T21:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558576800
+      , "start_at": "2019-05-22T22:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558580400
+      , "start_at": "2019-05-22T23:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558584000
+      , "start_at": "2019-05-23T00:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558587600
+      , "start_at": "2019-05-23T01:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558591200
+      , "start_at": "2019-05-23T02:00:00-04:00"
+      , "temp": 61
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558594800
+      , "start_at": "2019-05-23T03:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558598400
+      , "start_at": "2019-05-23T04:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558602000
+      , "start_at": "2019-05-23T05:00:00-04:00"
+      , "temp": 59
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558605600
+      , "start_at": "2019-05-23T06:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558609200
+      , "start_at": "2019-05-23T07:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558612800
+      , "start_at": "2019-05-23T08:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558616400
+      , "start_at": "2019-05-23T09:00:00-04:00"
+      , "temp": 61
+      , "precip_probability": 37
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558620000
+      , "start_at": "2019-05-23T10:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558623600
+      , "start_at": "2019-05-23T11:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558627200
+      , "start_at": "2019-05-23T12:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558630800
+      , "start_at": "2019-05-23T13:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558634400
+      , "start_at": "2019-05-23T14:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558638000
+      , "start_at": "2019-05-23T15:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558641600
+      , "start_at": "2019-05-23T16:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558645200
+      , "start_at": "2019-05-23T17:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 37
+      , "precip_type": "rain"
+      , "phrase": "Scattered Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558648800
+      , "start_at": "2019-05-23T18:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 66
+      , "precip_type": "rain"
+      , "phrase": "Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558652400
+      , "start_at": "2019-05-23T19:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 72
+      , "precip_type": "rain"
+      , "phrase": "Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558656000
+      , "start_at": "2019-05-23T20:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 43
+      , "precip_type": "rain"
+      , "phrase": "Scattered Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558659600
+      , "start_at": "2019-05-23T21:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 30
+      , "precip_type": "rain"
+      , "phrase": "Isolated Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558663200
+      , "start_at": "2019-05-23T22:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558666800
+      , "start_at": "2019-05-23T23:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558670400
+      , "start_at": "2019-05-24T00:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558674000
+      , "start_at": "2019-05-24T01:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558677600
+      , "start_at": "2019-05-24T02:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558681200
+      , "start_at": "2019-05-24T03:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558684800
+      , "start_at": "2019-05-24T04:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558688400
+      , "start_at": "2019-05-24T05:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558692000
+      , "start_at": "2019-05-24T06:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558695600
+      , "start_at": "2019-05-24T07:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558699200
+      , "start_at": "2019-05-24T08:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558702800
+      , "start_at": "2019-05-24T09:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558706400
+      , "start_at": "2019-05-24T10:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558710000
+      , "start_at": "2019-05-24T11:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558713600
+      , "start_at": "2019-05-24T12:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558717200
+      , "start_at": "2019-05-24T13:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558720800
+      , "start_at": "2019-05-24T14:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558724400
+      , "start_at": "2019-05-24T15:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558728000
+      , "start_at": "2019-05-24T16:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558731600
+      , "start_at": "2019-05-24T17:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558735200
+      , "start_at": "2019-05-24T18:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558738800
+      , "start_at": "2019-05-24T19:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558742400
+      , "start_at": "2019-05-24T20:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558746000
+      , "start_at": "2019-05-24T21:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558749600
+      , "start_at": "2019-05-24T22:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558753200
+      , "start_at": "2019-05-24T23:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558756800
+      , "start_at": "2019-05-25T00:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558760400
+      , "start_at": "2019-05-25T01:00:00-04:00"
+      , "temp": 61
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558764000
+      , "start_at": "2019-05-25T02:00:00-04:00"
+      , "temp": 59
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558767600
+      , "start_at": "2019-05-25T03:00:00-04:00"
+      , "temp": 59
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558771200
+      , "start_at": "2019-05-25T04:00:00-04:00"
+      , "temp": 58
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558774800
+      , "start_at": "2019-05-25T05:00:00-04:00"
+      , "temp": 58
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558778400
+      , "start_at": "2019-05-25T06:00:00-04:00"
+      , "temp": 58
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558782000
+      , "start_at": "2019-05-25T07:00:00-04:00"
+      , "temp": 58
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558785600
+      , "start_at": "2019-05-25T08:00:00-04:00"
+      , "temp": 59
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558789200
+      , "start_at": "2019-05-25T09:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558792800
+      , "start_at": "2019-05-25T10:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558796400
+      , "start_at": "2019-05-25T11:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558800000
+      , "start_at": "2019-05-25T12:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558803600
+      , "start_at": "2019-05-25T13:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558807200
+      , "start_at": "2019-05-25T14:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558810800
+      , "start_at": "2019-05-25T15:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558814400
+      , "start_at": "2019-05-25T16:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558818000
+      , "start_at": "2019-05-25T17:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558821600
+      , "start_at": "2019-05-25T18:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558825200
+      , "start_at": "2019-05-25T19:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558828800
+      , "start_at": "2019-05-25T20:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 7
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558832400
+      , "start_at": "2019-05-25T21:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 9
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558836000
+      , "start_at": "2019-05-25T22:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 12
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558839600
+      , "start_at": "2019-05-25T23:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 46
+      , "precip_type": "rain"
+      , "phrase": "Scattered Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558843200
+      , "start_at": "2019-05-26T00:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 44
+      , "precip_type": "rain"
+      , "phrase": "Scattered Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558846800
+      , "start_at": "2019-05-26T01:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 37
+      , "precip_type": "rain"
+      , "phrase": "Scattered Thunderstorms"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558850400
+      , "start_at": "2019-05-26T02:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558854000
+      , "start_at": "2019-05-26T03:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558857600
+      , "start_at": "2019-05-26T04:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558861200
+      , "start_at": "2019-05-26T05:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558864800
+      , "start_at": "2019-05-26T06:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 7
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558868400
+      , "start_at": "2019-05-26T07:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558872000
+      , "start_at": "2019-05-26T08:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 8
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558875600
+      , "start_at": "2019-05-26T09:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558879200
+      , "start_at": "2019-05-26T10:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558882800
+      , "start_at": "2019-05-26T11:00:00-04:00"
+      , "temp": 76
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558886400
+      , "start_at": "2019-05-26T12:00:00-04:00"
+      , "temp": 79
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558890000
+      , "start_at": "2019-05-26T13:00:00-04:00"
+      , "temp": 81
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558893600
+      , "start_at": "2019-05-26T14:00:00-04:00"
+      , "temp": 81
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558897200
+      , "start_at": "2019-05-26T15:00:00-04:00"
+      , "temp": 82
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558900800
+      , "start_at": "2019-05-26T16:00:00-04:00"
+      , "temp": 81
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558904400
+      , "start_at": "2019-05-26T17:00:00-04:00"
+      , "temp": 80
+      , "precip_probability": 19
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558908000
+      , "start_at": "2019-05-26T18:00:00-04:00"
+      , "temp": 79
+      , "precip_probability": 20
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558911600
+      , "start_at": "2019-05-26T19:00:00-04:00"
+      , "temp": 77
+      , "precip_probability": 21
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558915200
+      , "start_at": "2019-05-26T20:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558918800
+      , "start_at": "2019-05-26T21:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558922400
+      , "start_at": "2019-05-26T22:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558926000
+      , "start_at": "2019-05-26T23:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 17
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558929600
+      , "start_at": "2019-05-27T00:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 17
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558933200
+      , "start_at": "2019-05-27T01:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 17
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558936800
+      , "start_at": "2019-05-27T02:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 12
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558940400
+      , "start_at": "2019-05-27T03:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558944000
+      , "start_at": "2019-05-27T04:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558947600
+      , "start_at": "2019-05-27T05:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558951200
+      , "start_at": "2019-05-27T06:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558954800
+      , "start_at": "2019-05-27T07:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 12
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558958400
+      , "start_at": "2019-05-27T08:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 9
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558962000
+      , "start_at": "2019-05-27T09:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 8
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558965600
+      , "start_at": "2019-05-27T10:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558969200
+      , "start_at": "2019-05-27T11:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558972800
+      , "start_at": "2019-05-27T12:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558976400
+      , "start_at": "2019-05-27T13:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558980000
+      , "start_at": "2019-05-27T14:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558983600
+      , "start_at": "2019-05-27T15:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558987200
+      , "start_at": "2019-05-27T16:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558990800
+      , "start_at": "2019-05-27T17:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 10
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558994400
+      , "start_at": "2019-05-27T18:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 11
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558998000
+      , "start_at": "2019-05-27T19:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 12
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559001600
+      , "start_at": "2019-05-27T20:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 21
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559005200
+      , "start_at": "2019-05-27T21:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 23
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559008800
+      , "start_at": "2019-05-27T22:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559012400
+      , "start_at": "2019-05-27T23:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559016000
+      , "start_at": "2019-05-28T00:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559019600
+      , "start_at": "2019-05-28T01:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559023200
+      , "start_at": "2019-05-28T02:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 10
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559026800
+      , "start_at": "2019-05-28T03:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 10
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559030400
+      , "start_at": "2019-05-28T04:00:00-04:00"
+      , "temp": 61
+      , "precip_probability": 10
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559034000
+      , "start_at": "2019-05-28T05:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559037600
+      , "start_at": "2019-05-28T06:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559041200
+      , "start_at": "2019-05-28T07:00:00-04:00"
+      , "temp": 60
+      , "precip_probability": 3
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559044800
+      , "start_at": "2019-05-28T08:00:00-04:00"
+      , "temp": 62
+      , "precip_probability": 2
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559048400
+      , "start_at": "2019-05-28T09:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559052000
+      , "start_at": "2019-05-28T10:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 1
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559055600
+      , "start_at": "2019-05-28T11:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559059200
+      , "start_at": "2019-05-28T12:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559062800
+      , "start_at": "2019-05-28T13:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559066400
+      , "start_at": "2019-05-28T14:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559070000
+      , "start_at": "2019-05-28T15:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559073600
+      , "start_at": "2019-05-28T16:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 0
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559077200
+      , "start_at": "2019-05-28T17:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 4
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559080800
+      , "start_at": "2019-05-28T18:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 5
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559084400
+      , "start_at": "2019-05-28T19:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559088000
+      , "start_at": "2019-05-28T20:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 11
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559091600
+      , "start_at": "2019-05-28T21:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 12
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559095200
+      , "start_at": "2019-05-28T22:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559098800
+      , "start_at": "2019-05-28T23:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 8
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559102400
+      , "start_at": "2019-05-29T00:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 9
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559106000
+      , "start_at": "2019-05-29T01:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 9
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559109600
+      , "start_at": "2019-05-29T02:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559113200
+      , "start_at": "2019-05-29T03:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559116800
+      , "start_at": "2019-05-29T04:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559120400
+      , "start_at": "2019-05-29T05:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559124000
+      , "start_at": "2019-05-29T06:00:00-04:00"
+      , "temp": 63
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559127600
+      , "start_at": "2019-05-29T07:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559131200
+      , "start_at": "2019-05-29T08:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559134800
+      , "start_at": "2019-05-29T09:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559138400
+      , "start_at": "2019-05-29T10:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559142000
+      , "start_at": "2019-05-29T11:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 18
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559145600
+      , "start_at": "2019-05-29T12:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 18
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559149200
+      , "start_at": "2019-05-29T13:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 18
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559152800
+      , "start_at": "2019-05-29T14:00:00-04:00"
+      , "temp": 76
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559156400
+      , "start_at": "2019-05-29T15:00:00-04:00"
+      , "temp": 77
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559160000
+      , "start_at": "2019-05-29T16:00:00-04:00"
+      , "temp": 77
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559163600
+      , "start_at": "2019-05-29T17:00:00-04:00"
+      , "temp": 77
+      , "precip_probability": 16
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559167200
+      , "start_at": "2019-05-29T18:00:00-04:00"
+      , "temp": 76
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559170800
+      , "start_at": "2019-05-29T19:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559174400
+      , "start_at": "2019-05-29T20:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 21
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559178000
+      , "start_at": "2019-05-29T21:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 21
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559181600
+      , "start_at": "2019-05-29T22:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 22
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559185200
+      , "start_at": "2019-05-29T23:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 23
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559188800
+      , "start_at": "2019-05-30T00:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559192400
+      , "start_at": "2019-05-30T01:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559196000
+      , "start_at": "2019-05-30T02:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559199600
+      , "start_at": "2019-05-30T03:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559203200
+      , "start_at": "2019-05-30T04:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559206800
+      , "start_at": "2019-05-30T05:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 37
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559210400
+      , "start_at": "2019-05-30T06:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559214000
+      , "start_at": "2019-05-30T07:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559217600
+      , "start_at": "2019-05-30T08:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 22
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559221200
+      , "start_at": "2019-05-30T09:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 34
+      , "precip_type": "rain"
+      , "phrase": "Few Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559224800
+      , "start_at": "2019-05-30T10:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 37
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559228400
+      , "start_at": "2019-05-30T11:00:00-04:00"
+      , "temp": 76
+      , "precip_probability": 37
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559232000
+      , "start_at": "2019-05-30T12:00:00-04:00"
+      , "temp": 78
+      , "precip_probability": 38
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559235600
+      , "start_at": "2019-05-30T13:00:00-04:00"
+      , "temp": 80
+      , "precip_probability": 39
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559239200
+      , "start_at": "2019-05-30T14:00:00-04:00"
+      , "temp": 79
+      , "precip_probability": 36
+      , "precip_type": "rain"
+      , "phrase": "Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559242800
+      , "start_at": "2019-05-30T15:00:00-04:00"
+      , "temp": 80
+      , "precip_probability": 34
+      , "precip_type": "rain"
+      , "phrase": "Few Showers"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559246400
+      , "start_at": "2019-05-30T16:00:00-04:00"
+      , "temp": 79
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559250000
+      , "start_at": "2019-05-30T17:00:00-04:00"
+      , "temp": 78
+      , "precip_probability": 22
+      , "precip_type": "rain"
+      , "phrase": "Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559253600
+      , "start_at": "2019-05-30T18:00:00-04:00"
+      , "temp": 77
+      , "precip_probability": 17
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559257200
+      , "start_at": "2019-05-30T19:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 9
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559260800
+      , "start_at": "2019-05-30T20:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 11
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559264400
+      , "start_at": "2019-05-30T21:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 12
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559268000
+      , "start_at": "2019-05-30T22:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559271600
+      , "start_at": "2019-05-30T23:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559275200
+      , "start_at": "2019-05-31T00:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Mostly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559278800
+      , "start_at": "2019-05-31T01:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559282400
+      , "start_at": "2019-05-31T02:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559286000
+      , "start_at": "2019-05-31T03:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559289600
+      , "start_at": "2019-05-31T04:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559293200
+      , "start_at": "2019-05-31T05:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559296800
+      , "start_at": "2019-05-31T06:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559300400
+      , "start_at": "2019-05-31T07:00:00-04:00"
+      , "temp": 64
+      , "precip_probability": 6
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559304000
+      , "start_at": "2019-05-31T08:00:00-04:00"
+      , "temp": 65
+      , "precip_probability": 19
+      , "precip_type": "rain"
+      , "phrase": "Partly Cloudy"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559307600
+      , "start_at": "2019-05-31T09:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 18
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559311200
+      , "start_at": "2019-05-31T10:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 16
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559314800
+      , "start_at": "2019-05-31T11:00:00-04:00"
+      , "temp": 70
+      , "precip_probability": 14
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559318400
+      , "start_at": "2019-05-31T12:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 11
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559322000
+      , "start_at": "2019-05-31T13:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 11
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559325600
+      , "start_at": "2019-05-31T14:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 10
+      , "precip_type": "rain"
+      , "phrase": "Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559329200
+      , "start_at": "2019-05-31T15:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559332800
+      , "start_at": "2019-05-31T16:00:00-04:00"
+      , "temp": 75
+      , "precip_probability": 13
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559336400
+      , "start_at": "2019-05-31T17:00:00-04:00"
+      , "temp": 74
+      , "precip_probability": 15
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559340000
+      , "start_at": "2019-05-31T18:00:00-04:00"
+      , "temp": 73
+      , "precip_probability": 17
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559343600
+      , "start_at": "2019-05-31T19:00:00-04:00"
+      , "temp": 72
+      , "precip_probability": 19
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559347200
+      , "start_at": "2019-05-31T20:00:00-04:00"
+      , "temp": 71
+      , "precip_probability": 23
+      , "precip_type": "rain"
+      , "phrase": "Mostly Sunny"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559350800
+      , "start_at": "2019-05-31T21:00:00-04:00"
+      , "temp": 69
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559354400
+      , "start_at": "2019-05-31T22:00:00-04:00"
+      , "temp": 68
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559358000
+      , "start_at": "2019-05-31T23:00:00-04:00"
+      , "temp": 67
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559361600
+      , "start_at": "2019-06-01T00:00:00-04:00"
+      , "temp": 66
+      , "precip_probability": 24
+      , "precip_type": "rain"
+      , "phrase": "Mostly Clear"
+    }
+  ]
+  , "daily_forecasts": [
+      {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558436400
+      , "day": null
+      , "night": {
+          "start_timestamp": 1558479600
+        , "start_at": "2019-05-21T19:00:00-04:00"
+        , "temp": 54
+        , "precip_probability": 0
+        , "precip_type": "rain"
+        , "narrative": "Clear skies"
+        , "phrase": "Clear"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558522800
+      , "day": {
+          "start_timestamp": 1558522800
+        , "start_at": "2019-05-22T07:00:00-04:00"
+        , "temp": 75
+        , "precip_probability": 0
+        , "precip_type": "rain"
+        , "narrative": "Except for a few afternoon clouds, mainly sunny"
+        , "phrase": "Mostly Sunny"
+      }
+      , "night": {
+          "start_timestamp": 1558566000
+        , "start_at": "2019-05-22T19:00:00-04:00"
+        , "temp": 58
+        , "precip_probability": 40
+        , "precip_type": "rain"
+        , "narrative": "Considerable cloudiness"
+        , "phrase": "Showers Late"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558609200
+      , "day": {
+          "start_timestamp": 1558609200
+        , "start_at": "2019-05-23T07:00:00-04:00"
+        , "temp": 74
+        , "precip_probability": 80
+        , "precip_type": "rain"
+        , "narrative": "Rain showers in the morning with numerous thunderstorms developing in the afternoon"
+        , "phrase": "Thunderstorms"
+      }
+      , "night": {
+          "start_timestamp": 1558652400
+        , "start_at": "2019-05-23T19:00:00-04:00"
+        , "temp": 64
+        , "precip_probability": 80
+        , "precip_type": "rain"
+        , "narrative": "Thunderstorms during the evening, then skies turning partly cloudy overnight"
+        , "phrase": "Thunderstorms Early"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558695600
+      , "day": {
+          "start_timestamp": 1558695600
+        , "start_at": "2019-05-24T07:00:00-04:00"
+        , "temp": 75
+        , "precip_probability": 0
+        , "precip_type": "rain"
+        , "narrative": "Sunny skies"
+        , "phrase": "Sunny"
+      }
+      , "night": {
+          "start_timestamp": 1558738800
+        , "start_at": "2019-05-24T19:00:00-04:00"
+        , "temp": 57
+        , "precip_probability": 0
+        , "precip_type": "rain"
+        , "narrative": "Clear to partly cloudy"
+        , "phrase": "Mostly Clear"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558782000
+      , "day": {
+          "start_timestamp": 1558782000
+        , "start_at": "2019-05-25T07:00:00-04:00"
+        , "temp": 69
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "Partly cloudy skies in the morning will give way to cloudy skies during the afternoon"
+        , "phrase": "Mostly Cloudy"
+      }
+      , "night": {
+          "start_timestamp": 1558825200
+        , "start_at": "2019-05-25T19:00:00-04:00"
+        , "temp": 64
+        , "precip_probability": 50
+        , "precip_type": "rain"
+        , "narrative": "Scattered thunderstorms in the evening"
+        , "phrase": "Thunderstorms Early"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558868400
+      , "day": {
+          "start_timestamp": 1558868400
+        , "start_at": "2019-05-26T07:00:00-04:00"
+        , "temp": 83
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "Sunshine and clouds mixed"
+        , "phrase": "Partly Cloudy"
+      }
+      , "night": {
+          "start_timestamp": 1558911600
+        , "start_at": "2019-05-26T19:00:00-04:00"
+        , "temp": 63
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "Overcast"
+        , "phrase": "Cloudy"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1558954800
+      , "day": {
+          "start_timestamp": 1558954800
+        , "start_at": "2019-05-27T07:00:00-04:00"
+        , "temp": 76
+        , "precip_probability": 10
+        , "precip_type": "rain"
+        , "narrative": "Intervals of clouds and sunshine"
+        , "phrase": "Partly Cloudy"
+      }
+      , "night": {
+          "start_timestamp": 1558998000
+        , "start_at": "2019-05-27T19:00:00-04:00"
+        , "temp": 59
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "Partly cloudy skies"
+        , "phrase": "Partly Cloudy"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559041200
+      , "day": {
+          "start_timestamp": 1559041200
+        , "start_at": "2019-05-28T07:00:00-04:00"
+        , "temp": 76
+        , "precip_probability": 10
+        , "precip_type": "rain"
+        , "narrative": "Plentiful sunshine"
+        , "phrase": "Mostly Sunny"
+      }
+      , "night": {
+          "start_timestamp": 1559084400
+        , "start_at": "2019-05-28T19:00:00-04:00"
+        , "temp": 62
+        , "precip_probability": 10
+        , "precip_type": "rain"
+        , "narrative": "A few clouds"
+        , "phrase": "Partly Cloudy"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559127600
+      , "day": {
+          "start_timestamp": 1559127600
+        , "start_at": "2019-05-29T07:00:00-04:00"
+        , "temp": 79
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "A mix of clouds and sun in the morning followed by cloudy skies during the afternoon"
+        , "phrase": "Mostly Cloudy"
+      }
+      , "night": {
+          "start_timestamp": 1559170800
+        , "start_at": "2019-05-29T19:00:00-04:00"
+        , "temp": 67
+        , "precip_probability": 40
+        , "precip_type": "rain"
+        , "narrative": "Partly cloudy in the evening"
+        , "phrase": "Showers Late"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559214000
+      , "day": {
+          "start_timestamp": 1559214000
+        , "start_at": "2019-05-30T07:00:00-04:00"
+        , "temp": 80
+        , "precip_probability": 40
+        , "precip_type": "rain"
+        , "narrative": "Considerable cloudiness with occasional rain showers"
+        , "phrase": "Showers"
+      }
+      , "night": {
+          "start_timestamp": 1559257200
+        , "start_at": "2019-05-30T19:00:00-04:00"
+        , "temp": 63
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "Considerable clouds early"
+        , "phrase": "Partly Cloudy"
+      }
+    }
+    , {
+        "expire_timestamp": 1558500928
+      , "start_timestamp": 1559300400
+      , "day": {
+          "start_timestamp": 1559300400
+        , "start_at": "2019-05-31T07:00:00-04:00"
+        , "temp": 76
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "A few clouds early, otherwise mostly sunny"
+        , "phrase": "Mostly Sunny"
+      }
+      , "night": {
+          "start_timestamp": 1559343600
+        , "start_at": "2019-05-31T19:00:00-04:00"
+        , "temp": 62
+        , "precip_probability": 20
+        , "precip_type": "rain"
+        , "narrative": "Mostly clear skies"
+        , "phrase": "Mostly Clear"
+      }
+    }
+  ]
+}
