@@ -1,6 +1,5 @@
 import Time from './time'
 
-export default {
+module.exports = {
   Time
 }
-
