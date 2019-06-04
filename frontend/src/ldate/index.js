@@ -1,5 +1,2 @@
-import LocalTime from './time'
 
-module.exports = {
-  LocalTime,
-}
+export { default as LocalTime } from './time'

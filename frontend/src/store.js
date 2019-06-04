@@ -1,4 +1,6 @@
-import { make_hash, merge } from './util'
+import _ from 'underscore'
+import {LocalTime} from './ldate'
+import * as u from './util'
 import reactor from './reactor'
 import { Store, toImmutable } from 'nuclear-js'
 
@@ -47,8 +49,11 @@ let WeatherStore = Store({
 })
 
 function receive_weather(state, { location_query, payload }) {
-  let new_payload = merge(state[location_query] || {}, payload)
-  let delta = make_hash(location_query, payload)
+  payload = u.merge(payload, {
+    hourly_forecasts: _.map(payload.hourly_forecasts,hfc=>u.merge(hfc,
+    {start_ltime:new LocalTime(hfc.start_at)}))})
+  let new_payload = u.merge(state[location_query] || {}, payload)
+  let delta = u.make_hash(location_query, new_payload)
   return state.merge(delta)
 }
 
