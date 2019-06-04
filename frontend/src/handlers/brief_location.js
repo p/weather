@@ -28,8 +28,7 @@ class BriefLocationHandler extends React.Component {
           params={{ location: this.props.params.location }}
         >
           Full View
-        </Link>
-          {' '}
+        </Link>{' '}
         <Link
           to="TodayLocation"
           params={{ location: this.props.params.location }}
