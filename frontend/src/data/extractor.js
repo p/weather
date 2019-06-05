@@ -1,6 +1,5 @@
 import _ from 'underscore'
 import date from 'date-fns'
-import { LocalTime } from '../ldate'
 
 // Extracts one day worth of forecasts out of the hourly forecasts.
 //
@@ -16,7 +15,7 @@ export function extract_today_hourly(hourly_forecasts) {
   }
 
   let first = hourly_forecasts[0]
-  let time = new LocalTime(first.start_at)
+  let time = first.start_ltime
   let i = 0
 
   if (time.hour >= 19) {
@@ -24,7 +23,7 @@ export function extract_today_hourly(hourly_forecasts) {
     while (i < hourly_forecasts.length) {
       let forecast = hourly_forecasts[i]
 
-      let time = new LocalTime(forecast.start_at)
+      let time = forecast.start_ltime
 
       if (time.hour < 8) {
         break
@@ -38,7 +37,7 @@ export function extract_today_hourly(hourly_forecasts) {
   while (i < hourly_forecasts.length) {
     let forecast = hourly_forecasts[i]
 
-    let time = new LocalTime(forecast.start_at)
+    let time = forecast.start_ltime
 
     if (time.hour >= 8) {
       break
@@ -51,7 +50,7 @@ export function extract_today_hourly(hourly_forecasts) {
   while (i < hourly_forecasts.length) {
     let forecast = hourly_forecasts[i]
 
-    let time = new LocalTime(forecast.start_at)
+    let time = forecast.start_ltime
 
     if (time.hour < 2) {
       break
@@ -66,7 +65,7 @@ export function extract_today_hourly(hourly_forecasts) {
   while (i < hourly_forecasts.length) {
     let forecast = hourly_forecasts[i]
 
-    let time = new LocalTime(forecast.start_at)
+    let time = forecast.start_ltime
 
     if (time.hour >= 2) {
       break

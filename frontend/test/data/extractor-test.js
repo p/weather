@@ -1,3 +1,4 @@
+import {transform_hourly_forecast,transform_forecasts} from '../../src/transformers'
 import _ from 'underscore'
 import * as u from '../../src/util'
 import { assert } from 'chai'
@@ -7,7 +8,8 @@ import { extract_today_hourly } from '../../src/data/extractor'
 const nyc = require('../fixtures/nyc.json')
 
 describe('extract_today_hourly', function() {
-  const forecasts = nyc.hourly_forecasts
+  const forecasts = _.map(nyc.hourly_forecasts, transform_hourly_forecast)
+  //console.log(forecasts)
 
   const expected_timestamps = [
     '2019-05-22T08:00:00-04:00',
