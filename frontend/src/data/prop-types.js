@@ -1,5 +1,18 @@
 import PropTypes from 'prop-types'
 
+// primitives
+
+const LocalTimePropTypes = PropTypes.shape({
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
+  hour: PropTypes.number.isRequired,
+  minute: PropTypes.number.isRequired,
+  second: PropTypes.number.isRequired,
+})
+
+// incoming data
+
 export const HourlyForecastPropTypes = PropTypes.shape({
   temp: PropTypes.number.isRequired,
   precip_probability: PropTypes.number.isRequired,
@@ -44,4 +57,15 @@ export const DailyWithHourlyForecastPropTypes = PropTypes.shape({
   expire_timestamp: PropTypes.number.isRequired,
   day: DayPartWithHourlyPropTypes,
   night: DayPartWithHourlyPropTypes,
+})
+
+// transformed
+
+export const TransformedHourlyForecastPropTypes = PropTypes.shape({
+  temp: PropTypes.number.isRequired,
+  precip_probability: PropTypes.number.isRequired,
+  precip_type: PropTypes.string.isRequired,
+  phrase: PropTypes.string.isRequired,
+  start_ltime: LocalTimePropTypes.isRequired,
+  phrase: PropTypes.string.isRequired,
 })

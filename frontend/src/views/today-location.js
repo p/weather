@@ -1,7 +1,10 @@
+import ForecastPrecip from '../format/forecast-precip'
 import ForecastDayOfWeek from '../format/forecast-day-of-week'
 import ForecastDate from '../format/forecast-date'
 import SingleDayTemp from '../format/single-day-temp'
+import {extract_today_hourly} from '../data/extractor'
 import {
+  TransformedHourlyForecastPropTypes,
   DailyForecastPropTypes,
   LocationPropTypes,
   DayPartPropTypes,
@@ -20,6 +23,9 @@ import Current from '../components/current'
 
 export default class TodayLocationView extends React.Component {
   render() {
+    const extracted_hfcs = extract_today_hourly(this.props.hourly_forecasts)
+    const first_hfc=extracted_hfcs[0]
+    
     return (
       <div>
         <h2>
@@ -27,75 +33,29 @@ export default class TodayLocationView extends React.Component {
             ? this.props.location.city + ', ' + this.props.location.state_abbr
             : this.props.location_query}
         </h2>
+        
+        <div>
+          {first_hfc.start_ltime.format('ddd MMM D')}
+        </div>
 
-        {this.props.current && <Current current={this.props.current} />}
-
-        {this.props.daily_forecasts && (
-          <div>
-            {_.map(this.props.daily_forecasts, forecast => (
-              <div key={forecast.start_timestamp} className="forecast-row">
-                <div className="forecast-date">
-                  <div>
-                    <ForecastDayOfWeek forecast={forecast} />
-                  </div>
-                  <div>
-                    <ForecastDate forecast={forecast} />
-                  </div>
-                </div>
-
-                {forecast.day
-                  ? this.render_day_part_forecast('day', forecast.day, forecast)
-                  : this.render_day_part_forecast(
-                      'night',
-                      forecast.night,
-                      forecast,
-                    )}
-              </div>
+        {extracted_hfcs && (
+          <table>
+              <tbody>
+            {_.map(extracted_hfcs, forecast => (
+                <tr key={forecast.start_timestamp} className="forecast-row">
+                  <td>
+                    {forecast.start_ltime.format('h a')}
+                  </td>
+                    <td>{forecast.temp}&deg;</td>
+                    <td><ForecastPrecip forecast={forecast}/></td>
+                  <td>
+                    {forecast.phrase}
+                  </td>
+                </tr>
             ))}
-          </div>
+          </tbody></table>
         )}
       </div>
-    )
-  }
-
-  render_day_part_forecast(day_part_name, forecast, full_forecast) {
-    return (
-      <div className="forecast-row" key={forecast.time}>
-        <div className={'forecast-' + day_part_name}>
-          <div className="forecast-temp">
-            <SingleDayTemp forecast={full_forecast} />
-            {'\xb0'}
-          </div>
-          <div className="forecast-precip">
-            {forecast.precip_probability > 10 ? (
-              <div>
-                <div>{forecast.precip_probability}%</div>
-                <div>
-                  <PrecipType
-                    precip_type={forecast.precip_type}
-                    start_timestamp={forecast.start_timestamp}
-                  />
-                </div>
-              </div>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="forecast-blurb">{forecast.narrative}</div>
-        </div>
-      </div>
-    )
-  }
-
-  format_short_forecast(name, dpf) {
-    return (
-      <p>
-        {name}:{' '}
-        <b>
-          {dpf.temp}&deg;, {dpf.precip_type}: {dpf.precip_probability}%
-        </b>{' '}
-        {dpf.narrative}
-      </p>
     )
   }
 }
@@ -106,6 +66,7 @@ TodayLocationView.propTypes = {
   location: LocationPropTypes.isRequired,
 
   daily_forecasts: PropTypes.arrayOf(DailyForecastPropTypes).isRequired,
+  hourly_forecasts: PropTypes.arrayOf(TransformedHourlyForecastPropTypes).isRequired,
 
   current: Current.propTypes.current.isRequired,
 }

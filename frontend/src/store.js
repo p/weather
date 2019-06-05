@@ -1,4 +1,4 @@
-import {transform_forecasts} from './transformer'
+import {transform_forecasts} from './transformers'
 import _ from 'underscore'
 import {LocalTime} from './ldate'
 import * as u from './util'

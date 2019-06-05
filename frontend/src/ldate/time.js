@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const iso_8601_regexp = /^(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)/
 
 export default class LocalTime {
@@ -16,5 +18,9 @@ export default class LocalTime {
     } else {
       throw new Error('Invalid time format: ' + time_str)
     }
+  }
+  
+  format(format_str){
+    return moment(new Date(this.year, this.month-1, this.day, this.hour,this.minute,this.second)).format(format_str)
   }
 }
