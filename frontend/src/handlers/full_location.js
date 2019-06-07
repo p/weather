@@ -28,6 +28,12 @@ class FullLocationHandler extends React.Component {
           params={{ location: this.props.params.location }}
         >
           Brief View
+        </Link>{' '}
+        <Link
+          to="TodayLocation"
+          params={{ location: this.props.params.location }}
+        >
+          Today
         </Link>
       </Forecast>
     )
