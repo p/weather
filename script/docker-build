@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+(cd frontend &&
+  yarn install &&
+  ./script/build-production
+)
+
+rsync -av --delete frontend/dist/ ruby/html
+
+(cd ruby && make docker-build)
