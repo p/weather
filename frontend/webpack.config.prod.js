@@ -1,3 +1,4 @@
+const TerserPlugin = require('terser-webpack-plugin')
 var path = require('path');
 var webpack = require('webpack');
   const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -18,7 +19,12 @@ module.exports = function(env){
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
-  new UglifyJSPlugin({sourceMap:true}),
+    new TerserPlugin({
+    parallel: true,
+    terserOptions: {
+      ecma: 6,
+    },
+  }),
   new webpack.DefinePlugin({
     API_URL:env.API_URL,
     NODE_ENV:'"production"',
