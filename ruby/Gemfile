@@ -11,4 +11,4 @@ gem 'geocoder'
 gem 'hashie'
 gem 'childprocess'
 
-gem 'weathercom', path: '/home/me/apps/wc'
+gem 'weathercom'

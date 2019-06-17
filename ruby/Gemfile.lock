@@ -1,8 +1,3 @@
-PATH
-  remote: /home/me/apps/wc
-  specs:
-    weathercom (0.0.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -16,7 +11,7 @@ GEM
     geocoder (1.5.1)
     hashie (3.6.0)
     mini_portile2 (2.4.0)
-    multipart-post (2.0.0)
+    multipart-post (2.1.1)
     mustermann (1.0.3)
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
@@ -32,6 +27,7 @@ GEM
       rack-protection (= 2.0.5)
       tilt (~> 2.0)
     tilt (2.0.9)
+    weathercom (0.0.1)
 
 PLATFORMS
   ruby
@@ -47,7 +43,7 @@ DEPENDENCIES
   nokogiri
   shotgun
   sinatra
-  weathercom!
+  weathercom
 
 BUNDLED WITH
    1.17.2
