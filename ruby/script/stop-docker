@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+docker kill `docker ps |grep :8050 |awk '{print $1}'` || true
