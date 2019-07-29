@@ -16,6 +16,6 @@ COPY html ./html/
 
 WORKDIR /app
 
-CMD ["bundle", "exec", "puma", ".config.prod.ru", "-p", "80"]
+CMD ["bundle", "exec", "puma", ".config.prod.ru", "-p", "80", "-v", "--debug"]
 
 EXPOSE 80

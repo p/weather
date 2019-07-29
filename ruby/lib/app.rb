@@ -44,6 +44,19 @@ Location = Struct.new(
 end
 
 class App < Sinatra::Base
+  class << self
+    def error_logger(error_logger)
+      before do
+        # https://spin.atomicobject.com/2013/11/12/production-logging-sinatra/
+        # rack.logger seems to be set to NullLogger
+        env['rack.logger'] = error_logger
+        # rack.errors is a fall back and needs to be a path to log file or
+        # an IO object
+        env['rack.errors'] = STDERR
+      end
+    end
+  end
+
   private def wu_api_request(path, resloc)
     attempt = 1
     payload = nil
