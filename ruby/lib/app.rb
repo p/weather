@@ -44,6 +44,11 @@ Location = Struct.new(
 end
 
 class App < Sinatra::Base
+  # Disable JsonCsrf protection because it is killing legitimate requests
+  # and does not explain why.
+  # https://stackoverflow.com/questions/53493717/how-can-i-see-what-rackprotection-is-doing-with-sinatra-server
+  set :protection, :except => [:json_csrf]
+
   class << self
     def error_logger(error_logger)
       before do
